@@ -2,9 +2,9 @@
   "name": "document-api",
   "version": "1.0.0",
   "description": "The system manages documents, users and user roles.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start:dev": "node server.js",
+    "start:dev": "nodemon --exec node_modules/.bin/babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node server/seeders/seedData"
   },
