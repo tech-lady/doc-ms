@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Document = sequelize.define('Document', {
     dateCreated: {
@@ -8,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
     access: {
       type: DataTypes.STRING,
-      defaultValue: 'public'
+      defaultValue: 'public',
       value: ['public', 'private', 'role'],
     },
     content: DataTypes.TEXT,
