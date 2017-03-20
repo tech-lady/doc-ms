@@ -1,7 +1,7 @@
-const user = require('../models');
+import user from '../models';
 
 
-module.exports.createUser = (req, res) => {
+export const createUser = (req, res) => {
   const newUser = {
     UserId: user.id,
     Email: user.email,
@@ -12,102 +12,32 @@ module.exports.createUser = (req, res) => {
     .catch(error => res.status(400).send(error));
 }
 
-module.exports.getUser =
+export const getUser = (req, res) => {
+  db.User.findById(req.params.id)
+    .then((User, err) => {
+      res.status(200).send(User);
+    })
+}
 
 
+export const updateUser = (req, res) => {
+  db.User.findById(req.params.id)
+    .update({
+      username: User.username,
+      name: User.name,
+      email: User.email,
+      password,
+      roleId: User.roleId
+    })
+    .then((User, err) => {
+      res.status(200).send(User);
+    })
+}
 
 
-
-
-
-  // /get: function(req, res) {
-  // //     res.send('User route');
-  // //     User.findById(req.params.id, function(err, user) {
-  // //       if (err) {
-  // //         res.status(400).json({ 'message': 'Something wrong'});
-  // //       } else {
-  // //         res.json(user);
-  // //       }
-  // //     });
-  //  },
-
-
-  //   store: function(req, res) {
-  //     User.create()
-  //   }
-  // }*/
-
-
-  // module.exports = {
-  //   create: (req, res) => {
-  //     res.send('User route');
-  //     .create({
-  //         username: newUser.username,
-  //         name: newUser.name,
-  //         email: newUser.email,
-  //         password,
-  //         roleId: newUser.roleId
-  //       })
-  //       .then(user => res.status(201).send(user))
-  //       .catch(error => res.status(400).send(error));
-  //   },
-
-
-
-  //   edit: (req, res) => {
-  //     return user
-  //       .create({
-  //         username: newUser.username,
-  //         name: newUser.name,
-  //         email: newUser.email,
-  //         password,
-  //         roleId: newUser.roleId
-  //       })
-  //       .then(user => res.status(201).send(user))
-  //       .catch(error => res.status(400).send(error));
-  //   },
-
-
-
-  //   get: (req, res) => {
-  //     return user
-  //       .get({
-  //         username: newUser.username,
-  //         name: newUser.name,
-  //         email: newUser.email,
-  //         password,
-  //         roleId: newUser.roleId
-  //       })
-  //       .then(user => res.status(201).send(user))
-  //       .catch(error => res.status(400).send(error));
-  //   },
-
-
-
-  //   update: (req, res) => {
-  //     return user
-  //       .update({
-  //         username: newUser.username,
-  //         name: newUser.name,
-  //         email: newUser.email,
-  //         password,
-  //         roleId: newUser.roleId
-  //       })
-  //       .then(user => res.status(201).send(user))
-  //       .catch(error => res.status(400).send(error));
-  //   },
-
-
-  //   delete: (req, res) => {
-  //     return user
-  //       .delete({
-  //         username: newUser.username,
-  //         name: newUser.name,
-  //         email: newUser.email,
-  //         password,
-  //         roleId: newUser.roleId
-  //       })
-  //       .then(user => res.status(201).send(user))
-  //       .catch(error => res.status(400).send(error));
-  //   },
-  // };
+export const deleteUser = (req, res) => {
+  db.User.findById(req.params.id)
+    .then((User, err) => {
+      res.status(200).send(User);
+    })
+}
