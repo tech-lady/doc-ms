@@ -1,84 +1,89 @@
-const document = require('../models').document;
-module.exports = {
-  create(req, res) {
-    return document.create({
-        title: req.body.title,
-        access: req.body.access,
-        content: req.body.content,
-      })
-      .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error))
-  },
-};
+ const document = require('../models');
 
-module.exports = {
-  get(req, res) {
-    return document.
-    findById(req.params.ownerId {
-        include: [{
-          model: Document,
-          as: 'document',
-        }]
-      })
-      .then(document => {
-        if (!document) {
-          return res.status(404).send({
-            message: 'Document not found'
-          });
-        }
-        return res.status(200).send(document);
-      })
-      .catch(error => res.status(400).send(error));
-  },
-};
+ module.exports.createDocument = (req, res) => {
+   const newDoc = {
+     title: req.body.title,
+     content: req.body.content,
+     access: req.body.access
+   };
+   db.Document.create(newDoc)
+     .then(document => res.status(201).send(Document))
+     .catch(error => res.status(400).send(error));
+ }
 
 
-module.exports = {
-  edit(req, res) {
-    return document.edit({
-        title: req.body.title,
-        access: req.body.access,
-        content: req.body.content,
-      })
-      .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error))
-  },
-};
+ module.exports.getDocument = (req, res) => {
+   db.Document.findById({
+       where: {
+         id: req.params.ownerId
+       }
+     })
+     .then((Document, err) => {
+       res.status(200).send(Document)
+     })
+ }
+
+ module.exports.getDocuments = (req, res) => {
+   db.Document.findAll({
+       where: {
+         access: 'public'
+       }
+     })
+     .then((Document, err) => {
+       res.status(200).send(Document)
+         .catch(error => res.status(400).send(error));
+     })
+ }
+
+ module.exports.editDoc = (req, res) => {
+     db.Document.findOne({ where: { id: req.params.id } })
+       .then((document) => {
+         if (!document) {
+           return res.status(404)
+             .send({ message: `documentid: ${req.body.id} does not exist` });
+         }
+         document.update(req.body)
+           .then(() => {
+             res.send({ message: 'Update successful' });
+           })
+           .catch((err) => {
+             res.status(400)
+               .send(err.errors);
+           });
+       });
+   },
 
 
-module.exports = {
-  search(req, res) {
-    return document.search({
-        title: req.body.title,
-        access: req.body.access,
-        content: req.body.content,
-      })
-      .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error))
-  },
-};
-
-module.exports = {
-  update(req, res) {
-    return document.update({
-        title: req.body.title,
-        access: req.body.access,
-        content: req.body.content,
-      })
-      .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error))
-  },
-};
+   module.exports.searchDoc = (req, res) => {
+     db.Document.findAll({
+       where: {
+         access: 'public'
+       }
+     }]
+   }
+ })
+ .then(documents => res.status(200)
+     .send(documents))
+   .catch(error => res.status(400)
+     .send(error));
+ }
 
 
-module.exports = {
-  delete(req, res) {
-    return document.delete({
-        title: req.body.title,
-        access: req.body.access,
-        content: req.body.content,
-      })
-      .then(document => res.status(201).send(document))
-      .catch(error => res.status(400).send(error))
-  },
-};
+ module.exports.deleteDocument = (req, res) => {
+     db.Document.findOne({
+         where: {
+           id: req.params.id
+         }
+       })
+       .then((document) => {
+         if (!document) {
+           return res.status(404)
+             .send({ message: `id ${req.body.id} does not exist` });
+         }
+         document.destroy();
+         res.status(200).send({ message: 'Delete successful' });
+       })
+       .catch((err) => {
+         res.status(400).send(err.errors);
+       });
+   },
