@@ -1,6 +1,6 @@
-const db = require('../models');
+import db from '../models';
 
-module.exports.createRole = (req, res) => {
+export const createRole = (req, res) => {
   const newRole = {
     title: req.body.title
   };
@@ -9,38 +9,37 @@ module.exports.createRole = (req, res) => {
     .catch(error => res.status(400).send(error));
 }
 
-module.exports.getRole = (req, res) => {
-  db.Role.findOne({
-      where: {
-        id: req.params.id
-      }
-    })
+export const getRole = (req, res) => {
+  db.Role.findById(req.params.id)
     .then((role, err) => {
       res.status(200).send(role)
     })
 }
 
-module.exports.getRoles = (req, res) => {
+export const getRoles = (req, res) => {
   db.Role.findAll()
     .then((roles, err) => {
       res.status(200).send(roles)
     })
 }
 
-module.exports.updateRole = (req, res) => {
-  db.Role.findById({
+export const updateRole = (req, res) => {
+  db.Role.update({ title: req.body.title }, {
       where: {
-        title: req.body.title
+        id: req.params.id
       }
     })
-    .then(role => res.status(201).send(role))
+    .then(role => res.status(201).send({
+      message: "role updated"
+    }))
     .catch(error => res.status(400).send(error));
 }
 
-module.exports.deleteRole = (req, res) => {
-  db.Role.findById({
+export const deleteRole = (req, res) => {
+  console.log(req.params.id);
+  db.Role.destroy({
       where: {
-        title: req.body.title
+        id: 8
       }
     })
     .then(role => res.status(201).send(role))
