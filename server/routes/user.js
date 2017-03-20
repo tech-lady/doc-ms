@@ -1,12 +1,16 @@
-// const express = require('express');
+import express from 'express';
+import * as roleCtrl from '../controllers/userController';
+
+const router = express.Router();
+
+router.route('/users')
+  .post(userCtrl.createUser)
+  .get(userCtrl.getUser)
 
 
-// (function() {
-//   var UserController = require('./../controllers/userController');
-//   module.exports = function(app) {
-//     app.get('/api/users', UserController.create());
-//     // app.get('/api/users/:id', UserController.get());
-//     // app.post('/api/users', UserController.store());
+router.route('/roles/:id')
+  .get(userCtrl.getUser)
+  .put(userCtrl.updateUser)
+  .delete(userCtrl.deleteUser);
 
-//   }
-// })();
+export default router;
