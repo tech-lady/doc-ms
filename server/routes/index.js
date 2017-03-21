@@ -1,5 +1,11 @@
 // (function() {
 // require('./user.js')(app);
-const roleRouter = require('./role.js');
+import roleRouter from './role.js';
+import docRouter from './document.js';
+import userRouter from './user.js';
 // })();
-module.exports = roleRouter;
+export default {
+  roleRouter,
+  docRouter,
+  userRouter
+}

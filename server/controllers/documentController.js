@@ -1,89 +1,60 @@
- const document = require('../models');
+import db from '../models';
 
- module.exports.createDocument = (req, res) => {
-   const newDoc = {
-     title: req.body.title,
-     content: req.body.content,
-     access: req.body.access
-   };
-   db.Document.create(newDoc)
-     .then(document => res.status(201).send(Document))
-     .catch(error => res.status(400).send(error));
- }
-
-
- module.exports.getDocument = (req, res) => {
-   db.Document.findById({
-       where: {
-         id: req.params.ownerId
-       }
-     })
-     .then((Document, err) => {
-       res.status(200).send(Document)
-     })
- }
-
- module.exports.getDocuments = (req, res) => {
-   db.Document.findAll({
-       where: {
-         access: 'public'
-       }
-     })
-     .then((Document, err) => {
-       res.status(200).send(Document)
-         .catch(error => res.status(400).send(error));
-     })
- }
-
- module.exports.editDoc = (req, res) => {
-     db.Document.findOne({ where: { id: req.params.id } })
-       .then((document) => {
-         if (!document) {
-           return res.status(404)
-             .send({ message: `documentid: ${req.body.id} does not exist` });
-         }
-         document.update(req.body)
-           .then(() => {
-             res.send({ message: 'Update successful' });
-           })
-           .catch((err) => {
-             res.status(400)
-               .send(err.errors);
-           });
-       });
-   },
+export const createDocument = (req, res) => {
+  const newDoc = {
+    title: req.body.title,
+    content: req.body.content,
+    access: req.body.access
+  };
+  db.Document.create(newDoc)
+    .then(document => res.status(201).json(document))
+    .catch(error => res.status(400).json(error));
+}
 
 
-   module.exports.searchDoc = (req, res) => {
-     db.Document.findAll({
-       where: {
-         access: 'public'
-       }
-     }]
-   }
- })
- .then(documents => res.status(200)
-     .send(documents))
-   .catch(error => res.status(400)
-     .send(error));
- }
+export const getDocument = (req, res) => {
+  db.Document.findById(req.params.id)
+    .then(document => res.status(200).json(document))
+    .catch(error => res.status(400).json(error));
+}
+
+export const getDocuments = (req, res) => {
+  console.log('hello');
+  db.Document.findAll({})
+    .then(document => res.status(200).json(document))
+    .catch(error => res.status(400).json(error));
+}
+
+export const editDocument = (req, res) => {
+  db.Document.findById(req.params.id)
+    .then((document) => {
+      if (!document) {
+        return res.status(404)
+          .json({ message: `documentid: ${req.body.id} does not exist` });
+      }
+      document.update(req.body)
+        .then(() => {
+          res.json({ message: 'Update successful' });
+        })
+        .catch((err) => {
+          res.status(400)
+            .json(err.errors);
+        });
+    });
+}
 
 
- module.exports.deleteDocument = (req, res) => {
-     db.Document.findOne({
-         where: {
-           id: req.params.id
-         }
-       })
-       .then((document) => {
-         if (!document) {
-           return res.status(404)
-             .send({ message: `id ${req.body.id} does not exist` });
-         }
-         document.destroy();
-         res.status(200).send({ message: 'Delete successful' });
-       })
-       .catch((err) => {
-         res.status(400).send(err.errors);
-       });
-   },
+export const deleteDocument = (req, res) => {
+  db.Document.findById(req.params.id)
+    .then((document) => {
+      if (!document) {
+        return res.status(404)
+          .json({ message: `id ${req.body.id} does not exist` });
+      }
+      document.destroy();
+      res.status(200).json({ message: 'Delete successful' });
+    })
+    .catch((err) => {
+      res.status(400).json(err.errors);
+    });
+}

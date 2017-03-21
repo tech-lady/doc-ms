@@ -1,9 +1,8 @@
-const http = require('http');
-const express = require('express');
-const logger = require('morgan');
-const Sequelize = require("sequelize");
-const bodyParser = require('body-parser');
-const routes = require('./server/routes');
+import express from 'express';
+import logger from 'morgan';
+import sequelize from 'sequelize';
+import bodyParser from 'body-parser';
+import routes from './server/routes';
 
 
 // Set up the express app
@@ -20,17 +19,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // require('./server/routes/index')(app);
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 
-app.use('/', routes)
+app.use('/', routes.roleRouter);
+app.use('/', routes.docRouter);
+app.use('/', routes.userRouter);
 
-
-app.get('*', (req, res) => res.status(200).send({
+app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of greatness.',
 }));
 
 
 const port = parseInt(process.env.PORT, 10) || 8000;
-app.set('port', port);
+app.listen(port, () => {
+  console.log(`app started on port: ${port}`);
+});
 
-const server = http.createServer(app);
-server.listen(port);
-console.log(`app started on port: ${port}`);
+export default app;
