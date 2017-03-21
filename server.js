@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', routes.roleRouter);
 app.use('/', routes.docRouter);
-
+app.use('/', routes.userRouter);
 
 app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of greatness.',
