@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/andela-oawofadeju/document-api#readme",
   "dependencies": {
+    "Faker": "^0.7.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "codeclimate-test-reporter": "^0.4.1",
     "express": "^4.15.2",
-    "faker": "^4.1.0",
     "jsonwebtoken": "^7.3.0",
     "morgan": "^1.8.1",
     "pg": "^6.1.3",
