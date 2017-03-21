@@ -1,4 +1,8 @@
+import bcrypt from 'bcrypt-nodejs';
+import jwt from 'jsonwebtoken';
 import db from '../models';
+
+const secret = process.env.SECRET;
 
 export const createUser = (req, res) => {
   db.User
