@@ -1,6 +1,6 @@
-const faker = require('faker');
-const model = require('../models');
-const bcrypt = require('bcrypt-nodejs');
+import faker from 'Faker';
+import model from '../models';
+import bcrypt from 'bcrypt-nodejs';
 
 /**
  * seedData class to generate test user data
