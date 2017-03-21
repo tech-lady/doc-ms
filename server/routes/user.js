@@ -14,3 +14,4 @@ router.route('/users/:id')
   .delete(userCtrl.deleteUser);
 
 export default router;
+
