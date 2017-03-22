@@ -1,6 +1,5 @@
 const faker = require('Faker');
 
-
 module.exports = {
   up: function(queryInterface, Sequelize) {
     /*
@@ -13,29 +12,16 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-
-    return queryInterface.bulkInsert('User', [{
-      name: 'administrator',
-      username: 'admin',
-      email: 'admin@someone.com',
-      password: '123456password',
-      roleId: 1,
+    return queryInterface.bulkInsert('Role', [{
+      title: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      name: 'someone',
-      username: 'regular',
-      email: 'seun@seun.com',
-      password: 'hello01',
-      roleId: 2,
+      title: 'regular',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      name: 'person',
-      username: 'regular',
-      email: 'sola@sola.com',
-      password: 'someone01',
-      roleId: 3,
+      title: 'regular',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
