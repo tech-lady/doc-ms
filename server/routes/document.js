@@ -1,5 +1,6 @@
 import express from 'express';
 import * as docCtrl from '../controllers/documentController';
+import userAuth from '../middlewares/userAuth';
 const router = express.Router();
 
 router.route('/documents')

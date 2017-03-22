@@ -3,6 +3,9 @@ import * as userCtrl from '../controllers/userController';
 
 const router = express.Router();
 
+router.route('/users/login')
+  .post(userCtrl.login);
+
 router.route('/users')
   .post(userCtrl.createUser)
   .get(userCtrl.getUser)
