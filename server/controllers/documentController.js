@@ -21,7 +21,6 @@ export const getDocument = (req, res) => {
 export const getDocuments = (req, res) => {
   db.Document.findAll()
     .then((document) => {
-      console.log(document)
       return res.status(200).json(document)
     })
 }

@@ -36,7 +36,6 @@ export const updateRole = (req, res) => {
 }
 
 export const deleteRole = (req, res) => {
-  console.log(req.params.id);
   db.Role.destroy({
       where: {
         id: 8

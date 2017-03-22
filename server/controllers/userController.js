@@ -2,13 +2,42 @@ import bcrypt from 'bcrypt-nodejs';
 import jwt from 'jsonwebtoken';
 import db from '../models';
 
-const secret = process.env.SECRET;
+const secret = process.env.SECRET || 'document';
 
 export const createUser = (req, res) => {
   db.User
     .create(req.body)
-    .then(user => res.status(201).send(user))
+    .then(user => {
+      const token = jwt.sign({
+        userId: user.id,
+        userName: user.username,
+        userRoleId: user.roleId
+      }, secret, { expiresIn: '1 day' });
+      res.status(201).send({ user, token })
+    })
     .catch(error => res.status(400).send(error));
+}
+
+export const login = (req, res) => {
+  db.User.find({
+      where: {
+        email: req.body.email,
+        password: req.body.password
+      }
+    })
+    .then(user => {
+      if (user.dataValues) {
+        user = user.dataValues
+        const token = jwt.sign({
+          userId: user.id,
+          userName: user.username,
+          userRoleId: user.roleId
+        }, secret, { expiresIn: '1 day' });
+        res.status(200).send({ user, token })
+      } else {
+        res.status(404).send({ message: "User not found" })
+      }
+    })
 }
 
 export const getUser = (req, res) => {
