@@ -19,10 +19,11 @@ export const getDocument = (req, res) => {
 }
 
 export const getDocuments = (req, res) => {
-  console.log('hello');
-  db.Document.findAll({})
-    .then(document => res.status(200).json(document))
-    .catch(error => res.status(400).json(error));
+  db.Document.findAll()
+    .then((document) => {
+      console.log(document)
+      return res.status(200).json(document)
+    })
 }
 
 export const editDocument = (req, res) => {
