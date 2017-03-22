@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       name: {
-        type: Sequelize.JSON
+        type: Sequelize.STRING
       },
       email: {
         type: Sequelize.STRING
