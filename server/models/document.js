@@ -1,9 +1,5 @@
  module.exports = (sequelize, DataTypes) => {
    const Document = sequelize.define('Document', {
-     dateCreated: {
-       type: DataTypes.STRING,
-       defaultValue: Date()
-     },
      title: {
        type: DataTypes.STRING,
        allowNull: false,
