@@ -3,6 +3,7 @@ import logger from 'morgan';
 import sequelize from 'sequelize';
 import bodyParser from 'body-parser';
 import routes from './server/routes';
+import models from './server/models';
 
 
 // Set up the express app
@@ -26,6 +27,11 @@ app.use('/', routes.userRouter);
 app.get('/', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of greatness.',
 }));
+
+
+models.sequelize.sync().then(() => {
+  console.log('database migrated');
+});
 
 
 const port = parseInt(process.env.PORT, 10) || 8000;
