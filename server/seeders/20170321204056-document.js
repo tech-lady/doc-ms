@@ -27,7 +27,7 @@ module.exports = {
       updatedAt: new Date()
     }));
 
-    return queryInterface.bulkInsert('Document', documents, { returning: true, validate: true });
+    return queryInterface.bulkInsert('Documents', documents, { returning: true, validate: true });
   },
 
   down: function(queryInterface, Sequelize) {
