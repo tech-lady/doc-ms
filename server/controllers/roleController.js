@@ -5,42 +5,58 @@ export const createRole = (req, res) => {
     title: req.body.title
   };
   db.Role.create(newRole)
-    .then(role => res.status(201).send(role))
-    .catch(error => res.status(400).send(error));
+    .then(role => res.status(201)
+      .json({ message: 'New Role has been assigned', newRole }))
+    .catch(error => res.status(400).json({ error, message: 'An error occured' }));
 }
 
 export const getRole = (req, res) => {
   db.Role.findById(req.params.id)
     .then((role, err) => {
-      res.status(200).send(role)
+      res.status(200).json(role)
     })
 }
 
 export const getRoles = (req, res) => {
   db.Role.findAll()
     .then((roles, err) => {
-      res.status(200).send(roles)
+      res.status(200).json(roles)
     })
 }
 
 export const updateRole = (req, res) => {
-  db.Role.update({ title: req.body.title }, {
-      where: {
-        id: req.params.id
+  if (req.params.id === '1') {
+    return res.status(403)
+      .json({ message: 'SuperAdmin role can not be updated' });
+  }
+
+  db.Role.findById(req.params.id)
+    .then((foundRole) => {
+      // check if role exists before updating
+      if (!foundRole) {
+        return res.status(404)
+          .json({ message: `Unable to update because role ${req.params.id} is not found` });
       }
+      return foundRole
+        .update({ title: req.body.title }, {
+          where: {
+            id: req.params.id
+          }
+        })
+        .then(role => res.status(201).json({
+          message: "role updated"
+        }))
+        .catch(error => res.status(400).json(error));
     })
-    .then(role => res.status(201).send({
-      message: "role updated"
-    }))
-    .catch(error => res.status(400).send(error));
 }
 
 export const deleteRole = (req, res) => {
   db.Role.destroy({
       where: {
-        id: 8
+        id: req.params.id
       }
+
     })
-    .then(role => res.status(201).send(role))
-    .catch(error => res.status(400).send(error));
+    .then(role => res.status(201).json(role))
+    .catch(error => res.status(400).json(error));
 }

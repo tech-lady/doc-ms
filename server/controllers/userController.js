@@ -13,9 +13,9 @@ export const createUser = (req, res) => {
         userName: user.username,
         userRoleId: user.roleId
       }, secret, { expiresIn: '1 day' });
-      res.status(201).send({ user, token })
+      res.status(201).json({ user, token })
     })
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(400).json(error));
 }
 
 export const login = (req, res) => {
@@ -33,9 +33,9 @@ export const login = (req, res) => {
           userName: user.username,
           userRoleId: user.roleId
         }, secret, { expiresIn: '1 day' });
-        res.status(200).send({ user, token })
+        res.status(200).json({ user, token })
       } else {
-        res.status(404).send({ message: "User not found" })
+        res.status(404).json({ message: "User not found" })
       }
     })
 }
@@ -52,14 +52,39 @@ export const getUsers = (req, res) => {
     .catch(error => res.status(400).json(error));
 }
 
+
+export const searchUser = (req, res) => {
+  db.User.findAll({
+      where: {
+        $or: [{
+          username: {
+            $iLike: `%${req.query.q}%`
+          }
+        }, {
+          name: {
+            $iLike: `%${req.query.q}%`
+          }
+        }, {
+          email: {
+            $iLike: `%${req.query.q}%`
+          }
+        }]
+      }
+    })
+    .then(documents => res.status(200)
+      .json(documents))
+    .catch(error => res.status(400)
+      .json(error));
+}
+
 export const updateUser = (req, res) => {
   db.User.findById(req.params.id)
     .update({
-      username: User.username,
-      name: User.name,
-      email: User.email,
+      username: user.username,
+      name: user.name,
+      email: user.email,
       password,
-      roleId: User.roleId
+      roleId: user.roleId
     })
     .then(user => res.status(200).json(user))
     .catch(error => res.status(400).json(error));
@@ -67,7 +92,11 @@ export const updateUser = (req, res) => {
 
 
 export const deleteUser = (req, res) => {
-  db.User.findById(req.params.id)
+  db.User.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
     .then(user => res.status(200).json(user))
     .catch(error => res.status(400).json(error));
 }

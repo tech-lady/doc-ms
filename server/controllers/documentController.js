@@ -1,5 +1,6 @@
 import db from '../models';
 
+
 export const createDocument = (req, res) => {
   const newDoc = {
     title: req.body.title,
@@ -7,8 +8,10 @@ export const createDocument = (req, res) => {
     access: req.body.access
   };
   db.Document.create(newDoc)
-    .then(document => res.status(201).json(document))
-    .catch(error => res.status(400).json(error));
+    .then(document => res.status(201)
+      .json({ message: 'New document has been created' }))
+    .catch(error => res.status(400)
+      .json({ error, message: 'Error occured while creating document' }));
 }
 
 
@@ -23,6 +26,7 @@ export const getDocuments = (req, res) => {
     .then((document) => {
       return res.status(200).json(document)
     })
+    .catch(error => res.status(400).json(error));
 }
 
 export const editDocument = (req, res) => {
