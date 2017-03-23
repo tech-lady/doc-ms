@@ -1,6 +1,5 @@
 import db from '../models';
 
-
 export const createDocument = (req, res) => {
   const newDoc = {
     title: req.body.title,
@@ -9,25 +8,23 @@ export const createDocument = (req, res) => {
   };
   db.Document.create(newDoc)
     .then(document => res.status(201)
-      .json({ message: 'New document has been created' }))
+.json({ message: 'New document has been created' }))
     .catch(error => res.status(400)
       .json({ error, message: 'Error occured while creating document' }));
-}
+};
 
 
 export const getDocument = (req, res) => {
   db.Document.findById(req.params.id)
     .then(document => res.status(200).json(document))
     .catch(error => res.status(400).json(error));
-}
+};
 
 export const getDocuments = (req, res) => {
   db.Document.findAll()
-    .then((document) => {
-      return res.status(200).json(document)
-    })
+    .then(document => res.status(200).json(document))
     .catch(error => res.status(400).json(error));
-}
+};
 
 export const editDocument = (req, res) => {
   db.Document.findById(req.params.id)
@@ -45,7 +42,7 @@ export const editDocument = (req, res) => {
             .json(err.errors);
         });
     });
-}
+};
 
 
 export const deleteDocument = (req, res) => {
@@ -61,4 +58,4 @@ export const deleteDocument = (req, res) => {
     .catch((err) => {
       res.status(400).json(err.errors);
     });
-}
+};

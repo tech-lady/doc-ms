@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt-nodejs';
 import jwt from 'jsonwebtoken';
 import db from '../models';
 
@@ -12,45 +11,51 @@ export const createUser = (req, res) => {
         userId: user.id,
         userName: user.username,
         userRoleId: user.roleId
-      }, secret, { expiresIn: '1 day' });
-      res.status(201).json({ user, token })
+      }, secret, { expiresIn: '1 day' })
+      delete user.password;
+      res.status(201).json({ user: user, token })
     })
-    .catch(error => res.status(400).json(error));
-}
+    .catch(error => res.status(400).json(error.errors));
+};
 
 export const login = (req, res) => {
   db.User.find({
       where: {
-        email: req.body.email,
-        password: req.body.password
+        email: req.body.email
       }
     })
     .then(user => {
-      if (user.dataValues) {
-        user = user.dataValues
+      if (!user) {
+        return res.status(400).json({ message: 'Not a valid user' });
+      } else if (user.dataValues) {
+        user = user.dataValues;
         const token = jwt.sign({
-          userId: user.id,
-          userName: user.username,
-          userRoleId: user.roleId
-        }, secret, { expiresIn: '1 day' });
-        res.status(200).json({ user, token })
+            userId: user.id,
+            userName: user.username,
+            userRoleId: user.roleId
+          },
+          secret, {
+            expiresIn: '1 day'
+          });
+        res.status(200).json({ user, token });
       } else {
-        res.status(404).json({ message: "User not found" })
+        res.status(404).json({ message: 'User not found' });
       }
     })
-}
+    .catch(error => res.status(400).json(error));
+};
 
 export const getUser = (req, res) => {
   db.User.findById(req.params.id)
     .then(user => res.status(200).json(user))
     .catch(error => res.status(400).json(error));
-}
+};
 
 export const getUsers = (req, res) => {
   db.user.findAll()
     .then(user => res.status(200).json(user))
     .catch(error => res.status(400).json(error));
-}
+};
 
 
 export const searchUser = (req, res) => {
@@ -75,7 +80,7 @@ export const searchUser = (req, res) => {
       .json(documents))
     .catch(error => res.status(400)
       .json(error));
-}
+};
 
 export const updateUser = (req, res) => {
   db.User.findById(req.params.id)
@@ -88,7 +93,7 @@ export const updateUser = (req, res) => {
     })
     .then(user => res.status(200).json(user))
     .catch(error => res.status(400).json(error));
-}
+};
 
 
 export const deleteUser = (req, res) => {
@@ -99,4 +104,4 @@ export const deleteUser = (req, res) => {
     })
     .then(user => res.status(200).json(user))
     .catch(error => res.status(400).json(error));
-}
+};
