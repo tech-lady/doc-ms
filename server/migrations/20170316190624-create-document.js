@@ -13,15 +13,20 @@ module.exports = {
       },
       access: {
         type: Sequelize.STRING
+        defaultValue: 'public',
+        type: ['public', 'private', 'role']
       },
       content: {
         type: Sequelize.TEXT
       },
       ownerId: {
-        type: Sequelize.INTEGER
-      },
-      ownerRoleId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+          as: 'userId'
+        }
       },
       createdAt: {
         allowNull: false,
