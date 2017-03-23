@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Document', {
@@ -12,9 +11,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       access: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM,
         defaultValue: 'public',
-        type: ['public', 'private', 'role']
+        value: ['public', 'private', 'role']
       },
       content: {
         type: Sequelize.TEXT

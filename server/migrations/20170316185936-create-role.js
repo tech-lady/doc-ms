@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Role', {
@@ -6,8 +5,9 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
+      i
       title: {
         type: Sequelize.STRING,
         allowNull: false,
