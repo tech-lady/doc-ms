@@ -10,11 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      unique: true,
+      allowNull: false,
+      verify: {
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        min: 6
+      }
     },
     roleId: DataTypes.INTEGER
   }, {
@@ -22,12 +29,21 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         // associations can be defined here
         User.hasMany(models.Document, {
-          foreignKey: 'ownerId'
+          foreignKey: 'ownerId',
+          as: 'documents'
         });
         User.belongsTo(models.Role, {
           foreignKey: 'roleId',
           onDelete: 'CASCADE'
         });
+      }
+    },
+    hooks: {
+      beforeCreate: (user) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+      },
+      beforeUpdate: (user) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
       }
     }
   });

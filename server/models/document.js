@@ -9,7 +9,10 @@
        defaultValue: 'public',
        value: ['public', 'private', 'role'],
      },
-     content: DataTypes.TEXT,
+     content: {
+       type: DataTypes.TEXT,
+       allowNull: true
+     },
      ownerId: DataTypes.INTEGER,
      ownerRoleId: DataTypes.INTEGER
    }, {
