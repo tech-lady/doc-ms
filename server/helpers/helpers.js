@@ -16,6 +16,18 @@ export const checkRoleId = (req) => {
   return req.body.roleId !== 2;
 }
 
+export const userProfile = (user) => {
+  console.log('hello');
+  const profile = {
+    id: user.id,
+    username: user.username,
+    name: user.name,
+    email: user.email
+
+  };
+  return profile;
+}
+
 /**
  * Method to ensure a role cannot be
  * specified when a user is created
