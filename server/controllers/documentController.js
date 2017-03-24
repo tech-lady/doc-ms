@@ -16,15 +16,81 @@ export const createDocument = (req, res) => {
 
 export const getDocument = (req, res) => {
   db.Document.findById(req.params.id)
-    .then(document => res.status(200).json(document))
-    .catch(error => res.status(400).json(error));
+    .then((document) => {
+      if (!foundDoc) {
+        return res.status(404)
+          .json({ message: `Document with id ${req.params.id} not found` });
+      } else if (foundDoc.access === 'private') {
+        return res.status(401)
+          .json({ message: 'This document is private' });
+      }
+      res.status(200)
+        .json(foundDoc);
+    })
+    .catch(error => res.status(400)
+      .json(error));
 };
+
+export const getUserDocument = (req, res) => {
+  db.Document.findAll({
+      where: {
+        userId: req.params.id
+      }
+    })
+    .then((document) => {
+      if (!document) {
+        return res.status(404)
+          .send({ message: 'No match found for query' });
+      }
+      return res.status(200).json(document);
+    })
+    .catch(err => res.status(400).json(err));
+}
 
 export const getDocuments = (req, res) => {
   db.Document.findAll()
     .then(document => res.status(200).json(document))
     .catch(error => res.status(400).json(error));
 };
+
+export const searchDocument = (req, res) => {
+  db.Document.findAll({
+      where: {
+        access: 'public',
+        $or: [{
+          title: {
+            $iLike: `%${req.query.q}%`
+          }
+        }]
+      }
+    })
+    .then(document => res.status(200)
+      .json(document))
+    .catch(error => res.status(400)
+      .json(error));
+}
+
+export const searchUserDocument = (req, res) => {
+  db.Document.findAll({
+      where: {
+        userId: req.params.id,
+        $or: [{
+          content: {
+            $iLike: `%${req.body.query}%`
+          }
+        }, {
+          title: {
+            $iLike: `%${req.body.query}%`
+          }
+        }]
+      }
+    })
+    .then(document => res.status(200)
+      .json(document))
+    .catch(error => res.status(400)
+      .json(error));
+}
+
 
 export const editDocument = (req, res) => {
   db.Document.findById(req.params.id)
