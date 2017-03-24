@@ -8,7 +8,7 @@ export const createDocument = (req, res) => {
   };
   db.Document.create(newDoc)
     .then(document => res.status(201)
-.json({ message: 'New document has been created' }))
+      .json({ message: 'New document has been created' }))
     .catch(error => res.status(400)
       .json({ error, message: 'Error occured while creating document' }));
 };
@@ -35,7 +35,7 @@ export const editDocument = (req, res) => {
       }
       document.update(req.body)
         .then(() => {
-          res.json({ message: 'Update successful' });
+          res.status(200).json({ message: 'Update successful' });
         })
         .catch((err) => {
           res.status(400)

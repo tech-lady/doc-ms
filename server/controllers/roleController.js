@@ -7,14 +7,15 @@ export const createRole = (req, res) => {
   db.Role.create(newRole)
     .then(role => res.status(201)
       .json({ message: 'New Role has been assigned', newRole }))
-    .catch(error => res.status(400).json({ error, message: 'An error occured' }));
+    .catch(error => res.status(500).json({ error, message: 'An error occured' }));
 };
 
 export const getRole = (req, res) => {
   db.Role.findById(req.params.id)
     .then((role, err) => {
       res.status(200).json(role);
-    });
+    })
+    .catch(error => res.status(500).json(error));
 };
 
 export const getRoles = (req, res) => {
@@ -22,6 +23,7 @@ export const getRoles = (req, res) => {
     .then((roles, err) => {
       res.status(200).json(roles)
     })
+    .catch(error => res.status(500).json(error));
 }
 
 export const updateRole = (req, res) => {
@@ -52,11 +54,11 @@ export const updateRole = (req, res) => {
 
 export const deleteRole = (req, res) => {
   db.Role.destroy({
-    where: {
-      id: req.params.id
-    }
+      where: {
+        id: req.params.id
+      }
 
-  })
+    })
     .then(role => res.status(201).json(role))
     .catch(error => res.status(400).json(error));
 };

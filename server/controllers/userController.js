@@ -13,7 +13,7 @@ export const createUser = (req, res) => {
         userRoleId: user.roleId
       }, secret, { expiresIn: '1 day' })
       delete user.password;
-      res.status(201).json({ user: user, token })
+      res.status(201).json({ user: user.toPublicJson(), token })
     })
     .catch(error => res.status(400).json(error.errors));
 };
@@ -25,8 +25,8 @@ export const login = (req, res) => {
       }
     })
     .then(user => {
-      if (!user) {
-        return res.status(400).json({ message: 'Not a valid user' });
+      if (!user || !user.authenticate(req.user.password)) {
+        return res.status(400).json({ message: 'Invalid username or password' });
       } else if (user.dataValues) {
         user = user.dataValues;
         const token = jwt.sign({
@@ -91,7 +91,7 @@ export const updateUser = (req, res) => {
       password,
       roleId: user.roleId
     })
-    .then(user => res.status(200).json(user))
+    .then(user => res.status(200).json({ message: `User with id ${req.params.id} updated!` }))
     .catch(error => res.status(400).json(error));
 };
 
@@ -102,6 +102,6 @@ export const deleteUser = (req, res) => {
         id: req.params.id
       }
     })
-    .then(user => res.status(200).json(user))
+    .then(user => res.status(200).json({ message: `User with id ${req.params.id} deleted` }))
     .catch(error => res.status(400).json(error));
 };
