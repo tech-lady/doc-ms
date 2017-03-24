@@ -77,7 +77,8 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       toPublicJson() {
-        delete this.password;
+        delete this.password
+        console.log(this);
         return this;
       }
     },
