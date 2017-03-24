@@ -1,6 +1,18 @@
 import supertest from 'supertest';
 import should from 'should';
-import app from '../../server';
-import '../../models/index';
+import chai from 'chai';
+import { userDetail, roleDetail } from '../testFile.js';
+// import app from '../../server';
+// import db from '../../models';
 
-const server = supertest.agent(app);
+const expect = chai.expect;
+
+
+describe('Role', () => {
+  it('should run test', () => {
+    expect
+      (true).to.be.true;
+  })
+
+});
+// const server = supertest.agent(app);
