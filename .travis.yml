@@ -13,7 +13,7 @@ addons:
 
 before_script:
   - npm install
-  - psql -c 'create database doc-api;' -U postgres
+  - psql -c 'create database doc_api;' -U postgres
   - npm run seed
 
 after_success:
