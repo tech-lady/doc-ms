@@ -6,7 +6,7 @@ services:
 script: npm test
 before_script:
   - npm install
-  - psql -c 'create database travis;' -U postgres
+  - psql -c 'create database doc-api;' -U postgres
   - npm run seed
 after_success:
   - npm run coveralls
