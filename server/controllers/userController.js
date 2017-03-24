@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt-nodejs';
 import db from '../models';
 import helpers from '../helpers/helpers';
+import { userProfile } from '../helpers/helpers';
 
 const secret = process.env.SECRET || 'document';
 
@@ -82,7 +83,11 @@ export const login = (req, res) => {
 
 export const getUser = (req, res) => {
   db.User.findById(req.params.id)
-    .then(user => res.status(200).json(user))
+
+  .then((user) => {
+      user = userProfile(user);
+      return res.status(200).json(user);
+    })
     .catch(error => res.status(400).json(error));
 };
 
