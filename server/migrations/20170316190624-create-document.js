@@ -13,7 +13,7 @@ module.exports = {
       access: {
         type: Sequelize.ENUM,
         defaultValue: 'public',
-        value: ['public', 'private', 'role']
+        values: ['public', 'private', 'role']
       },
       content: {
         type: Sequelize.TEXT
