@@ -14,7 +14,7 @@ services:
 before_script:
   - psql -c 'drop database if exists doc_travis;' -U postgres
   - psql -c 'create database doc_travis;' -U postgres
-  - NODE_ENV=test npm run migration
+  - NODE_ENV=test npm run migrate
 
 after_success:
   - npm run coverage
