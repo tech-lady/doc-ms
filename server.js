@@ -4,6 +4,7 @@ import sequelize from 'sequelize';
 import bodyParser from 'body-parser';
 import routes from './server/routes';
 import models from './server/models';
+import http from 'http';
 
 
 // Set up the express app
@@ -29,14 +30,17 @@ app.get('/', (req, res) => res.status(200).send({
 }));
 
 
-models.sequelize.sync().then(() => {
-  console.log('database migrated');
-});
+// models.sequelize.sync().then(() => {
+      //   console.log('database migrated');
+      // });
+
 
 
 const port = parseInt(process.env.PORT, 10) || 8000;
-app.listen(port, () => {
+const server = http.createServer(app);
+server
+.listen(port, () => {
   console.log(`app started on port: ${port}`);
 });
 
-export default app;
+export default server;

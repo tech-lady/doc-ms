@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon --exec node_modules/.bin/babel-node server.js",
     "migrate": "node_modules/.bin/sequelize db:migrate",
-    "test": "cross-env NODE_ENV=test &&  npm run migrate && npm run coverage",
+    "test": "cross-env NODE_ENV=test && npm run coverage",
     "coverage": "cross-env NODE_ENV=test node_modules/.bin/istanbul cover  ./node_modules/.bin/_mocha  ./server/tests/**/*.js -- --require babel-register",
     "seed": "NODE_ENV=test sequelize db:seed:all"
   },
@@ -57,7 +57,9 @@
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
+    "babel-loader": "^6.4.1",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
     "chai": "^3.5.0",
     "coveralls": "^2.12.0",
     "eslint": "^3.16.1",
@@ -67,6 +69,8 @@
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "should": "^11.2.1",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-hot-middleware": "^2.17.1"
   }
 }
