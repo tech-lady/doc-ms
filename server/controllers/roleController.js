@@ -2,8 +2,8 @@ import db from '../models';
 
 export const createRole = (req, res) => {
   db.Role.findOne({
-      where: { title: req.body.title }
-    })
+    where: { title: req.body.title }
+  })
     .then((roleExists) => {
       /**
        * If role already exists
@@ -20,12 +20,11 @@ export const createRole = (req, res) => {
     })
     .catch(error => res.status(500)
       .json({ error: error.errors, message: 'An error occurred' }));
-
 };
 
 export const getRole = (req, res) => {
   db.Role.findById(req.params.id)
-    .then((role, err) => {
+    .then((role) => {
       res.status(200).json(role);
     })
     .catch(error => res.status(500).json(error));
@@ -34,7 +33,7 @@ export const getRole = (req, res) => {
 export const getRoles = (req, res) => {
   db.Role.findAll()
     .then((roles, err) => {
-      res.status(200).json(roles)
+      res.status(200).json(roles);
     })
     .catch(error => res.status(500).json(error));
 }
@@ -53,11 +52,7 @@ export const updateRole = (req, res) => {
           .json({ message: `Update not successful due to unidentified role ${req.params.id}` });
       }
       return foundRole
-        .update({ title: req.body.title }, {
-          where: {
-            id: req.params.id
-          }
-        })
+        .update({ title: req.body.title })
         .then(role => res.status(201).json({
           message: 'Role updated successfully'
         }))
