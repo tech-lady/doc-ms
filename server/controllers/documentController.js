@@ -33,10 +33,10 @@ export const getDocument = (req, res) => {
           .json({ message: `Document with id ${req.params.id} not found` });
       } else if (foundDoc.access === 'private' && foundDoc.ownerId === req.decoded.userId) {
         return res.status(200)
-          .json({ message: `Document for %${req.userId}`, foundDoc });
+          .json(foundDoc);
       }
       res.status(200)
-        .json({ message: 'Document found', foundDoc });
+        .json(foundDoc);
     })
     .catch(error => res.status(500)
       .json({ message: 'An error occured', error }));
