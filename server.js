@@ -29,17 +29,17 @@ app.use('/api', routes.docRouter);
 app.use('/api', routes.userRouter);
 
 
-// app.use(require('webpack-dev-middleware')(compiler, {
-//   noInfo: true,
-//   publicPath: webpackConfig.output.publicPath
-// }));
-// app.use(require('webpack-hot-middleware')(compiler));
-// app.use(express.static(path.join(__dirname, './dist/')));
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: webpackConfig.output.publicPath
+}));
+app.use(require('webpack-hot-middleware')(compiler));
+app.use(express.static(path.join(__dirname, './dist/')));
 
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.resolve('./client/src/index.html'));
-// });
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('./client/src/index.html'));
+});
 
 
 models.sequelize.sync().then(() => {
