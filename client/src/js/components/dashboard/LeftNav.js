@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router'
 
-import  * as auth from '../../actions/AuthenticationAction'; 
+import  * as auth from '../../actions/Authentication'; 
 import { bindActionCreators } from 'redux' 
 
 

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import Search from '../Search';
 import Document from './Document';
 import DocumentApi from '../../../utils/DocumentsApi';
-import { loadDocuments } from '../../../actions/DocumentsActions';
+import { loadDocuments } from '../../../actions/Documents';
 
 
 class Documents extends React.Component {
