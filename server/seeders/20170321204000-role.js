@@ -12,7 +12,7 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Role', [{
+    return queryInterface.bulkInsert('Roles', [{
       title: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()

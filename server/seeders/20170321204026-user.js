@@ -1,5 +1,5 @@
 const faker = require('Faker');
-
+const bcrypt = require('bcrypt-nodejs')
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -14,31 +14,39 @@ module.exports = {
       }], {});
     */
 
-    return queryInterface.bulkInsert('User', [{
-      name: 'administrator',
+    return queryInterface.bulkInsert('Users', [{
+      id: 1,
+      firstname: 'administrator',
+      lastname: 'admin',
       username: 'admin',
       email: 'admin@someone.com',
-      password: '123456password',
+      password: bcrypt.hashSync('1234567'),
       roleId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      name: 'someone',
+      id: 2,
+      firstname: 'someone',
+      lastname: 'person',
       username: 'regular',
       email: 'seun@seun.com',
-      password: 'hello01',
+      password: bcrypt.hashSync('1234567'),
       roleId: 2,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      name: 'person',
+      id: 3,
+      firstname: 'person',
+      lastname: 'gender',
       username: 'regular',
       email: 'sola@sola.com',
-      password: 'someone01',
+      password: bcrypt.hashSync('1234567'),
       roleId: 3,
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {});
+    }], {
+      returning: true
+    });
   },
 
   down: function(queryInterface, Sequelize) {
