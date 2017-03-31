@@ -24,9 +24,7 @@ class Header extends React.Component {
               </div>
               <div className="col m4 s8 menu">
                 <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">About</a></li>
-                
+                  <li><Link path="home">Home</Link></li>                
                   {showLink()}
                 </ul>
               </div>
