@@ -29,13 +29,24 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
     },
-    name: {
+    firstname: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         is: {
           args: /^[a-z]+$/i,
-          msg: 'Name should contain only alphabets'
+          msg: 'First name should contain only alphabets'
+        },
+      }
+
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        is: {
+          args: /^[a-z]+$/i,
+          msg: 'Last name should contain only alphabets'
         },
       }
 
@@ -73,13 +84,12 @@ module.exports = (sequelize, DataTypes) => {
 
     instanceMethods: {
       authenticate(password) {
-        return bcrypt.compareSync(password, this.password)
+        return bcrypt.compareSync(password, this.password);
       },
 
       toPublicJson() {
-        delete this.password
-        console.log(this);
-        return this;
+        const user = delete this.dataValues.password;
+        return this.dataValues.password
       }
     },
     hooks: {
@@ -87,6 +97,9 @@ module.exports = (sequelize, DataTypes) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
       },
       beforeUpdate: (user) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+      },
+      beforeBulkCreate: (user) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
       }
     }
