@@ -8,7 +8,7 @@ export const documentDetail = [{
   updatedAt: new Date()
 }, {
   id: 2,
-  ownerId: 400,
+  ownerId: 4,
   title: 'Joy',
   content: 'Joy to the world',
   access: 'private',
@@ -16,7 +16,7 @@ export const documentDetail = [{
   updatedAt: new Date()
 }, {
   id: 3,
-  ownerId: 401,
+  ownerId: 5,
   title: 'We are making progress',
   content: 'Andela is fun, Andela is awesome',
   access: 'private',
@@ -41,38 +41,52 @@ export const documentDetail = [{
 }];
 
 export const userDetail = [{
-  id: 400,
+  id: 4,
   username: 'jbaby',
+  firstname: 'yems',
+  lastname: 'meee',
   email: 'yems@yems.com',
   password: '12345678',
-  role: 'regular'
+  roleId: 1
 }, {
   id: 1,
   username: 'bestie',
+  firstname: 'yemzi',
+  lastname: 'yale',
   email: 'seun@seun.com',
   password: '12345678',
-  role: 'admin'
+  roleId: 2
 }, {
-  id: 401,
+  id: 5,
   username: 'tolu',
+  firstname: 'seun',
+  lastname: 'tolu',
   email: 'one@one.com',
   password: '12345678',
-  role: 'regular'
+  roleId: 3
+},  {
+  id: 6,
+  username: 'titi',
+  firstname: 'bola',
+  lastname: 'tolu',
+  email: 'me@you.com',
+  password: '12345678',
+  roleId: 3
 }];
 
 export const roleDetail = [{
   id: 1,
+  title: 'Superadmin',
+  createdAt: new Date(),
+  updatedAt: new Date()
+},{
+  id: 2,
   title: 'admin',
   createdAt: new Date(),
   updatedAt: new Date()
-}, {
-  id: 2,
-  title: 'regular',
-  createdAt: new Date(),
-  updatedAt: new Date()
-}, {
+},{
   id: 3,
   title: 'regular',
   createdAt: new Date(),
   updatedAt: new Date()
-}];
+}]
