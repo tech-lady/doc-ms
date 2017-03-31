@@ -4,7 +4,7 @@ import Header from './components/common/header';
 import { isAuthenticated } from './utils/helpers';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { authenticate } from './actions/AuthenticationAction'; 
+import { authenticate } from './actions/Authentication'; 
 
 class App extends React.Component {
   componentWillMount() {
