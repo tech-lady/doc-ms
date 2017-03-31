@@ -1,15 +1,16 @@
 import express from 'express';
 import * as docCtrl from '../controllers/documentController';
-import userAuth from '../middlewares/userAuth';
+import { verifyToken } from '../middlewares/userAuth';
+
 const router = express.Router();
 
 router.route('/documents')
-  .post(docCtrl.createDocument)
-  .get(docCtrl.getDocuments)
+  .post(verifyToken, docCtrl.createDocument)
+  .get(verifyToken, docCtrl.getDocuments);
 
 
 router.route('/documents/:id')
-  .get(docCtrl.getDocument)
-  .put(docCtrl.editDocument)
-  .delete(docCtrl.deleteDocument);
+  .get(verifyToken, docCtrl.getDocument)
+  .put(verifyToken, docCtrl.editDocument)
+  .delete(verifyToken, docCtrl.deleteDocument);
 module.exports = router;
