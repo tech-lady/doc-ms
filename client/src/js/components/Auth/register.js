@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators }  from 'redux';
 import { TextInput } from '../common/forms';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/AuthenticationAction';
+import { registerUser } from '../../actions/Authentication';
 
 class Register extends React.Component {
 

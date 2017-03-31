@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 
 import { TextInput } from '../common/forms';
 import { connect } from 'react-redux';
-import * as authAction from '../../actions/AuthenticationAction';
+import * as authAction from '../../actions/Authentication';
 import { Alert } from '../common/alert';
 
 import axios from 'axios';
@@ -12,7 +12,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
+      email: '',
       password: ''
     };
 
@@ -23,7 +23,6 @@ class Login extends React.Component {
     this.setState({
       [ e.target.name ] : e.target.value
     })
-    
   }
 
   onSubmit(e) {
@@ -46,12 +45,12 @@ class Login extends React.Component {
                 { error()}
                 <div className="row">
                   <TextInput
-                    id="first_name"
-                    type="text" 
+                    id="emil"
+                    type="email" 
                     value={this.state.username}
                     className="validate" 
-                    name="username" 
-                    label="username"
+                    name="email" 
+                    label="email"
                     onChange={this.onChange} /> 
                 </div>
 

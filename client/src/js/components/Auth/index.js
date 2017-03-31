@@ -3,7 +3,7 @@ import Login from './login';
 import Register from './Register'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as authAction from '../../actions/AuthenticationAction';
+import * as authAction from '../../actions/Authentication';
 
 class Auth extends React.Component {
   componentWillMount() {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { isAuthenticated } from '../../utils/helpers';
-import * as authActions from '../../actions/AuthenticationAction'
+import * as authActions from '../../actions/Authentication'
 
 export default (ComposedComponent)  => {
   class Authentication extends React.Component {
