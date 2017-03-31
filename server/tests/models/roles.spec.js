@@ -1,18 +1,18 @@
-import supertest from 'supertest';
-import should from 'should';
-import chai from 'chai';
-import { userDetail, roleDetail } from '../testFile.js';
-// import app from '../../server';
-// import db from '../../models';
+// import supertest from 'supertest';
+// import should from 'should';
+// import chai from 'chai';
+// import { userDetail, roleDetail } from '../testFile.js';
+// // import app from '../../server';
+// // import db from '../../models';
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 
-describe('Role', () => {
-  it('should run test', () => {
-    expect
-      (true).to.be.true;
-  })
+// describe('Role', () => {
+//   it('should run test', () => {
+//     expect
+//       (true).to.be.true;
+//   })
 
-});
-// const server = supertest.agent(app);
+// });
+// // const server = supertest.agent(app);
