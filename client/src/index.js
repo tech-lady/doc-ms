@@ -7,7 +7,7 @@ import { Router, browserHistory } from 'react-router';
 import "../src/css/style.scss";;
 import routes from './routes';
 import storeConfig from './js/stores/StoreConfig';
-import { loadDocuments } from './js/actions/DocumentsActions';
+import { loadDocuments } from './js/actions/Documents';
 
 const store = storeConfig();
 // store.dispatch(loadDocuments());
