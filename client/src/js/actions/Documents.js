@@ -51,8 +51,7 @@ export const loadDocuments = () => (dispatch) => {
 export const getDocument = id => (dispatch) => {
   DocumentApi.get(id)
   .then((doc) => {
-    console.log(doc)
-    dispatch(Actions.getDocument(doc.data));
+    dispatch(Actions.getDocument(doc));
   })
   .catch((error) => {
     dispatch(Actions.documentError(error));
