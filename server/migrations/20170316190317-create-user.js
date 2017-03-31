@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('User', {
+    return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,7 +11,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      name: {
+      firstname: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      lastname: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -31,8 +35,10 @@ module.exports = {
       },
       roleId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        defaultValue: 2,
         references: {
-          model: 'Role',
+          model: 'Roles',
           key: 'id',
           as: 'roleId'
         }
