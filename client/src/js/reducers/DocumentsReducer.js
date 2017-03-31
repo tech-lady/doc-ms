@@ -5,6 +5,7 @@ export default (state = [], action) => {
   case types.GET_ALL_DOCUMENTS:
     return action.documents;
   case types.GET_DOCUMENT:
+    console.log(action.doc);
     return [action.doc];
   default:
     return state;
