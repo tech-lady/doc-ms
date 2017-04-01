@@ -11,7 +11,7 @@
   "test": {
     "username": "postgres",
     "password": "",
-    "database": "doc_travis",
+    "database": "doc_api_test",
     "host": "127.0.0.1",
     "port": 5432,
     "dialect": "postgres",

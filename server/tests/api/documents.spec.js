@@ -20,7 +20,7 @@ describe('Documents', () => {
     db.Role.bulkCreate(roleDetail)
       .then(() => {
         db.User.create(userDetail[2]).then(() => {
-          request.post('/api/users/login')
+          request.post('/users/login')
             .send(userDetail[2])
             .end((err, res) => {
               regularToken = res.body.token;
@@ -36,11 +36,11 @@ describe('Documents', () => {
 
   describe('Document Api', () => {
     it('should create a new document', (done) => {
-      request.post('/api/documents')
+      request.post('/documents')
         .send(documentDetail[0])
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
-          res.should.have.status(201);
+          res.status.should.be.equal(201);
           done();
         });
     });
@@ -48,10 +48,10 @@ describe('Documents', () => {
 
   describe('Get Documents', () => {
     it('should get existing documents', (done) => {
-      request.get('/api/documents')
+      request.get('/documents')
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           done();
         });
     });
@@ -59,10 +59,10 @@ describe('Documents', () => {
 
   describe('Get User Document', () => {
     it('should get existing documents', (done) => {
-      request.get(`/api/documents/${documentDetail[0].id}`)
+      request.get(`/documents/${documentDetail[0].id}`)
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           done();
         });
     });

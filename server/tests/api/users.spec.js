@@ -31,7 +31,7 @@ describe('Users', () => {
       db.User.bulkCreate(userDetail)
         .then((use) => {
           console.log(use);
-          request.post('/api/users/login')
+          request.post('/users/login')
           .send({ email: userDetail[1].email, password: userDetail[0].password })
           .end((err, res) => {
             console.log(res.body);
@@ -46,11 +46,11 @@ describe('Users', () => {
 
   describe('Create Users', () => {
     it('should create a new user', (done) => {
-      request.post('/api/users')
+      request.post('/users')
         .send(newUser)
         .end((err, res) => {
           regularToken = res.body.token;
-          res.should.have.status(201);
+          res.status.should.be.equal(201);
           res.body.should.have.property('token');
           done();
         });
@@ -62,10 +62,10 @@ describe('Users', () => {
         username: '',
         password: 12344567
       };
-      request.post('/api/users')
+      request.post('/users')
       .send(invalid)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.status.should.be.equal(400);
         done();
       });
     });
@@ -73,10 +73,10 @@ describe('Users', () => {
 
   describe('Get User', () => {
     it('should get an existing user', (done) => {
-      request.get(`/api/users/${userDetail[2].id}`)
+      request.get(`/users/${userDetail[2].id}`)
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           done();
         });
     });
@@ -84,10 +84,10 @@ describe('Users', () => {
 
   describe('Get Multiple Users', () => {
     it('should get all existing users', (done) => {
-      request.get('/api/users')
+      request.get('/users')
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           done();
         });
     });
@@ -95,10 +95,10 @@ describe('Users', () => {
 
   describe('Create Admin', () => {
     it('should not allow admin account creation on signup', (done) => {
-      request.post('/api/users')
+      request.post('/users')
       .send(userDetail[0])
       .end((err, res) => {
-        res.should.have.status(403);
+        res.status.should.be.equal(403);
         res.body.message.should.equal('You are not permitted to signup as an admin');
         done();
       });
@@ -107,19 +107,19 @@ describe('Users', () => {
 
   describe('User Login', () => {
     it('should login an already registered user', (done) => {
-      request.post('/api/users/login')
+      request.post('/users/login')
         .send(newUser)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           res.body.should.have.property('token');
           done();
         });
     });
     it('should ensure that all credentials are entered on signin', (done) => {
-      request.post('/api/users/login')
+      request.post('/users/login')
         .send({ email: 'helo01', password: '12' })
         .end((err, res) => {
-          res.should.have.status(400);
+          res.status.should.be.equal(400);
           res.body.message.should.equal('Invalid username or password');
           done();
         });
@@ -128,10 +128,10 @@ describe('Users', () => {
 
   describe('User Logout', () => {
     it('should logout a logged in user', (done) => {
-      request.post('/api/users/logout')
+      request.post('/users/logout')
         .send(userDetail[2])
         .end((err, res) => {
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           done();
         });
     });
@@ -139,11 +139,11 @@ describe('Users', () => {
 
   describe('Search User', () => {
     it('should get an existing user', (done) => {
-      request.get('/api/search/users/?q=ti')
+      request.get('/search/users/?q=ti')
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
           res.body.should.have.lengthOf(2);
-          res.should.have.status(200);
+          res.status.should.be.equal(200);
           done();
         });
     });
@@ -151,30 +151,30 @@ describe('Users', () => {
 
   describe('Update User', () => {
     it('should update an existing user\'s credential', (done) => {
-      request.put(`/api/users/${newUser.id}`)
+      request.put(`/users/${newUser.id}`)
       .send({
         firstname: 'ade',
         lastname: 'jare'
       })
       .set({ 'x-access-token': regularToken })
       .end((err, res) => {
-        res.should.have.status(200);
+        res.status.should.be.equal(200);
         res.body.message.should.equal(`User with id ${newUser.id} updated!`);
         done();
       });
     });
   });
 
-  // describe('Delete User', () => {
-  //   it('should allow an admin delete an existing user', (done) => {
-  //     request.delete(`/api/users/${newUser.id}`)
-  //       .set({ 'x-access-token': adminToken })
-  //       .end((err, res) => {
-  //         console.log(res.body);
-  //         res.should.have.status(200);
-  //         res.body.message.should.equal(`User with id ${newUser.id} deleted!`);
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('Delete User', () => {
+    it('should allow an admin delete an existing user', (done) => {
+      request.delete(`/users/${newUser.id}`)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          console.log(res.body);
+          res.status.should.be.equal(200);
+          res.body.message.should.equal(`User with id ${newUser.id} deleted!`);
+          done();
+        });
+    });
+  });
 });
