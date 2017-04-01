@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { userDetail, roleDetail } from '../testFile';
+import { userDetail, roleDetail, defaultUser } from '../testFile';
 import app from '../../../server';
 import db from '../../models';
 
@@ -16,29 +16,20 @@ const request = chai.request(app);
 describe('Users', () => {
   let regularToken;
   let adminToken;
-  const newUser = {
-    id: 10,
-    username: 'newnew',
-    firstname: 'newnew',
-    lastname: 'newnew',
-    email: 'newnew@mail.com',
-    password: '1111111111'
-  };
-
   before((done) => {
     db.Role.bulkCreate(roleDetail)
     .then(() => {
       db.User.bulkCreate(userDetail)
-        .then((use) => {
-          console.log(use);
-          request.post('/users/login')
-          .send({ email: userDetail[1].email, password: userDetail[0].password })
-          .end((err, res) => {
-            console.log(res.body);
-            adminToken = res.body.token;
-            console.log(adminToken);
-            done();
-          });
+        .then(() => {
+          db.User.create(defaultUser[1])
+            .then(() => {
+              request.post('/users/login')
+                .send(defaultUser[1])
+                .end((err, res) => {
+                  adminToken = res.body.token;
+                  done();
+                });
+            });
         });
     });
   });
@@ -47,7 +38,7 @@ describe('Users', () => {
   describe('Create Users', () => {
     it('should create a new user', (done) => {
       request.post('/users')
-        .send(newUser)
+        .send(defaultUser[0])
         .end((err, res) => {
           regularToken = res.body.token;
           res.status.should.be.equal(201);
@@ -108,7 +99,7 @@ describe('Users', () => {
   describe('User Login', () => {
     it('should login an already registered user', (done) => {
       request.post('/users/login')
-        .send(newUser)
+        .send(defaultUser[0])
         .end((err, res) => {
           res.status.should.be.equal(200);
           res.body.should.have.property('token');
@@ -151,7 +142,7 @@ describe('Users', () => {
 
   describe('Update User', () => {
     it('should update an existing user\'s credential', (done) => {
-      request.put(`/users/${newUser.id}`)
+      request.put(`/users/${defaultUser[0].id}`)
       .send({
         firstname: 'ade',
         lastname: 'jare'
@@ -159,7 +150,7 @@ describe('Users', () => {
       .set({ 'x-access-token': regularToken })
       .end((err, res) => {
         res.status.should.be.equal(200);
-        res.body.message.should.equal(`User with id ${newUser.id} updated!`);
+        res.body.message.should.equal(`User with id ${defaultUser[0].id} updated!`);
         done();
       });
     });
@@ -167,12 +158,11 @@ describe('Users', () => {
 
   describe('Delete User', () => {
     it('should allow an admin delete an existing user', (done) => {
-      request.delete(`/users/${newUser.id}`)
+      request.delete(`/users/${defaultUser[0].id}`)
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
-          console.log(res.body);
           res.status.should.be.equal(200);
-          res.body.message.should.equal(`User with id ${newUser.id} deleted!`);
+          res.body.message.should.equal(`User with id ${defaultUser[0].id} deleted`);
           done();
         });
     });

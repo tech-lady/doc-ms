@@ -89,4 +89,22 @@ export const roleDetail = [{
   title: 'regular',
   createdAt: new Date(),
   updatedAt: new Date()
-}]
+}];
+
+export const defaultUser = [{
+  id: 10,
+  username: 'newnew',
+  firstname: 'newnew',
+  lastname: 'newnew',
+  email: 'newnew@mail.com',
+  password: '1111111111'
+},
+{
+  id: 11,
+  username: 'admin',
+  firstname: 'admin',
+  lastname: 'admin',
+  email: 'admin@mail.com',
+  password: 'password',
+  roleId: 2
+}];
