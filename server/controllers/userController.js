@@ -197,7 +197,6 @@ export const updateUserRole = (req, res) => {
 };
 
 export const deleteUser = (req, res) => {
-  console.log('hellooooo');
   db.User.destroy({
     where: {
       id: req.params.id
