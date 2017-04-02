@@ -7,13 +7,13 @@
 
 
 // const expect = chai.expect;
-
+// const request = chai.request(app);
 
 // describe('Users Auth', () => {
 //   before((done) => {
-//     //db.Users.sequelize.sync({ force: true })
-//     done()
-//   })
+//   //db.Users.sequelize.sync({ force: true })
+//     done();
+//   });
 //   const newUser = {
 //     username: 'yemi'
 //   };
@@ -22,7 +22,7 @@
 //       .then((res) => {
 //         expect(res.body.message).to.equal('New user has been created');
 //         done();
-//       }).catch(error => error);
-//   })
-
+//       })
+//         .catch(error => error);
+//   });
 // });
