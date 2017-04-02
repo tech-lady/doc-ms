@@ -182,8 +182,8 @@ export const sharePrivateDocument = (req, res) => {
           res.status(200).send(documents);
         });
       });
-  }
-};
+  };
+
 
 export const editDocument = (req, res) => {
   db.Document.findById(req.params.id)
