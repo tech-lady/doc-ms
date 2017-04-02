@@ -34,10 +34,10 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath
 }));
 app.use(require('webpack-hot-middleware')(compiler));
-app.use(express.static(path.join(__dirname, './dist/')));
+app.use(express.static(path.join(__dirname, './client')));
 
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.resolve('./client/src/index.html'));
 });
 
