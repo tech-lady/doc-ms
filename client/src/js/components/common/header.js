@@ -19,12 +19,14 @@ class Header extends React.Component {
             <div className="row">
               <div className="col m6 s8">
                 <div className="logo">
-                  <Link path="home"><img src="" alt="" /><strong>Document Manager App</strong></Link>
+                  <Link path="home"><img src="" alt="" /><strong> DOCUMENT MANAGER </strong></Link>
                 </div>
               </div>
               <div className="col m4 s8 menu">
                 <ul>
-                  <li><Link path="home">Home</Link></li>                
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">Features</a></li>
+                
                   {showLink()}
                 </ul>
               </div>

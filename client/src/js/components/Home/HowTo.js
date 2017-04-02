@@ -6,15 +6,15 @@ class HowTo extends React.Component {
     return(
      <div>
       <div className="parallax-container">
-        <div className="parallax"><img src="../../../assets/img/Untitled-2.jpg" /></div>
+        <div className="parallax"><img src="../assets/img/Untitled-2.jpg" /></div>
         <div className="container">
           <div className="row">
             <div className="how">
-              <h1>How to use the DM Application</h1>
+              <h1>How to use the Document Management Application</h1>
               <ol>
                 <li><strong>Create</strong> an account</li>
                 <li><strong>Login</strong> to your account</li>
-                <li>start creating <strong>unlimited</strong> documents</li>
+                <li>Access <strong>unlimited</strong> documents</li>
               </ol>
             </div>
           </div>

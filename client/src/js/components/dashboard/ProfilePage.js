@@ -11,7 +11,8 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-       <h1>Welcome to my profile page</h1>
+       <h3>Welcome to my profile page</h3>
+       <p> I am Olayemi Awofadeju. This Document Mangement System Web application is my Checkpoint Finale project.</p>
       </div>
     );
   }

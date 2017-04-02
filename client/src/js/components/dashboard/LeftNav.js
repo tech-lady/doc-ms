@@ -13,18 +13,18 @@ class LeftNav extends React.Component {
       <div>
         <div className="col m3">
           <ul id="slide-out" className="side-nav fixed">
-            <h1><strong>Document Manager App</strong></h1>
+            <h4><strong>Document Management User Dashboard</strong></h4>
             <li>
               <Link to="/dashboard" ><strong>My</strong> Documents</Link>
-              <i className="material-icons prefix">library_books</i>
+              <i className="material-icons prefix">library_add</i>
             </li>
             <li>
               <Link to="dashboard/profile">Profile</Link>
-              <i className="material-icons prefix">person</i>  
+              <i className="material-icons prefix">person_pin</i>  
             </li>
             <li>
               <Link to="profile">Roles</Link>
-              <i className="material-icons prefix">access</i>
+              <i className="material-icons prefix">reorder</i>
             </li>
             <li>
               <Link>Users</Link>

@@ -7,14 +7,13 @@ class Hero extends React.Component {
      <div>
       <div className="hero">
         <div className="jumbotron">
-          <h1><strong className="bold">Document Magement App</strong></h1>
-          <span>The system manages documents, users and user roles</span>
+          <h1><strong className="bold">Document Management System</strong></h1>
+          <span>A web application for creating and managing private and public documents</span>
         </div>
       </div>
-      <div className="col s12">
+      <div className="col m12">
         <div className="center-align">
           <a className="btn btn-large waves-effect waves-light" type="submit" name="action">Getting started</a>
-          <a className="btn btn-large waves-effect waves-light" type="submit" name="action">Learn More</a>
         </div>
       </div>
     </div>
