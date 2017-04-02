@@ -34,7 +34,7 @@ export default class RolesApi {
 
 
   static delete(id) {
-    axios.delete(`api/roles/${id}`)
+    axios.delete(`/roles/${id}`)
       .then((roles) => {
         console.log(roles);
       })
@@ -44,7 +44,7 @@ export default class RolesApi {
   }
 
   static update(id, data) {
-    axios.update(`api/roles/${id}`, data)
+    axios.update(`/roles/${id}`, data)
       .then((res) => {
         console.log(res);
       })
