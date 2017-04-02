@@ -34,7 +34,7 @@ class CreateDocument extends React.Component {
       <div>
         <div className="col m12 l12 s12 ">
           <div className="login">
-            <p>login to use The UDMC</p>
+            <p>You  must be registered to use the App</p>
             <div className="row">
               <form onSubmit={this.onSubmit} className="col s12">
                 <div className="row">

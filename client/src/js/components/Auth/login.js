@@ -39,7 +39,7 @@ class Login extends React.Component {
       <div>
         <div className="col m6 l6 s12 ">
           <div className="login">
-            <p>login to your platform</p>
+            <p><strong>Login as a Registered User</strong></p>
             <div className="row">
               <form onSubmit={this.onSubmit} className="col s12">
                 { error()}

@@ -35,7 +35,7 @@ class Register extends React.Component {
      <div>
         <div className="col m6 l6 s12 form-right">
           <div className="register">
-            <p>Create an account</p>
+            <p><strong>Sign up as a New User</strong></p>
             <div className="row">
     
               <form onSubmit={this.onSubmit} className="col s12">

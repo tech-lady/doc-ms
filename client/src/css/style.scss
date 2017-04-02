@@ -12,7 +12,7 @@ body {
   }
   p {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
   }
 }
@@ -72,8 +72,8 @@ nav {
   background-color: #ec407a;
 }
 .hero {
-  background-image: url('../assets/img/Untitled-2.jpg');
-  height: 330px;
+  background-image: url('/src/assets/img/document-library.jpg');
+  height: 200px;
   background-size: cover;
   background-position: center center;
   text-align: center;
@@ -92,8 +92,10 @@ background-color: #88034f;
 color: #000000;
 }
 
-.parallax img {
-  background-image: url('../assets/img/Untitled-2.jpg')
+.parallax-container{
+  background-image: url('../assets/img/document-library.png');
+  background: linear-gradient( rgba(0, 0, 0.2, 0.7), rgba(0, 0, 0.2, 0.7) );
+  margin-bottom: -20px;
 }
 
 .bold {
@@ -106,8 +108,8 @@ color: #000000;
 
 .about-us {
   margin-top: 50px;
-  font-size: 16px;
-  font-weight: 200;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .auth-body {
@@ -125,12 +127,14 @@ color: #000000;
     }
   }
   .login {
-    
+    float: left;
     margin-right: 20px;
+    border-color: #880e4f;
   }
   .register {
-    
+    float: right;
     margin-left: 20px;
+    border-color: #880e4f;
   }
   .form-right {
     border-left: solid 1px #fce4ec;
@@ -139,16 +143,17 @@ color: #000000;
 
 .how {
   font-weight: 200;
-  color: #fff;
-  h1 {
+  color: #ffffff;
+  h3 {
     margin-top: 12%;
-    color: #fff;
-    font-weight: 200;
+    color:#fce4ec;
+    font-weight: 400;
   }
   li {
     text-align: left;
     font-weight: inherit;
     font-size: 24px;
+    color: #fce4ec;
   }
 }
 
@@ -251,6 +256,7 @@ color: #000000;
 
 .search {
   margin: 40px auto;
+  border-color: #880e4f;
 }
 
 footer {
