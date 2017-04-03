@@ -112,3 +112,19 @@ export const defaultUser = [{
   password: 'password',
   roleId: 2
 }];
+
+export const invalidUserParams = [
+  {
+    username: 'meeee',
+    firstname: 'some',
+    lastname: 'one',
+    email: 'hellooooo',
+    password: 'hello@01'
+  },
+  {
+    firstname: 'bae',
+    lastname: 'friend',
+    email: 'bae@bae.com',
+    password: 'hello@01'
+  }
+];
