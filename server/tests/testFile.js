@@ -4,6 +4,7 @@ export const documentDetail = [{
   title: 'Hello World',
   content: 'Welcome to this world',
   access: 'private',
+  ownerRoleId: 1,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
@@ -12,22 +13,25 @@ export const documentDetail = [{
   title: 'Joy',
   content: 'Joy to the world',
   access: 'private',
+  ownerRoleId: 1,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
   id: 3,
-  ownerId: 5,
+  ownerId: 2,
   title: 'We are making progress',
   content: 'Andela is fun, Andela is awesome',
-  access: 'private',
+  access: 'public',
+  ownerRoleId: 3,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
   id: 4,
-  ownerId: 1,
+  ownerId: 5,
   title: 'I have headache',
   content: 'I am very weary but no time for rest',
   access: 'public',
+  ownerRoleId: 3,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
