@@ -64,7 +64,7 @@ export const getUserDocument = (req, res) => {
 
 export const getPublicDocument = (req, res) => {
   const rawQuery =
-    `SELECT * FROM "Documents" INNER JOIN "Users" ON "Documents"."OwnerId" = "Users"."id" WHERE ("Users"."RoleId" = ${req.decoded.roleId} AND "Documents".access = 'role') OR ("Documents".access = 'public')`;
+    `SELECT * FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents".access = 'role') OR ("Documents".access = 'public')`;
   db.sequelize.query(rawQuery, {
     type: db.sequelize.QueryTypes.SELECT
   })
@@ -81,11 +81,11 @@ export const getPublicDocument = (req, res) => {
 export const countUsersDoc = (req, res) => {
   const page = helper.pagination(req);
   let rawQuery =
-      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."OwnerId" = "Users"."id" WHERE ("Users"."RoleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."OwnerId" = ${req.params.id})`;
+      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})`;
 
   if (req.query.q) {
     rawQuery =
-      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."OwnerId" = "Users"."id" WHERE (("Users"."RoleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."OwnerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
+      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE (("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
   }
   db.sequelize.query(rawQuery, {
     type: db.sequelize.QueryTypes.SELECT
@@ -108,12 +108,23 @@ export const countUsersDoc = (req, res) => {
 
 
 export const getDocuments = (req, res) => {
-  db.Document.findAll()
+  db.Document.findAndCount({
+    where: {
+      $or: [
+        { access: 'public' },
+        { $and: [
+          { access: 'private' },
+          { ownerId: req.decoded.userId }
+        ] }
+      ]
+    }
+  })
     .then(document => res.status(200).json(document))
     .catch(err => res.status(400).json(err));
 };
 
 export const searchDocument = (req, res) => {
+  console.log(':::::::::hello');
   db.Document.findAll({
     where: {
       access: 'public',
@@ -132,14 +143,14 @@ export const searchDocument = (req, res) => {
 export const searchUserDocument = (req, res) => {
   db.Document.findAll({
     where: {
-      userId: req.params.id,
+      ownerId: req.params.id,
       $or: [{
         content: {
-          $iLike: `%${req.body.query}%`
+          $iLike: `%${req.query.q}%`
         }
       }, {
         title: {
-          $iLike: `%${req.body.query}%`
+          $iLike: `%${req.query.q}%`
         }
       }]
     }
@@ -150,13 +161,13 @@ export const searchUserDocument = (req, res) => {
 };
 
 export const sharePrivateDocument = (req, res) => {
-    const docId = req.body.documentId;
-    const userEmail = req.body.userEmail;
-    db.User.findOne({ where: { email: userEmail } })
+    const docId = req.body.document.Id;
+    const userEmail = req.body.user.email;
+    db.User.findOne({ where: { email: user.email } })
     .then((user) => {
-      db.Access.create({
+      db.Document.create({
         documentId: docId,
-        usersAccess: user.id
+        ownerId: user.id
       }).then((sharedDocument) => {
         res.status(201)
           .send(sharedDocument);
@@ -165,23 +176,18 @@ export const sharePrivateDocument = (req, res) => {
     });
 };
 
-  export const viewPrivateDocuments = (req, res) => {
-    const userId = req.decoded.UserId;
-    db.Access.findAll(
-      {
-        where: { usersAccess: userId }
-      }).then((sharedDocument) => {
-        const allDocumentIds = sharedDocument.map(doc => doc.documentId);
-        db.Document.findAll({
-          where: {
-            id: {
-              $in: allDocumentIds
-            }
-          }
-        }).then((documents) => {
-          res.status(200).send(documents);
-        });
-      });
+export const viewPrivateDocuments = (req, res) => {
+   const userId = req.decoded.userId;  
+   db.Document.findAndCount({
+      where: {
+        $and: [
+          { access: 'private' },
+          { ownerId: userId }
+        ]
+      }
+    })
+    .then(privateDoc => res.status(200).json(privateDoc))
+    .catch(err => res.status(500).json(err));
   };
 
 
