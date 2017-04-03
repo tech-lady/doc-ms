@@ -23,6 +23,7 @@ module.exports = {
       content: Faker.Lorem.paragraphs(),
       access: access[Math.round(Math.random() * 2) + 1],
       ownerId: Math.floor(Math.random() * 3) + 1,
+      ownerRoleId: Math.floor(Math.random() * 3) + 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }));
