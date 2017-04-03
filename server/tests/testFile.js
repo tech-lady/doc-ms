@@ -36,7 +36,7 @@ export const documentDetail = [{
   updatedAt: new Date()
 }, {
   id: 5,
-  ownerId: 400,
+  ownerId: 6,
   title: 'Good better best ',
   content: 'My better is becoming much better',
   access: 'role',
