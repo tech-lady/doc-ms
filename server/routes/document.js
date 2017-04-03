@@ -8,9 +8,21 @@ router.route('/documents')
   .post(verifyToken, docCtrl.createDocument)
   .get(verifyToken, docCtrl.getDocuments);
 
+router.route('/documents/private')
+.get(verifyToken, docCtrl.viewPrivateDocuments);
+
+router.route('/documents/public')
+.get(verifyToken, docCtrl.getPublicDocument);
+
+router.route('/search/documents')
+.get(verifyToken, docCtrl.searchDocument);
+
+router.route('/search/documents/user/:id')
+.get(verifyToken, docCtrl.searchUserDocument);
 
 router.route('/documents/:id')
   .get(verifyToken, docCtrl.getDocument)
   .put(verifyToken, docCtrl.editDocument)
   .delete(verifyToken, docCtrl.deleteDocument);
+
 module.exports = router;
