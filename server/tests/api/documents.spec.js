@@ -189,12 +189,23 @@ describe('Document Api', () => {
       request.get('/search/documents/user/5?q=are')
       .set({ 'x-access-token': regularToken })
       .end((err, res) => {
-        console.log(res.body);
         res.status.should.be.equal(200);
         res.body[0].should.have.property('title');
         done();
       });
     });
   });
-});
 
+  describe('Share Private Document', () => {
+    it('should allow user to share private documents at will', (done) => {
+      request.put(`/documents/${documentDetail[2].id}/sharedocument`)
+        .send({ shareUserEmail: userDetail[3].email })
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          res.status.should.equal(200);
+          res.body.shareId.includes(userDetail[3].id).should.equal(true);
+          done();
+        });
+    });
+  });
+});

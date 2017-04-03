@@ -24,6 +24,7 @@ module.exports = {
       access: access[Math.round(Math.random() * 2) + 1],
       ownerId: Math.floor(Math.random() * 3) + 1,
       ownerRoleId: Math.floor(Math.random() * 3) + 1,
+      shareId: [1],
       createdAt: new Date(),
       updatedAt: new Date()
     }));

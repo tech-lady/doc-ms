@@ -161,18 +161,19 @@ export const searchUserDocument = (req, res) => {
 };
 
 export const sharePrivateDocument = (req, res) => {
-    const docId = req.body.document.Id;
-    const userEmail = req.body.user.email;
-    db.User.findOne({ where: { email: user.email } })
-    .then((user) => {
-      db.Document.create({
-        documentId: docId,
-        ownerId: user.id
-      }).then((sharedDocument) => {
-        res.status(201)
-          .send(sharedDocument);
-      })
-.catch(err => res.status(400).json(err));
+  const docId = req.params.id;
+  const shareUserEmail = req.body.shareUserEmail;
+  db.User.findOne({ where: { email: shareUserEmail } })
+    .then((foundShareUser) => {
+      db.Document.findById(docId)
+        .then((foundDocument) => {
+          const list = foundDocument.shareId;
+          list.push(foundShareUser.id);
+          foundDocument.update({ shareId: list })
+            .then((shareDoc) => {
+              res.status(200).json(shareDoc);
+            });
+        });
     });
 };
 
