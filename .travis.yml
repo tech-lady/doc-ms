@@ -1,12 +1,27 @@
+sudo: required
+dist: trusty
 language: node_js
 node_js:
-  - "node"
+  - node
+
+before_install:
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 services:
   - postgresql
-script: npm test
+
 before_script:
-  - npm install
-  - psql -c 'create database travis;' -U postgres
-  - npm run seed
+  - psql -c 'drop database if exists doc_api_test;' -U postgres
+  - psql -c 'create database doc_api_test;' -U postgres
+  - NODE_ENV=test npm run migrate
+
 after_success:
+  - npm run coverage
+  - npm run coveralls
+addons:
+  postgresql: "9.3"
+
+after_failure:
+  - npm run coverage
   - npm run coveralls

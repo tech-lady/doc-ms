@@ -1,8 +1,8 @@
 // (function() {
 // require('./user.js')(app);
-import roleRouter from './role.js';
-import docRouter from './document.js';
-import userRouter from './user.js';
+import roleRouter from './role';
+import docRouter from './document';
+import userRouter from './user';
 // })();
 export default {
   roleRouter,

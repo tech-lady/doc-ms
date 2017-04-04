@@ -1,47 +1,79 @@
 import db from '../models';
 
 export const createRole = (req, res) => {
-  const newRole = {
-    title: req.body.title
-  };
-  db.Role.create(newRole)
-    .then(role => res.status(201).send(role))
-    .catch(error => res.status(400).send(error));
-}
+  db.Role.findOne({
+    where: { title: req.body.title }
+  })
+    .then((roleExists) => {
+      /**
+       * If role already exists
+       * return http status code 409
+       */
+      if (roleExists) {
+        return res.status(409)
+          .json({ message: `Role ${req.body.title} already exists` });
+      }
+      // create role
+      db.Role.create(req.body)
+        .then(newRole => res.status(201)
+          .json({ message: 'New role has been assigned', newRole }));
+    })
+    .catch(error => res.status(500)
+      .json({ error: error.errors, message: 'An error occurred' }));
+};
 
 export const getRole = (req, res) => {
   db.Role.findById(req.params.id)
-    .then((role, err) => {
-      res.status(200).send(role)
+    .then((role) => {
+      res.status(200).json(role);
     })
-}
+    .catch(error => res.status(500).json(error));
+};
 
 export const getRoles = (req, res) => {
   db.Role.findAll()
     .then((roles, err) => {
-      res.status(200).send(roles)
+      res.status(200).json(roles);
     })
+    .catch(error => res.status(500).json(error));
 }
 
 export const updateRole = (req, res) => {
-  db.Role.update({ title: req.body.title }, {
-      where: {
-        id: req.params.id
+  if (req.params.id === '1') {
+    return res.status(403)
+      .json({ message: 'SuperAdmin role can not be updated' });
+  }
+
+  db.Role.findById(req.params.id)
+    .then((foundRole) => {
+      // check if role exists before updating
+      if (!foundRole) {
+        return res.status(404)
+          .json({ message: `Update not successful due to unidentified role ${req.params.id}` });
       }
-    })
-    .then(role => res.status(201).send({
-      message: "role updated"
-    }))
-    .catch(error => res.status(400).send(error));
-}
+      return foundRole
+        .update({ title: req.body.title })
+        .then(role => res.status(200).json({
+          message: 'Role updated successfully'
+        }))
+        .catch(error => res.status(400).json(error));
+    });
+};
 
 export const deleteRole = (req, res) => {
-  console.log(req.params.id);
-  db.Role.destroy({
-      where: {
-        id: 8
+  if (req.params.id === '1') {
+    return res.status(403)
+      .send({ message: 'SuperAdmin role can not be deleted' });
+  }
+  db.Role.findById(req.params.id)
+    .then((foundRole) => {
+      // check if role exists before deleting
+      if (!foundRole) {
+        return res.status(404)
+          .json({ message: 'Unable to delete because role is not found' });
       }
-    })
-    .then(role => res.status(201).send(role))
-    .catch(error => res.status(400).send(error));
-}
+      foundRole.destroy()
+        .then(res.status(200)
+          .json({ message: 'Role successfully deleted' }));
+    });
+};

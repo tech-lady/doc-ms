@@ -1,7 +1,6 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Document', {
+    return queryInterface.createTable('Documents', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,16 +11,30 @@ module.exports = {
         type: Sequelize.STRING
       },
       access: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM,
+        defaultValue: 'public',
+        values: ['public', 'private', 'role']
       },
       content: {
         type: Sequelize.TEXT
       },
       ownerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId'
+        }
       },
       ownerRoleId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      shareId: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        defaultValue: []
       },
       createdAt: {
         allowNull: false,

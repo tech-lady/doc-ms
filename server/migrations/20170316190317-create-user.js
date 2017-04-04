@@ -1,27 +1,47 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('User', {
+    return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       username: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      name: {
-        type: Sequelize.JSON
+      firstname: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      lastname: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
+        verify: {
+          isEmail: true
+        }
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+          min: 6
+        }
       },
       roleId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        defaultValue: 2,
+        references: {
+          model: 'Roles',
+          key: 'id',
+          as: 'roleId'
+        }
       },
       createdAt: {
         allowNull: false,

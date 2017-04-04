@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/andela-oawofadeju/document-api.svg?branch=master)](https://travis-ci.org/andela-oawofadeju/document-api)
+[![Build Status](https://travis-ci.org/andela-oawofadeju/document-api.svg?branch=develop)](https://travis-ci.org/andela-oawofadeju/document-api)
 
-[![Coverage Status](https://coveralls.io/repos/github/andela-oawofadeju/document-api/badge.svg?branch=master)](https://coveralls.io/github/andela-oawofadeju/document-api?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/andela-oawofadeju/document-api/badge.svg?branch=develop)](https://coveralls.io/github/andela-oawofadeju/document-api?branch=develop)
 
 # document-api
 
