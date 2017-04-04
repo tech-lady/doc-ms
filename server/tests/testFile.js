@@ -126,5 +126,19 @@ export const invalidUserParams = [
     lastname: 'friend',
     email: 'bae@bae.com',
     password: 'hello@01'
+  },
+  {
+    firstname: 'heeey',
+    lastname: 'friend',
+    email: 'bae@b',
+    password: 'hello@01'
+  },
+  {
+    username: 'meeee',
+    firstname: 'heeey',
+    lastname: 'friend',
+    email: 'bae@b',
+    password: 'hello@01'
   }
+
 ];

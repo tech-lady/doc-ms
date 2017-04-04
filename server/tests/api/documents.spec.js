@@ -117,19 +117,8 @@ describe('Document Api', () => {
       request.get('/documents')
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
+          console.log(res.body);
           res.status.should.be.equal(200);
-          done();
-        });
-    });
-    it('should be able to retrieve private document for the user', (done) => {
-      request.get('/documents/private')
-        .set({ 'x-access-token': regularToken })
-        .end((err, res) => {
-          res.status.should.equal(200);
-          res.body.rows.forEach((doc) => {
-            doc.access.should.equal('private');
-            doc.ownerId.should.equal(userDetail[2].id);
-          });
           done();
         });
     });
@@ -206,6 +195,44 @@ describe('Document Api', () => {
           res.body.shareId.includes(userDetail[3].id).should.equal(true);
           done();
         });
+    });
+  });
+  describe('View Private Document', () => {
+    it('should be able to retrieve and view private documents for the user', (done) => {
+      request.get('/documents/private')
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          res.status.should.equal(200);
+          res.body.rows.forEach((doc) => {
+            doc.access.should.equal('private');
+            doc.ownerId.should.equal(userDetail[2].id);
+          });
+          done();
+        });
+    });
+  });
+
+  describe('Edit Document', () => {
+    it('should allow user to edit document', (done) => {
+      request.put(`/documents/${documentDetail[2].id}`)
+      .send({ title: 'edit', content: 'updating content'})
+      .set({ 'x-acess-token': regularToken })
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.message.should.equal('Update successful');       
+      });
+      done();
+    });
+  });
+  describe('Delete Document', () => {
+    it('should ensure that user can delete document', (done) => {
+      request.delete(`/documents/${documentDetail[2].id}`)
+      .set({ 'x-access-token': regularToken })
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.message.should.equal('Delete successful');
+      });
+      done();
     });
   });
 });
