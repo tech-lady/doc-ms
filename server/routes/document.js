@@ -20,6 +20,9 @@ router.route('/search/documents')
 router.route('/search/documents/user/:id')
 .get(verifyToken, docCtrl.searchUserDocument);
 
+router.route('/documents/:id/sharedocument')
+.put(verifyToken, docCtrl.sharePrivateDocument);
+
 router.route('/documents/:id')
   .get(verifyToken, docCtrl.getDocument)
   .put(verifyToken, docCtrl.editDocument)
