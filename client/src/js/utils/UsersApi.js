@@ -1,15 +1,12 @@
 import axios from './index';
 
 export default class UsersApi {
-
   static getAll(limit) {
-    axios.get('/users')
-      .then((users) => {
-        console.log(users);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios.get('/users')
+        .then((users) => resolve(users))
+        .catch((error) => reject(error));
+    });
   }
 
   static get(id) {
@@ -31,7 +28,6 @@ export default class UsersApi {
         console.log(error);
       });
   }
-
 
   static delete(id) {
     axios.delete(`/users/${id}`)
