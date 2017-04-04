@@ -76,7 +76,7 @@ describe('Document Model', () => {
     it('requires title field to create a document', (done) => {
       Document.create()
         .catch((error) => {
-          error.message.should.equal('notNull Violation: title cannot be null');
+          error.message.should.equal('notNull Violation: title cannot be null,\nnotNull Violation: content cannot be null');
           done();
         });
     });
