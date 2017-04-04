@@ -87,5 +87,14 @@ describe('Roles', () => {
     });
   });
 
-// Describe('Get Role')
+  describe('Get Role', () => {
+    it('should get existing roles', (done) => {
+      request.get(`/roles/${roleDetail[2].id}`)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          res.status.should.be.equal(200);
+          done();
+        });
+    });
+  });
 });

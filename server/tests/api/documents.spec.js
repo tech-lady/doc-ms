@@ -133,21 +133,21 @@ describe('Document Api', () => {
           done();
         });
     });
-  //   it('should ensure user cannot retrieve other users private document', (done) => {
-  //     request.get('/documents')
-  //     .set({ 'x-access-token': regularUserToken })
-  //     .end((err, res) => {
-  //       res.status.should.equal(200);
-  //       res.body.rows.forEach((doc) => {
-  //         if (doc.ownerId === userDetail[3].id) {
-  //           [doc.access].should.be.oneOf(['public', 'private', 'role']);
-  //         } else {
-  //           doc.access.should.be.equal('public');
-  //         }
-  //       });
-  //       done();
-  //     });
-  //   });
+    it('should ensure user cannot retrieve other users private document', (done) => {
+      request.get('/documents')
+      .set({ 'x-access-token': regularUserToken })
+      .end((err, res) => {
+        res.status.should.equal(200);
+        res.body.rows.forEach((doc) => {
+          if (doc.ownerId === userDetail[3].id) {
+            doc.access.should.be.oneOf(['public', 'private', 'role']);
+          } else {
+            doc.access.should.be.equal('public');
+          }
+        });
+        done();
+      });
+    });
   });
 
   describe('Get User Document', () => {
