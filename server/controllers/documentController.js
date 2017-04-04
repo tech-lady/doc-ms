@@ -109,15 +109,13 @@ export const countUsersDoc = (req, res) => {
 
 export const getDocuments = (req, res) => {
   db.Document.findAndCount({
-    where: {
-      $or: [
-        { access: 'public' },
-        { $and: [
-          { access: 'private' },
-          { ownerId: req.decoded.userId }
-        ] }
-      ]
-    }
+    where: { $or: [
+       { access: 'public' },
+      { $and: [
+        { access: 'private' },
+        { ownerId: req.decoded.userId }
+      ] }
+    ] }
   })
     .then(document => res.status(200).json(document))
     .catch(err => res.status(400).json(err));
@@ -178,18 +176,18 @@ export const sharePrivateDocument = (req, res) => {
 };
 
 export const viewPrivateDocuments = (req, res) => {
-   const userId = req.decoded.userId;  
-   db.Document.findAndCount({
-      where: {
-        $and: [
+  const userId = req.decoded.userId;
+  db.Document.findAndCount({
+    where: {
+      $and: [
           { access: 'private' },
           { ownerId: userId }
-        ]
-      }
-    })
+      ]
+    }
+  })
     .then(privateDoc => res.status(200).json(privateDoc))
     .catch(err => res.status(500).json(err));
-  };
+};
 
 
 export const editDocument = (req, res) => {
