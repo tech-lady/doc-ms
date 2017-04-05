@@ -10,6 +10,8 @@ import Documents from './js/components/dashboard/documents/Documents';
 import CreateDocument from './js/components/dashboard/documents/CreateDocument';
 import ProfilePage from './js/components/dashboard/ProfilePage';
 import userList from './js/components/dashboard/users/userList';
+import Users from './js/components/dashboard/users/User';
+
 
 export default (
   <Route path="/"  component={App} > 
@@ -17,11 +19,11 @@ export default (
       <Route path="login" component={Auth} />
       <Route path="/dashboard" component={DashboardPage} >
         <IndexRoute component={Documents} />
-        <Route path="/documents/:id" component={ViewDocument}></Route>
-        <Route path="/document" component={CreateDocument}></Route>
-        <Route path="/profile" component={ProfilePage}></Route>
-        <Route path="/users/:id" component={viewUser}></Route>
-        <Route path="/users" component={userList}></Route>
+        <Route path="documents/:id" component={ViewDocument}></Route>
+        <Route path="documents" component={CreateDocument}></Route>
+        <Route path="profile" component={ProfilePage}></Route>
+        <Route path="users" component={userList}></Route>
+        <Route path="users/:id" component={viewUser}></Route>
       </Route>
       <Route path="*" component={ViewDocument} />
   </Route>
