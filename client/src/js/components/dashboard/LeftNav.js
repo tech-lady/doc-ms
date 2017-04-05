@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router'
-
 import  * as auth from '../../actions/Authentication'; 
 import { bindActionCreators } from 'redux' 
 
@@ -23,11 +22,11 @@ class LeftNav extends React.Component {
               <i className="material-icons prefix">library_add</i>
             </li>
             <li>
-              <Link to="/dashboard/profile">Profile</Link>
+              <Link to="/profile"><strong>My</strong> Profile</Link>
               <i className="material-icons prefix">person_pin</i>  
             </li>
             <li>
-              <Link to="/profile">Roles</Link>
+              <Link to="/roles">Roles</Link>
               <i className="material-icons prefix">reorder</i>
             </li>
             <li>

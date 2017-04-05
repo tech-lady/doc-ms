@@ -25,7 +25,7 @@ class Document extends React.Component {
                   className="material-icons prefix">remove_red_eye</i></Link>
               </div>
                 <div className="col s4 m4">
-                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a>              </div>
+                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a> </div>
               <div className="col s4 m4">
                 <a href="#"> <i className="material-icons prefix">delete</i></a>
               </div>

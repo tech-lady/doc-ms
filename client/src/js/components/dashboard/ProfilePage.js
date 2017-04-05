@@ -10,9 +10,16 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
-       <h3>Welcome to my profile page</h3>
-       <p> I am Olayemi Awofadeju. This Document Mangement System Web application is my Checkpoint Finale project.</p>
+      <div className="row">
+         <div className="col s6 m10" >
+        <div className="card darken-1">
+          <div className="card-content ">
+            <span className="card-title">My Profile</span>
+            <p>Name: Olayemi Awofadeju</p>
+       <p>Project: Checkpoint Finale Defense</p>
+      </div>
+      </div>
+      </div>
       </div>
     );
   }
