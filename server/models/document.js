@@ -14,6 +14,7 @@
        allowNull: true
      },
      ownerId: DataTypes.INTEGER,
+     ownerRoleId: DataTypes.INTEGER
    }, {
      classMethods: {
        associate: (models) => {

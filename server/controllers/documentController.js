@@ -1,7 +1,7 @@
 import db from '../models';
 
 export const createDocument = (req, res) => {
-  console.log(req.decoded);
+  console.log('hhhhhhhhhh heheheh', req.body);
   const newDoc = {
     title: req.body.title,
     content: req.body.content,
