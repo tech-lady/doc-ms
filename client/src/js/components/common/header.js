@@ -19,7 +19,7 @@ class Header extends React.Component {
             <div className="row">
               <div className="col m6 s8">
                 <div className="logo">
-                  <Link path="home"><img src="" alt="" /><strong> DOCUMENT MANAGER </strong></Link>
+                  <Link to="home"><img src="" alt="" /><strong> DOCUMENT MANAGER </strong></Link>
                 </div>
               </div>
               <div className="col m4 s8 menu">

@@ -22,15 +22,15 @@ class LeftNav extends React.Component {
               <i className="material-icons prefix">library_add</i>
             </li>
             <li>
-              <Link to="/profile"><strong>My</strong> Profile</Link>
+              <Link to="/dashboard/profile"><strong>My</strong> Profile</Link>
               <i className="material-icons prefix">person_pin</i>  
             </li>
             <li>
-              <Link to="/roles">Roles</Link>
+              <Link to="/dashboard/roles">Roles</Link>
               <i className="material-icons prefix">reorder</i>
             </li>
             <li>
-                <Link to="/users">Users</Link>
+                <Link to="/dashboard/users">Users</Link>
               <i className="material-icons prefix">group</i>  
             </li>
             <li>

@@ -6,14 +6,18 @@ import  ViewUser from './viewUser';
 
 
 
-class viewUser extends React.Component {
-
+class User extends React.Component {
+constructor(props) {
+    super(props);
+  }
   render() {
+    console.log(this.props);
     return (
     <div className="row">
         <div className="col s8 m10">
           <div className="card darken-1">
             <div className="card-content ">
+              console.log({this.props.user.id})
               <span className="card-title">User {this.props.user.id}</span>
               <p>Username: {this.props.user.username}</p>
               <p>Firstname: {this.props.user.firstname}</p>
@@ -23,7 +27,7 @@ class viewUser extends React.Component {
             <div className="card-action">
               <div className="row">
                 <div className="col s4 m4">
-                  <Link to={`/users/${this.props.user.id}`}>
+                  <Link to={`/dashboard/users/${this.props.user.id}`}>
                   <i className="material-icons prefix">remove_red_eye</i></Link>
                 </div>
                 <div className="col s4 m4">
@@ -39,4 +43,6 @@ class viewUser extends React.Component {
   }
 }
 
-export default viewUser;
+
+
+export default User;

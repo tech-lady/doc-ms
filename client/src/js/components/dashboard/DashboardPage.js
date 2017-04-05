@@ -1,6 +1,5 @@
 import React from 'react';
 import LeftNav from './LeftNav';
-import Documents from './documents/Documents';
 import Authentication from '../Auth/Authentication';
 
 class DashboardPage extends React.Component {

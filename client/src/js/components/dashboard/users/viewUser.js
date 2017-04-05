@@ -1,70 +1,56 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUsers } from '../../../actions/Users';
-import { summarize } from '../../../utils/helpers'; 
+import { Link } from 'react-router';
+import { getUser } from '../../../actions/Users';
 import { bindActionCreators } from 'redux'
 
-class viewUser extends React.Component {
-  
-  constructor(props) {
-    super(props);
-  }
-    componentWillMount() {
+class ViewUser extends Component {
+  componentWillMount() {
     this.props.getUser(this.props.params.id)
   }
-renderUser(user) {
-    return (
 
-<div className="row">
-  <p><strong>User Profile Details</strong></p>
-    <form className="col s12"key={user.id}>
-      <div className="row">
-        <div className="input-field col s6">
-          <Textinput placeholder="Placeholder" id="first_name" type="text" class="validate" />
-          <label for="first_name">First Name : {user.firstname}</label>
-        </div>
-        <div className="input-field col s6">
-          <Textinput id="last_name" type="text" class="validate" />
-          <label for="last_name">Last Name : {user.lastname}</label>
-        </div>
-      </div>
-      <div className="row">
-        <div className="input-field col s12">
-          <Textinput disabled value="I am not editable" id="disabled" type="text" class="validate" />
-          <label for="disabled">Disabled</label>
-        </div>
-      </div>
-      <div className="row">
-        <div className="input-field col s12">
-          <Textinput id="email" type="email" class="validate" />
-          <label for="email">Email: {user.email}</label>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col s12">
-          This is an inline input field:
-          <div className="input-field inline">
-            <Textinput id="email" type="email" class="validate" />
-            <label for="email" data-error="wrong" data-success="right">Email</label>
+  renderUser() {
+    let { user } = this.props;
+    user = user[0].data
+    return (
+      <div className="col s12 m12" key={user.id}>
+        <div className="card darken-1">
+          <div className="card-content ">
+            <span className="card-title">{user.username}</span>
+            <p>{user.firstname}</p>
+            <p>{user.lastname}</p>
+            <p>{user.email}</p>
+          </div>
+          <div className="card-action">
+            <div className="row">
+              <div className="col s4 m4">
+                <Link key="1" to={`/dashboard/users/${user.id}`}> <i 
+                  className="material-icons prefix">remove_red_eye</i></Link>
+              </div>
+                <div className="col s4 m4">
+                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a>              </div>
+              <div className="col s4 m4">
+                <a href="#"> <i className="material-icons prefix">delete</i></a>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="input-field col s12">
-          <select>
-            <option value="" disabled selected>Choose your option</option>
-            <option value="1">Admin</option>
-            <option value="2">Regular</option>
-          </select>
-          <label>Materialize Select</label>
-        </div>
       </div>
-    </form>
-  </div>
-   )
+    )
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.user.map(this.renderUser.bind(this))}
+      </div>
+    );
   }
 }
 
+
 const mapStateToProps = (state, ownProps) => {
+  console.log(state, 'this is state');
   return {
     user: state.users
   }
@@ -73,8 +59,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   console.log(ownProps)
   return {
-    getDoc: bindActionCreators(getUser, dispatch)
+    getUser: bindActionCreators(getUser, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(viewUser)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewUser)

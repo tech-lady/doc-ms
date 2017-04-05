@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import { bindActionCreators } from 'redux'
-
+import { bindActionCreators } from 'redux';
+import * as documentAction from '../../../actions/Documents';
 import { TextInput, TextArea } from '../../common/forms';
 import { connect } from 'react-redux';
 
@@ -18,7 +18,7 @@ class CreateDocument extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onChange(e) {
-    console.log(e.target.value)
+    console.log(e.target.value);
     this.setState({
       [ e.target.name ] : e.target.value
     })
@@ -27,14 +27,13 @@ class CreateDocument extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state)
+    this.props.actions.createDocument(this.state);
   }
   render() {
     return (
       <div>
         <div className="col m12 l12 s12 ">
           <div className="login">
-            <p>You  must be registered to use the App</p>
             <div className="row">
               <form onSubmit={this.onSubmit} className="col s12">
                 <div className="row">
@@ -70,4 +69,17 @@ class CreateDocument extends React.Component {
   }
 }
 
-export default CreateDocument
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(documentAction, dispatch)
+  }
+}
+
+const mapStateToProps = (state) => {
+  console.log(state.documents);
+  return {
+    data: 'hello'
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateDocument);

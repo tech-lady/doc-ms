@@ -31,7 +31,7 @@ class Actions {
     return { type: 'USER_ERROR', error };
   }
 
-  static usertSuccess(payload) {
+  static userSuccess(payload) {
     return { type: 'USER_SUCCESS', payload };
   }
 }
@@ -51,7 +51,8 @@ export const loadUsers = () => (dispatch) => {
 
 export const getUser = id => (dispatch) => {
   UserApi.get(id)
-  .then((doc) => {
+  .then((user) => {
+    console.log(user);
     dispatch(Actions.getUser(user));
   })
   .catch((error) => {

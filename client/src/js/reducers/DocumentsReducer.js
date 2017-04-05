@@ -7,6 +7,8 @@ export default (state = [], action) => {
     case types.GET_DOCUMENT:
       console.log(action.doc);
       return [action.doc];
+    case types.DOCUMENT_SUCCESS:
+      return Object.assign({}, state, action.payload);
     default:
       return state;
   }

@@ -5,7 +5,7 @@ export default (state = [], action) => {
     case types.GET_ALL_USERS:
       return action.users;
     case types.GET_USER:
-      return [action.users];
+      return [action.user];
     default:
       return state;
   }
