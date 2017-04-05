@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class HowTo extends React.Component {
 
@@ -12,9 +13,9 @@ class HowTo extends React.Component {
             <div className="how">
               <h3>How to use the Document Management Application</h3>
               <ol>
-                <li><strong><em>Create</em></strong> an account</li>
-                <li><strong><em>Login</em></strong> to your account</li>
-                <li>Access <strong><em>Unlimited</em></strong> documents</li>
+                <Link to='/login'><li><strong><em>Create</em></strong> an account</li></Link>
+               <Link to='/login'> <li><strong><em>Login</em></strong> to your account</li></Link>
+                <Link to='/'><li>Access <strong><em>Unlimited</em></strong> documents</li></Link>
               </ol>
             </div>
           </div>

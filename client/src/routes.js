@@ -5,6 +5,7 @@ import Homepage from './js/components/Home/HomePage';
 import App from './js/app';
 import Auth from './js/components/Auth/index';
 import ViewDocument from './js/components/dashboard/documents/viewDocument';
+import viewUser from './js/components/dashboard/users/viewUser';
 import Documents from './js/components/dashboard/documents/Documents';
 import CreateDocument from './js/components/dashboard/documents/CreateDocument';
 import ProfilePage from './js/components/dashboard/ProfilePage';
@@ -19,6 +20,7 @@ export default (
         <Route path="/documents/:id" component={ViewDocument}></Route>
         <Route path="/document" component={CreateDocument}></Route>
         <Route path="/profile" component={ProfilePage}></Route>
+        <Route path="/users/:id" component={viewUser}></Route>
         <Route path="/users" component={userList}></Route>
       </Route>
       <Route path="*" component={ViewDocument} />

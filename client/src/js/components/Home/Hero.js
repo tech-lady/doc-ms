@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router'
 
 class Hero extends React.Component {
 
@@ -13,7 +14,8 @@ class Hero extends React.Component {
       </div>
       <div className="col m12">
         <div className="center-align">
-          <a className="btn btn-large waves-effect waves-light" type="submit" name="action">Getting started</a>
+          <Link to="/dashboard" ><a className="btn btn-large waves-effect waves-light" type="submit" name="action">Getting started</a></Link>
+       
         </div>
       </div>
     </div>
