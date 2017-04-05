@@ -2,7 +2,7 @@
    const Document = sequelize.define('Document', {
      title: {
        type: DataTypes.STRING,
-       allowNull: false,
+       allowNull: false
      },
      access: {
        type: DataTypes.STRING,
@@ -11,10 +11,11 @@
      },
      content: {
        type: DataTypes.TEXT,
-       allowNull: true
+       allowNull: false
      },
      ownerId: DataTypes.INTEGER,
-     ownerRoleId: DataTypes.INTEGER
+     ownerRoleId: DataTypes.INTEGER,
+     shareId: DataTypes.ARRAY(DataTypes.INTEGER)
    }, {
      classMethods: {
        associate: (models) => {

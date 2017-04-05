@@ -62,23 +62,38 @@ export const getUserDocument = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
+export const getPublicDocument = (req, res) => {
+  const rawQuery =
+    `SELECT * FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents".access = 'role') OR ("Documents".access = 'public')`;
+  db.sequelize.query(rawQuery, {
+    type: db.sequelize.QueryTypes.SELECT
+  })
+      .then((document) => {
+        if (!document) {
+          return res.status(404)
+            .json({ message: 'No document found' });
+        }
+        res.status(200).json(document);
+      })
+  .catch(err => res.status(400).json(err));
+};
 
 export const countUsersDoc = (req, res) => {
-    const page = helper.pagination(req);
-    let rawQuery =
-      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."OwnerId" = "Users"."id" WHERE ("Users"."RoleId" = ${req.decoded.RoleId} AND "Documents"."access" = 'role') OR ("Documents"."OwnerId" = ${req.params.id})`;
+  const page = helper.pagination(req);
+  let rawQuery =
+      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})`;
 
-    if (req.query.q) {
-      rawQuery =
-      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."OwnerId" = "Users"."id" WHERE (("Users"."RoleId" = ${req.decoded.RoleId} AND "Documents"."access" = 'role') OR ("Documents"."OwnerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
-    }
+  if (req.query.q) {
+    rawQuery =
+      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE (("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
+  }
   db.sequelize.query(rawQuery, {
     type: db.sequelize.QueryTypes.SELECT
   })
     .then((count) => {
       if (!count) {
         return res.status(404)
-          .send({ message: 'No document found' });
+          .json({ message: 'No document found' });
       }
       const meta = {};
       meta.totalCount = count[0].count;
@@ -86,20 +101,28 @@ export const countUsersDoc = (req, res) => {
       meta.pageCount = Math.floor(meta.totalCount / page.limit) + 1;
       meta.currentPage = Math.floor(page.offset / page.limit) + 1;
       res.status(200).send({ paginationMeta: meta });
-    }).catch((err) => {
-      res.status(400).send(err.message);
-    });
-}
+    })
+    .catch(err => res.status(400).json(err));
+};
 
 
 
 export const getDocuments = (req, res) => {
-  db.Document.findAll()
+  db.Document.findAndCount({
+    where: { $or: [
+       { access: 'public' },
+      { $and: [
+        { access: 'private' },
+        { ownerId: req.decoded.userId }
+      ] }
+    ] }
+  })
     .then(document => res.status(200).json(document))
-    .catch(error => res.status(400).json(error));
+    .catch(err => res.status(400).json(err));
 };
 
 export const searchDocument = (req, res) => {
+  console.log(':::::::::hello');
   db.Document.findAll({
     where: {
       access: 'public',
@@ -112,30 +135,59 @@ export const searchDocument = (req, res) => {
   })
     .then(document => res.status(200)
       .json(document))
-    .catch(error => res.status(400)
-      .json(error));
-}
+.catch(err => res.status(400).json(err));
+};
 
 export const searchUserDocument = (req, res) => {
   db.Document.findAll({
     where: {
-      userId: req.params.id,
+      ownerId: req.params.id,
       $or: [{
         content: {
-          $iLike: `%${req.body.query}%`
+          $iLike: `%${req.query.q}%`
         }
       }, {
         title: {
-          $iLike: `%${req.body.query}%`
+          $iLike: `%${req.query.q}%`
         }
       }]
     }
   })
     .then(document => res.status(200)
       .json(document))
-    .catch(error => res.status(400)
-      .json(error));
-}
+.catch(err => res.status(400).json(err));
+};
+
+export const sharePrivateDocument = (req, res) => {
+  const docId = req.params.id;
+  const shareUserEmail = req.body.shareUserEmail;
+  db.User.findOne({ where: { email: shareUserEmail } })
+    .then((foundShareUser) => {
+      db.Document.findById(docId)
+        .then((foundDocument) => {
+          const list = foundDocument.shareId;
+          list.push(foundShareUser.id);
+          foundDocument.update({ shareId: list })
+            .then((shareDoc) => {
+              res.status(200).json(shareDoc);
+            });
+        });
+    });
+};
+
+export const viewPrivateDocuments = (req, res) => {
+  const userId = req.decoded.userId;
+  db.Document.findAndCount({
+    where: {
+      $and: [
+          { access: 'private' },
+          { ownerId: userId }
+      ]
+    }
+  })
+    .then(privateDoc => res.status(200).json(privateDoc))
+    .catch(err => res.status(500).json(err));
+};
 
 
 export const editDocument = (req, res) => {
@@ -149,10 +201,7 @@ export const editDocument = (req, res) => {
         .then(() => {
           res.status(200).json({ message: 'Update successful' });
         })
-        .catch((err) => {
-          res.status(400)
-            .json(err.errors);
-        });
+.catch(err => res.status(400).json(err));
     });
 };
 
@@ -167,7 +216,5 @@ export const deleteDocument = (req, res) => {
       document.destroy();
       res.status(200).json({ message: 'Delete successful' });
     })
-    .catch((err) => {
-      res.status(400).json(err.errors);
-    });
+.catch(err => res.status(400).json(err));
 };

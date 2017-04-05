@@ -4,6 +4,7 @@ export const documentDetail = [{
   title: 'Hello World',
   content: 'Welcome to this world',
   access: 'private',
+  ownerRoleId: 1,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
@@ -12,27 +13,30 @@ export const documentDetail = [{
   title: 'Joy',
   content: 'Joy to the world',
   access: 'private',
+  ownerRoleId: 1,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
   id: 3,
-  ownerId: 5,
+  ownerId: 2,
   title: 'We are making progress',
   content: 'Andela is fun, Andela is awesome',
-  access: 'private',
+  access: 'public',
+  ownerRoleId: 3,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
   id: 4,
-  ownerId: 1,
+  ownerId: 5,
   title: 'I have headache',
   content: 'I am very weary but no time for rest',
   access: 'public',
+  ownerRoleId: 3,
   createdAt: new Date(),
   updatedAt: new Date()
 }, {
   id: 5,
-  ownerId: 400,
+  ownerId: 6,
   title: 'Good better best ',
   content: 'My better is becoming much better',
   access: 'role',
@@ -89,4 +93,52 @@ export const roleDetail = [{
   title: 'regular',
   createdAt: new Date(),
   updatedAt: new Date()
-}]
+}];
+
+export const defaultUser = [{
+  id: 10,
+  username: 'newnew',
+  firstname: 'newnew',
+  lastname: 'newnew',
+  email: 'newnew@mail.com',
+  password: '1111111111'
+},
+{
+  id: 11,
+  username: 'admin',
+  firstname: 'admin',
+  lastname: 'admin',
+  email: 'admin@mail.com',
+  password: 'password',
+  roleId: 2
+}];
+
+export const invalidUserParams = [
+  {
+    username: 'meeee',
+    firstname: 'some',
+    lastname: 'one',
+    email: 'hellooooo',
+    password: 'hello@01'
+  },
+  {
+    firstname: 'bae',
+    lastname: 'friend',
+    email: 'bae@bae.com',
+    password: 'hello@01'
+  },
+  {
+    firstname: 'heeey',
+    lastname: 'friend',
+    email: 'bae@b',
+    password: 'hello@01'
+  },
+  {
+    username: 'meeee',
+    firstname: 'heeey',
+    lastname: 'friend',
+    email: 'bae@b',
+    password: 'hello@01'
+  }
+
+];

@@ -32,6 +32,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      shareId: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        defaultValue: []
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

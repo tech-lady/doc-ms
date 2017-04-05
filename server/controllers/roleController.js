@@ -53,7 +53,7 @@ export const updateRole = (req, res) => {
       }
       return foundRole
         .update({ title: req.body.title })
-        .then(role => res.status(201).json({
+        .then(role => res.status(200).json({
           message: 'Role updated successfully'
         }))
         .catch(error => res.status(400).json(error));
@@ -73,7 +73,7 @@ export const deleteRole = (req, res) => {
           .json({ message: 'Unable to delete because role is not found' });
       }
       foundRole.destroy()
-        .then(res.status(201)
+        .then(res.status(200)
           .json({ message: 'Role successfully deleted' }));
     });
 };

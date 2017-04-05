@@ -106,9 +106,30 @@ export const getUser = (req, res) => {
 export const getUsers = (req, res) => {
   db.User.findAll({ attributes: ['id', 'username', 'email', 'firstname', 'lastname', 'createdAt', 'updatedAt'] })
     .then(user => res.status(200).json(user))
-    .catch(error => res.status(400).json(error));
+    .catch(err => res.status(400).json(err));
 };
 
+
+export const findAllUsers = (req, res) => {
+  const page = helper.pagination(req);
+  const limit = page.limit;
+  const offset = page.offset;
+  const order = page.order;
+  db.User.findAndCountAll({ limit, offset, order })
+      .then((users) => {
+        if (!users) {
+          return res.status(404)
+            .send({ message: 'No user found' });
+        }
+        const meta = {};
+        meta.totalCount = users.count;
+        meta.pageSize = limit;
+        meta.pageCount = Math.floor(meta.totalCount / limit) + 1;
+        meta.currentPage = Math.floor(offset / limit) + 1;
+        res.status(200).send({ paginationMeta: meta, result: users.rows });
+      })
+  .catch(err => res.status(400).json(err));
+};
 
 export const searchUser = (req, res) => {
   db.User.findAll({
@@ -197,7 +218,6 @@ export const updateUserRole = (req, res) => {
 };
 
 export const deleteUser = (req, res) => {
-  console.log('hellooooo');
   db.User.destroy({
     where: {
       id: req.params.id

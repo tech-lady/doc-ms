@@ -23,3 +23,4 @@ router.route('/users/:id')
   .delete(verifyToken, verifyAdmin, userCtrl.deleteUser);
 
 export default router;
+

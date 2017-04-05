@@ -1,72 +1,125 @@
-// /*eslint no-unused-expressions: "off"*/
-// import supertest from 'supertest';
-// import should from 'should';
-// import chai from 'chai';
-// import { userDetail } from '../testFile';
-// import app from '../../../server';
-// import db from '../../models';
+/*eslint no-unused-expressions: "off"*/
+import chai from 'chai';
+import { userDetail, roleDetail, invalidUserParams } from '../testFile';
+import db from '../../models';
 
+const expect = chai.expect;
+const should = chai.should();
 
-// const expect = chai.expect;
-// const request = supertest(app);
+describe('User Model', () => {
+  let user;
+  const Role = db.Role;
 
-// describe('User Model', () => {
-//   let user;
-//   describe('User validation', () => {
-//     it('should create new user', (done) => {
-//       db.User.create(user)
-//         .then((newUser) => {
-//           user = newUser;
-//           done();
-//         });
-//     });
-//     it('should be able to create a user', () => {
-//       expect(user).to.exist;
-//       expect(typeof user).to.equal('object');
-//     });
-//     it('user should have username', () => {
-//       expect(user).to.exist;
-//       expect(user).to.have.deep.property('username');
-//     });
-//     it('should create a user with first name & last name', () => {
-//       expect(user.username).to.equal(helper.username);
-//       expect(user.name).to.equal(helper.name);
-//     });
-//     it('should create a user with a valid email', () => {
-//       expect(user.email).to.equal(helper.email);
-//     });
-//     it('should ensure that username is not null', () => {
-//       db.User.create(helper.noUsername)
-//         .catch((error) => {
-//           expect(/notNull Violation: username cannot be null/
-//             .test(error.message)).to.be.true;
-//         });
-//     });
-//     it('should create a user with a defined role', (done) => {
-//       db.User.findById(user.id, {
-//           include: [db.Role]
-//         })
-//         .then((foundUser) => {
-//           expect(foundUser.Role.title).to.equal('User');
-//           done();
-//         });
-//     });
-//   });
-//   describe('Email validation', () => {
-//     it('should ensure that email is authenthic', () => {
-//       db.User.create(helper.invalidEmail)
-//         .catch((error) => {
-//           expect(/Validation error: Validation isEmail failed/
-//             .test(error.message)).to.be.true;
-//         });
-//     });
-//   });
-//   describe('Password Validation', () => {
-//     it('should be valid if compared', () => {
-//       db.User.create(helper.newUser)
-//         .then((createdUser) => {
-//           expect(createdUser.validPassword(helper.newUser.password)).to.be.true;
-//         });
-//     });
-//   });
-// });
+  before((done) => {
+    Role.bulkCreate(roleDetail)
+      .then(() => {
+        done();
+      });
+  });
+
+  after(() => db.Role.destroy({ where: {} }));
+
+  describe('Create User', () => {
+    it('should create new user', (done) => {
+      db.User.create(userDetail[2])
+      .then((newUser) => {
+        user = newUser;
+        done();
+      });
+    });
+
+    it('should be able to create a user', (done) => {
+      user.should.be.defined;
+      expect(typeof user).to.equal('object');
+      done();
+    });
+    it('user should have username', (done) => {
+      user.should.exist;
+      user.should.have.property('username');
+      done();
+    });
+    it('should create a user with first name & last name', (done) => {
+      user.firstname.should.equal(userDetail[2].firstname);
+      user.lastname.should.equal(userDetail[2].lastname);
+      done();
+    });
+    it('should create a user with a valid email', (done) => {
+      user.email.should.equal(userDetail[2].email);
+      done();
+    });
+    it('should ensure that username is not null', (done) => {
+      db.User.create(invalidUserParams[1])
+      .catch((error) => {
+        error.message.should.equal('notNull Violation: username cannot be null')
+        done();
+      });
+    });
+    it('should create a user with a defined role', (done) => {
+      db.User.findById(user.id, {
+        include: [db.Role]
+      })
+      .then((foundUser) => {
+        foundUser.Role.title.should.equal('regular');
+        done();
+      });
+    });
+  });
+
+  describe('User validation', () => {
+    describe('User Validation', () => {
+      it('requires firstname field to create a user', (done) => {
+        db.User.create(invalidUserParams[2].firstname)
+        .catch((error) => {
+          /notNull Violation/.test(error.message).should.be.true;
+          done();
+        });
+      });
+      it('requires email field to create a user', (done) => {
+        db.User.create(invalidUserParams[0].email)
+        .catch((error) => {
+         /notNull Violation/.test(error.message).should.be.true;
+          done();
+        });
+      });
+      it('requires username field to create a user', (done) => {
+        db.User.create(invalidUserParams[2].username)
+        .catch((error) => {
+          /notNull Violation/.test(error.message).should.be.true;
+          done();
+        });
+      });
+      it('ensures a user can only be created once(unique)', (done) => {
+        db.User.create(user)
+        .catch((error) => {
+          /notNull Violation/.test(error.message).should.be.true;
+          done();
+        });
+      });
+      it('ensures a username can only be created once(unique)', (done) => {
+        db.User.create(invalidUserParams[3].username)
+        .catch((error) => {
+          /notNull Violation/.test(error.message).should.be.true;
+          done();
+        });
+      });
+    });
+  });
+  
+  describe('Email Validation', () => {
+    it('should ensure that email is authenthic', () => {
+      db.User.create(invalidUserParams[0])
+      .catch((error) => {
+        error.message.should.equal('Validation error: Validation isEmail failed')
+      });
+    });
+  });
+  describe('Password Validation', () => {
+    it('should be valid if compared', () => {
+      db.User.findById(user.id)
+        .then((foundUser) => {
+          foundUser.authenticate(userDetail[2].password).should.be.true;
+        });
+    });
+  });
+});
+
