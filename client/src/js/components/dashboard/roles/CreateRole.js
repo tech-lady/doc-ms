@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.documents);
+  console.log(state.roles);
   return {
     data: 'hello'
   }

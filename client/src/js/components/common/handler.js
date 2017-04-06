@@ -9,9 +9,7 @@ class Handler extends Component {
         <div class="alert-{this.props.type} alert">
           <p>{this.props.message}</p>
         </div>
-
-      <div>
-
+      </div>
     );
   }
 }

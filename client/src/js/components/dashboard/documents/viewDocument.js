@@ -4,35 +4,45 @@ import { Link } from 'react-router';
 import { getDocument } from '../../../actions/Documents';
 import { bindActionCreators } from 'redux'
 
+
+import Modal from '../../common/modal';
+
 class ViewDocument extends Component {
   componentWillMount() {
+    comsole.log(this.props)
     this.props.getDoc(this.props.params.id)
   }
 
   renderDocument(document) {
     console.log(document);
+          console.log(Modal)
+
     return (
-      <div className="col s12 m12" key={document.id}>
-        <div className="card darken-1">
-          <div className="card-content ">
-            <span className="card-title">{document.title}</span>
-            <p>{document.content}</p>
-          </div>
-          <div className="card-action">
-            <div className="row"> 
-              <div className="col s4 m4">
-                <Link to={`/dashboard/documents/${document.id}`}> <i 
-                  className="material-icons prefix">remove_red_eye</i></Link>
-              </div>
+      <div>
+        <div className="col s12 m12" key={document.id}>
+          <div className="card darken-1">
+            <div className="card-content ">
+              <span className="card-title">{document.title}</span>
+              <p>{document.content}</p>
+            </div>
+            <div className="card-action">
+              <div className="row"> 
                 <div className="col s4 m4">
-                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a>              </div>
-              <div className="col s4 m4">
-                <a href="#"> <i className="material-icons prefix">delete</i></a>
+                  <Link to={`/dashboard/documents/${document.id}`}> <i 
+                    className="material-icons prefix">remove_red_eye</i></Link>
+                </div>
+                  <div className="col s4 m4">
+                    <a href="#mode"> <i className="material-icons prefix">mode_edit</i></a>              </div>
+                <div className="col s4 m4">
+                  <a href="#"> <i className="material-icons prefix">delete</i></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {/*<Modal key={document.id} />*/}
       </div>
+      
     )
   }
 
@@ -59,4 +69,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewDocument)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewDocument);

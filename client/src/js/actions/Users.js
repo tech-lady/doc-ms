@@ -52,8 +52,7 @@ export const loadUsers = () => (dispatch) => {
 export const getUser = id => (dispatch) => {
   UserApi.get(id)
   .then((user) => {
-    console.log(user);
-    dispatch(Actions.getUser(user));
+    dispatch(Actions.getUser(user.data));
   })
   .catch((error) => {
     dispatch(Actions.userError(error));

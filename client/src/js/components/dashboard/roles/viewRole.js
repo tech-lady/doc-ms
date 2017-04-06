@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { getUser } from '../../../actions/Users';
+import { getUser } from '../../../actions/Roles';
 import { bindActionCreators } from 'redux'
 
-class ViewUser extends Component {
+class ViewRole extends Component {
   componentWillMount() {
-    this.props.getUser(this.props.params.id)
+    this.props.getRole(this.props.params.id)
   }
 
-  renderUser() {
-    let { user } = this.props;
+  renderRole() {
+    let { role } = this.props;
     user = user[0].data
     return (
-      <div className="col s12 m12" key={user.id}>
+      <div className="col s12 m12" key={role.id}>
         <div className="card darken-1">
           <div className="card-content ">
-            <span className="card-title">{user.username}</span>
-            <p>{user.firstname}</p>
-            <p>{user.lastname}</p>
-            <p>{user.email}</p>
+            <span className="card-title">{role.title}</span>
           </div>
           <div className="card-action">
             <div className="row">
               <div className="col s4 m4">
-                <Link key="1" to={`/dashboard/users/${user.id}`}> <i 
+                <Link key="1" to={`/dashboard/roles/${role.id}`}> <i 
                   className="material-icons prefix">remove_red_eye</i></Link>
               </div>
                 <div className="col s4 m4">
@@ -42,7 +39,7 @@ class ViewUser extends Component {
   render() {
     return (
       <div>
-        {this.props.user.map(this.renderUser.bind(this))}
+        {this.props.role.map(this.renderRole.bind(this))}
       </div>
     );
   }
@@ -52,15 +49,15 @@ class ViewUser extends Component {
 const mapStateToProps = (state, ownProps) => {
   console.log(state, 'this is state');
   return {
-    user: state.users
+    role: state.roles
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   console.log(ownProps)
   return {
-    getUser: bindActionCreators(getUser, dispatch)
+    getRole: bindActionCreators(getRole, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewUser)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewRole)

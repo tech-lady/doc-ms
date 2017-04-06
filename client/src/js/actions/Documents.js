@@ -40,13 +40,13 @@ class Actions {
 export const loadDocuments = () => (dispatch) => {
   DocumentApi.getAll()
     .then((documents) => {
-      dispatch(Actions.getAllDocuments(documents));
+      console.log(documents);
+      dispatch(Actions.getAllDocuments(documents.rows));
     })
     .catch((error) => {
       throw (error);
     });
 };
-
 
 export const getDocument = id => (dispatch) => {
   DocumentApi.get(id)

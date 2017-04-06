@@ -22,7 +22,21 @@ render() {
   console.log(this.props)
     return (
       <div>
-        { this.props.users.map(this.renderUsers.bind(this))}
+        <table className="striped">
+          <thead>
+            <tr>
+              <th>Username</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>View</th>
+                <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.props.users.map(this.renderUsers.bind(this))}
+          </tbody>
+        </table>
       </div>
    );
   }

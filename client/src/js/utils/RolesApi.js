@@ -3,53 +3,43 @@ import axios from './index';
 export default class RolesApi {
 
   static getAll() {
-    axios.get('api/roles')
-      .then((roles) => {
-        console.log(roles);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios.get('api/roles')
+      .then(roles => resolve(roles))
+      .catch(error => reject(error));
+    });
   }
 
   static get(id) {
-    axios.get(`api/roles/${id}`)
-      .then((roles) => {
-        console.log(roles);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios.get(`api/roles/${id}`)
+      .then(roles => resolve(roles))
+      .catch(error => reject(error));
+    });
   }
 
   static create(data) {
-    axios.post('api/roles', data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios.post('api/roles', data)
+     .then(res => resolve(res.data))
+      .catch(error => reject(error));
+    });
   }
 
 
   static delete(id) {
-    axios.delete(`/roles/${id}`)
-      .then((roles) => {
-        console.log(roles);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios.delete(`/roles/${id}`)
+     .then(roles => resolve(roles))
+      .catch(error => reject(error));
+    });
   }
 
   static update(id, data) {
-    axios.update(`/roles/${id}`, data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios.update(`/roles/${id}`, data)
+      .then(res => resolve(res.data))
+      .catch(error => reject(error));
+    });
   }
 }

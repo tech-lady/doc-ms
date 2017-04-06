@@ -9,9 +9,11 @@ class ViewUser extends Component {
     this.props.getUser(this.props.params.id)
   }
 
-  renderUser() {
-    let { user } = this.props;
-    user = user[0].data
+  renderUser(user) {
+    // let { user } = this.props;
+    // user = user[0].data
+
+    console.log(user);
     return (
       <div className="col s12 m12" key={user.id}>
         <div className="card darken-1">
@@ -50,7 +52,6 @@ class ViewUser extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state, 'this is state');
   return {
     user: state.users
   }

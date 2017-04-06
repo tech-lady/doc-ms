@@ -207,7 +207,7 @@ color: #000000;
       font-weight: 200;
     }
     i {
-      color: #fff;
+      color: #fce4ec;
       position: absolute;
       top: 12px;
       left: 8px;
@@ -225,8 +225,8 @@ color: #000000;
   min-height: 200px;
   max-height: 2000px;
   background-color:#dfdce3;
-  color: #880e4f;
-  box-shadow: 8px 8px 5px #88034f;
+  color: #263238;
+  box-shadow: 3px 3px 5px #263238;
 
   p {
     color: black;
@@ -259,6 +259,14 @@ color: #000000;
 }
 
 .card-action i.material-icons{
+  color: #880e4f !important;
+}
+
+table{
+color: #263238 !important;
+}
+
+.material-icons {
   color: #880e4f !important;
 }
 

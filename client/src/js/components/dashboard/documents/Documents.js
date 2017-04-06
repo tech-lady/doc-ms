@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Modal, Button } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Search from '../Search';
@@ -7,6 +8,7 @@ import Document from './Document';
 import DocumentApi from '../../../utils/DocumentsApi';
 import { loadDocuments } from '../../../actions/Documents';
 import CreateDocument from './CreateDocument';
+import modal from '../../common/modal';
 
 
 class Documents extends React.Component {
@@ -42,13 +44,8 @@ class Documents extends React.Component {
    return (
 
     <div>
-
- <a className="modal-trigger btn-floating btn-large waves-effect waves-light" href="#modal1"><i className="material-icons">add</i></a>
-  <div id="modal1" className="modal modal-fixed-footer">
-    <div class="modal-content">
-    <CreateDocument />
-    </div>
-  </div>
+      <modal modal="modal1"  Component={CreateDocument} />
+    <a className="btn-floating btn-large waves-effect waves-light"><i className="material-icons">add</i></a>
       <div>
         <Search />
          <div className="documents">
@@ -67,9 +64,8 @@ Documents.contextTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const documents = state.documents.rows || [];
   return {
-    documents
+    documents : state.documents
   }
 }
 

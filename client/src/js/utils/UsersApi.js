@@ -1,6 +1,6 @@
 import axios from './index';
 
-export default class User {
+export default class UsersApi {
 
   static getAll() {
     return new Promise((resolve, reject) => {
