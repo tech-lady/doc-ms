@@ -9,7 +9,7 @@ import Modal from '../../common/modal';
 
 class ViewDocument extends Component {
   componentWillMount() {
-    comsole.log(this.props)
+    console.log(this.props)
     this.props.getDoc(this.props.params.id)
   }
 

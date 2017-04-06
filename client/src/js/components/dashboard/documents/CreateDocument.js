@@ -11,7 +11,9 @@ class CreateDocument extends React.Component {
     super(props)
     this.state = {
       title: '',
-      content: ''
+      content: '',
+      status: 'create',
+      docId: ''
     };
 
     this.onChange = this.onChange.bind(this);
@@ -25,9 +27,26 @@ class CreateDocument extends React.Component {
     
   }
 
+  componentDidMount() {
+    console.log(this.props);
+    if (this.props.document) {
+      this.update();
+    }
+  }
+
+  update() {
+    console.log(this.props.document, 'document document document');
+    this.setState({ title: this.props.document.title,
+      content: this.props.document.content, status: this.props.status });
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    this.props.actions.createDocument(this.state);
+    if (this.state.status === 'create') {
+      this.props.actions.createDocument(this.state);
+    } else {
+      console.log('update document');
+    }
   }
   render() {
     return (
@@ -76,7 +95,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.documents);
   return {
     data: 'hello'
   }

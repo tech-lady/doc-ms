@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Button } from 'react-materialize';
+import { Modal, Button, Row, Col, Icon } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Search from '../Search';
@@ -44,8 +44,13 @@ class Documents extends React.Component {
    return (
 
     <div>
-      <modal modal="modal1"  Component={CreateDocument} />
-    <a className="btn-floating btn-large waves-effect waves-light"><i className="material-icons">add</i></a>
+     <Modal
+        header='Modal Header'
+        trigger={
+   <a className="btn-floating btn-large waves-effect waves-light"><i className="material-icons">add</i></a>
+      }>
+      <CreateDocument />
+      </Modal>
       <div>
         <Search />
          <div className="documents">
@@ -54,6 +59,7 @@ class Documents extends React.Component {
             </div>
           </div>
       </div>
+
       </div>
     );
   }

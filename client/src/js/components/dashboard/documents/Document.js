@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
-
+import { Modal, Button, Row, Col, Icon } from 'react-materialize';
 import { summarize } from '../../../utils/helpers'; 
 import  ViewDocument from './viewDocument';
+import CreateDocument from './CreateDocument';
 
 class Document extends React.Component {
   
@@ -25,7 +26,14 @@ class Document extends React.Component {
                   className="material-icons prefix">remove_red_eye</i></Link>
               </div>
                 <div className="col s4 m4">
-                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a></div>
+                  <Modal
+                    header='Modal Header'
+                    trigger={
+                      <a href="#"> <i className="material-icons prefix">mode_edit</i></a>
+                    }>
+                  <CreateDocument status={'update'} document={this.props.document}/>
+                  </Modal>
+                </div>
               <div className="col s4 m4">
                 <a href="#"> <i className="material-icons prefix">delete</i></a>
               </div>

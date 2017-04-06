@@ -7,7 +7,7 @@ class HowTo extends React.Component {
     return(
      <div>
       <div className="parallax-container">
-        <div className="parallax"><img src="/src/assets/img/document-library.png" /></div>
+        <div className="parallax"></div>
         <div className="container">
           <div className="row">
             <div className="how">

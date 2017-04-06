@@ -22,7 +22,7 @@ render() {
   console.log(this.props)
     return (
       <div>
-        <table className="striped">
+        <table className="striped bordered responsive-table">
           <thead>
             <tr>
               <th>Username</th>

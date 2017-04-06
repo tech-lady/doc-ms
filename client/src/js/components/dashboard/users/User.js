@@ -19,9 +19,9 @@ constructor(props) {
             <td>{this.props.user.lastname}</td>
             <td>{this.props.user.email}</td>
             <td>
-              <Link to={`/dashboard/users/${this.props.user.id}`}><i className="material-icons prefix">remove_red_eye</i></Link>
+              <Link to={`/dashboard/users/${this.props.user.id}`}><i className="icon-change material-icons prefix">remove_red_eye</i></Link>
             </td>
-            <td><i className="material-icons prefix">delete</i></td>
+            <td><i className="icon-change material-icons prefix">delete</i></td>
           </tr>
 
     );

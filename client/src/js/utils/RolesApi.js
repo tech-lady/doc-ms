@@ -20,7 +20,7 @@ export default class RolesApi {
 
   static create(data) {
     return new Promise((resolve, reject) => {
-      axios.post('api/roles', data)
+      axios.post('/roles', data)
      .then(res => resolve(res.data))
       .catch(error => reject(error));
     });
