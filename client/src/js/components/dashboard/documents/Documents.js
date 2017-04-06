@@ -40,6 +40,7 @@ class Documents extends React.Component {
 
   render() {
    return (
+
     <div>
 
  <a className="modal-trigger btn-floating btn-large waves-effect waves-light" href="#modal1"><i className="material-icons">add</i></a>
@@ -66,8 +67,9 @@ Documents.contextTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const documents = state.documents.rows || [];
   return {
-    documents: state.documents
+    documents
   }
 }
 
