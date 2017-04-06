@@ -21,7 +21,8 @@ export const userProfile = (user) => {
   const profile = {
     id: user.id,
     username: user.username,
-    name: user.name,
+    firstname: user.firstname,
+    lastname: user.lastname,
     email: user.email
 
   };
