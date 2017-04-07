@@ -5,10 +5,11 @@ export default (state = [], action) => {
     case types.GET_ALL_DOCUMENTS:
       return action.documents;
     case types.GET_DOCUMENT:
-      console.log(action.doc);
       return [action.doc];
     case types.DOCUMENT_SUCCESS:
-      return Object.assign({}, state, action.payload);
+      return [...state, action.payload];
+    case types.DELETE_DOCUMENT:
+      return state.filter(doc => action.id !== doc.id);
     default:
       return state;
   }

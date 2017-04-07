@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { isAuthenticated } from '../../utils/helpers';
+import { isAuthenticated, getPayload } from '../../utils/helpers';
 import * as authActions from '../../actions/Authentication'
 
 export default (ComposedComponent)  => {
@@ -10,7 +10,7 @@ export default (ComposedComponent)  => {
     componentWillMount() {
       if(isAuthenticated()) {
         this.props.actions.authenticate()
-      } else if(!this.props.auth.authenticated) {
+      } else {
         this.context.router.push('/login')
       }
     }
@@ -21,6 +21,7 @@ export default (ComposedComponent)  => {
       }
     }
     render() {
+      console.log(getPayload());
       return (
         <ComposedComponent {...this.props} />
       )

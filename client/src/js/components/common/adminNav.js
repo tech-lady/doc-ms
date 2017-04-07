@@ -23,4 +23,4 @@ class AdminNav extends React.Component {
       </div>
     );
   }
-}
+};

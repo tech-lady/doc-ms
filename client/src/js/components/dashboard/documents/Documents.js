@@ -6,26 +6,27 @@ import { Link } from 'react-router';
 import Search from '../Search';
 import Document from './Document';
 import DocumentApi from '../../../utils/DocumentsApi';
-import { loadDocuments } from '../../../actions/Documents';
+import { loadDocuments, searchDocument } from '../../../actions/Documents';
 import CreateDocument from './CreateDocument';
 import modal from '../../common/modal';
+import { getPayload } from '../../../utils/helpers';
 
 
 class Documents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: [],
+      query: ""
     }
     this.renderDocument = this.renderDocument.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   
-
-  // componentWillMount() {
-  //   this.props.loadDocuments()
-  //   console.log(this.state);
-  // }
+  handleSearch(event){
+    this.setState({ query: event.target.result   })
+    this.props.searchDocument(getPayload().id, event.target.value);
+  }
 
     onClick(e) {
       this.setState({ showCreate: true });
@@ -33,7 +34,6 @@ class Documents extends React.Component {
 
     componentDidMount() {
       this.props.loadDocuments()
-      console.log(this.state);
     }
 
   renderDocument(document) {
@@ -52,7 +52,7 @@ class Documents extends React.Component {
       <CreateDocument />
       </Modal>
       <div>
-        <Search />
+        <Search  handleSearch={this.handleSearch}  value={this.state.value}/>
          <div className="documents">
             <div className="row">
               {this.props.documents.map(this.renderDocument)}
@@ -77,7 +77,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadDocuments: bindActionCreators(loadDocuments, dispatch)
+    loadDocuments: bindActionCreators(loadDocuments, dispatch),
+    searchDocument: bindActionCreators(searchDocument, dispatch)
   }
 }
 

@@ -33,20 +33,23 @@ export default class Document {
     return new Promise((resolve, reject) => {
       axios.delete(`/documents/${id}`)
       .then(res => resolve(res.data))
-      .catch((error) => {
-        reject(error);
-      });
+      .catch((error) => reject(error));
     });
   }
 
   static update(updateData) {
     return new Promise((resolve, reject) => {
       axios.put(`/documents/${updateData.id}`, updateData.data)
-      .then((res) => {
-        console.log(res.data);
-        resolve(res.data);
-      })
+      .then(res => resolve(res.data))
+     .catch(error => reject(error));
+    });
+  }
+
+  static search(id, query) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/users/${id}/documents?q=${query}`)
+      .then(res => resolve(res.data))
       .catch(error => reject(error));
     });
   }
-}
+};

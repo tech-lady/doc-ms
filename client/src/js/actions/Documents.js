@@ -20,11 +20,11 @@ class Actions {
   }
 
   static updateDocument(id) {
-    return { type: 'DELETE_DOCUMENT', id };
+    return { type: types.UPDATE_DOCUMENT, id };
   }
 
   static deleteDocument(id) {
-    return { type: 'DELETE_DOCUMENT', id };
+    return { type: types.DELETE_DOCUMENT, id };
   }
 
   static documentError(error) {
@@ -62,6 +62,7 @@ export const getDocument = id => (dispatch) => {
 export const createDocument = data => (dispatch) => {
   DocumentApi.create(data)
     .then((res) => {
+      console.log(res);
       dispatch(Actions.documentSuccess(res));
     })
     .catch(error => dispatch(error));
@@ -71,7 +72,7 @@ export const createDocument = data => (dispatch) => {
 export const deleteDocument = id => (dispatch) => {
   DocumentApi.delete(id)
      .then((res) => {
-       dispatch(Actions.documentSuccess(res));
+       dispatch(Actions.deleteDocument(id));
      })
     .catch(error => dispatch(error));
 };
@@ -83,4 +84,14 @@ export const updateDocument = updateData => (dispatch) => {
        dispatch(Actions.documentSuccess(res));
      })
     .catch(error => dispatch(error));
+};
+
+
+export const searchDocument = (id, query) => (dispatch) => {
+  DocumentApi.search(id, query)
+  .then((res) => {
+    console.log(res);
+    dispatch(Actions.getAllDocuments(res));
+  })
+  .catch(error => dispatch(error));
 };

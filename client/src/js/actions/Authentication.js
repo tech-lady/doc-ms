@@ -11,7 +11,7 @@ import { setToken, removeToken } from '../utils/helpers';
 export const signInUser = ({ email, password }) => (dispatch) => {
   axios.post('/users/login', { email, password })
     .then((res) => {
-      setToken(res.data.token);
+      setToken(res.data.token, res.data.payload);
 
       dispatch({ type: AUTH_USER });
 

@@ -1,10 +1,7 @@
 import React from 'react';
 
 
-
-class Search extends React.Component {
-
-  render() {
+const Search = ({handleSearch, value}) => {
     return (
       <div>
         <div className="search">
@@ -13,7 +10,12 @@ class Search extends React.Component {
               <div className="row">
                 <div className="input-field col s12">
                   <i className="icon-change material-icons prefix">search</i>
-                  <input type="text" id="autocomplete-input" className="autocomplete" />
+                  <input 
+                    type="text" 
+                    id="autocomplete-input" 
+                    value={value}
+                    className="autocomplete" 
+                    onChange={handleSearch}/>
                   <label htmlFor="autocomplete-input">search</label>
                 </div>
               </div>
@@ -23,6 +25,5 @@ class Search extends React.Component {
       </div>
     );
   }
-}
 
 export default Search;
