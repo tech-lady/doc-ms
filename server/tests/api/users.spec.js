@@ -73,7 +73,7 @@ describe('Users', () => {
   describe('Get Multiple Users', () => {
     it('should get all existing users', (done) => {
       request.get('/api/users')
-        .set({ 'x-access-token': regularToken })
+        .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           res.status.should.be.equal(200);
           done();

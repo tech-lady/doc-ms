@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Login from './login';
-import Register from './Register'
+import Register from './register'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as authAction from '../../actions/Authentication';
