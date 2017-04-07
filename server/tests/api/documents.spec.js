@@ -212,6 +212,25 @@ describe('Document Api', function () {
     });
   });
 
+  describe('User Document', () => {
+    it('should get an existing user\'s documents', (done) => {
+      request.get(`/api/users/${userDetail[2].id}/documents`)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          res.status.should.equal(200);
+          done();
+        });
+    });
+    it('should set limit for each page', (done) => {
+      request.get(`/api/users/${userDetail[2].id}/documents?limit=8`)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          res.status.should.equal(200);
+          done();
+        });
+    });
+  });
+
   describe('Edit Document', () => {
     it('should allow user to edit document', (done) => {
       request.put(`/api/documents/${documentDetail[2].id}`)
@@ -219,7 +238,7 @@ describe('Document Api', function () {
       .set({ 'x-acess-token': regularToken })
       .end((err, res) => {
         res.status.should.equal(200);
-        res.body.message.should.equal('Update successful');       
+        res.body.message.should.equal('Update successful');
       });
       done();
     });

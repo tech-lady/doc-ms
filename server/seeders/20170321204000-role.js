@@ -21,7 +21,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      title: 'regular',
+      title: 'fellow',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});

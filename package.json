@@ -8,7 +8,7 @@
     "start:dev": "nodemon --exec node_modules/.bin/babel-node server.js",
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "test": "cross-env npm run coverage",
-    "coverage": "cross-env npm run 'drop:db' && npm run 'create:db' && npm run 'migrate:test' && NODE_ENV=test node_modules/.bin/istanbul cover  ./node_modules/.bin/_mocha  ./server/tests/**/*.js -- --require babel-register",
+    "coverage": "cross-env npm run 'drop:db' && npm run 'create:db' && npm run 'migrate:test' && NODE_ENV=test node_modules/.bin/istanbul cover  ./node_modules/.bin/_mocha  ./server/tests/**/*.js -- --require babel-register && cat ./coverage/lcov.info | coveralls",
     "seed": "NODE_ENV=test sequelize db:seed:all",
     "drop:db": "psql -c 'drop database if exists doc_api_test;' -U postgres",
     "create:db": "psql -c 'create database doc_api_test;' -U postgres",
