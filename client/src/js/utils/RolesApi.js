@@ -4,16 +4,19 @@ export default class RolesApi {
 
   static getAll() {
     return new Promise((resolve, reject) => {
-      axios.get('api/roles')
-      .then(roles => resolve(roles))
+      axios.get('/roles')
+      .then(roles => resolve(roles.data))
       .catch(error => reject(error));
     });
   }
 
   static get(id) {
     return new Promise((resolve, reject) => {
-      axios.get(`api/roles/${id}`)
-      .then(roles => resolve(roles))
+      axios.get(`/roles/${id}`)
+      .then((roles) => {
+        console.log( roles);
+        return resolve(roles);
+      })
       .catch(error => reject(error));
     });
   }

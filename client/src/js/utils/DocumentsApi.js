@@ -39,10 +39,13 @@ export default class Document {
     });
   }
 
-  static update(id, data) {
+  static update(updateData) {
     return new Promise((resolve, reject) => {
-      axios.update(`/documents/${id}`, data)
-      .then(res => resolve(res.data))
+      axios.put(`/documents/${updateData.id}`, updateData.data)
+      .then((res) => {
+        console.log(res.data);
+        resolve(res.data);
+      })
       .catch(error => reject(error));
     });
   }

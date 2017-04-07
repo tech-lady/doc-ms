@@ -76,8 +76,9 @@ export const deleteDocument = id => (dispatch) => {
     .catch(error => dispatch(error));
 };
 
-export const updateDocument = id => (dispatch) => {
-  DocumentApi.update(id)
+export const updateDocument = updateData => (dispatch) => {
+  console.log('update document action', updateData);
+  DocumentApi.update(updateData)
      .then((res) => {
        dispatch(Actions.documentSuccess(res));
      })

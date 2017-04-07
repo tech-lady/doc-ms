@@ -12,6 +12,8 @@ import CreateDocument from './js/components/dashboard/documents/CreateDocument';
 import ProfilePage from './js/components/dashboard/ProfilePage';
 import userList from './js/components/dashboard/users/userList';
 import Users from './js/components/dashboard/users/User';
+import Roles from './js/components/dashboard/roles/Roles';
+import viewRole from './js/components/dashboard/roles/viewRole';
 
 
 export default (
@@ -26,6 +28,8 @@ export default (
         <Route path="profile" component={ProfilePage}></Route>
         <Route path="users" component={userList}></Route>
         <Route path="users/:id" component={viewUser}></Route>
+        <Route path="roles" component={Roles}></Route>
+        <Route path="roles/:id" component={viewRole}></Route>
       </Route>
       <Route path="*" component={ViewDocument} />
   </Route>

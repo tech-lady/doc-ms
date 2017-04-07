@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
+import  ViewRole from './viewRole';
 
-import { summarize } from '../../../utils/helpers'; 
-import  ViewDocument from './viewDocument';
-
-class Document extends React.Component {
+class Role extends React.Component {
   
   constructor(props) {
     super(props);
@@ -12,16 +10,16 @@ class Document extends React.Component {
 
   render() {
     return (
-      <div className="col s12 m3" key={this.props.document.id}>
+      <div className="col s12 m3" key={this.props.role.id}>
         <div className="card darken-1">
           <div className="card-content ">
-            <span className="card-title">{this.props.document.title}</span>
-            <p>{summarize(this.props.document.content, 13)}</p>
+            <span className="card-title">{this.props.role.title}</span>
+            <p>{this.props.role.title}</p>
           </div>
           <div className="card-action">
             <div className="row"> 
               <div className="col s4 m4">
-                <Link to={`/dashboard/documents/${this.props.document.id}`}> <i 
+                <Link to={`/dashboard/roles/${this.props.role.id}`}> <i 
                   className="material-icons prefix">remove_red_eye</i></Link>
               </div>
                 <div className="col s4 m4">
@@ -39,16 +37,16 @@ class Document extends React.Component {
 
 // const mapStateToProps = (state, ownProps) => {
 //   return {
-//     documents: state.documents
+//     roles: state.roles
 //   }
 // }
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
-//     actions: bindActionCreators(documentAction, dispatch)
+//     actions: bindActionCreators(roleAction, dispatch)
 //   }
 // }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Document);
+// export default connect(mapStateToProps, mapDispatchToProps)(Role);
 
-export default  Document
+export default  Role

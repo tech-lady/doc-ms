@@ -1,14 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Modal, Button, Row, Col, Icon } from 'react-materialize';
 import { summarize } from '../../../utils/helpers'; 
 import  ViewDocument from './viewDocument';
 import CreateDocument from './CreateDocument';
+import * as documentAction from '../../../actions/Documents';
 
 class Document extends React.Component {
   
   constructor(props) {
     super(props);
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+  onDelete(e) {
+    this.props.actions.deleteDocument(this.props.document.id);
   }
 
   render() {
@@ -35,7 +43,7 @@ class Document extends React.Component {
                   </Modal>
                 </div>
               <div className="col s4 m4">
-                <a href="#"> <i className="material-icons prefix">delete</i></a>
+                <a href="#"> <i onClick={this.onDelete} className="material-icons prefix">delete</i></a>
               </div>
             </div>
           </div>
@@ -51,12 +59,10 @@ class Document extends React.Component {
 //   }
 // }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     actions: bindActionCreators(documentAction, dispatch)
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(documentAction, dispatch)
+  }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Document);
-
-export default  Document
+export default connect(null, mapDispatchToProps)(Document);

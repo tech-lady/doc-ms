@@ -20,7 +20,6 @@ class CreateDocument extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onChange(e) {
-    console.log(e.target.value);
     this.setState({
       [ e.target.name ] : e.target.value
     })
@@ -28,14 +27,12 @@ class CreateDocument extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     if (this.props.document) {
       this.update();
     }
   }
 
   update() {
-    console.log(this.props.document, 'document document document');
     this.setState({ title: this.props.document.title,
       content: this.props.document.content, status: this.props.status });
   }
@@ -45,10 +42,12 @@ class CreateDocument extends React.Component {
     if (this.state.status === 'create') {
       this.props.actions.createDocument(this.state);
     } else {
-      console.log('update document');
+      this.props.actions.updateDocument({ id: this.props.document.id, data: this.state });
     }
   }
   render() {
+    const buttonName = this.state.status === 'create' ? 'Save' : 'update';
+  
     return (
       <div>
         <div className="col m12 l12 s12 ">
@@ -76,7 +75,7 @@ class CreateDocument extends React.Component {
                 </div>
                 <div className="row">
                   <div className="col m12 l12 s12 ">
-                    <button className="btn btn-large waves-effect waves-light"> Save </button>
+                    <button className="btn btn-large waves-effect waves-light"> { buttonName }</button>
                   </div>
                 </div>
               </form> 

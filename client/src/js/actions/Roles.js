@@ -37,10 +37,11 @@ class Actions {
 }
 
 
-export const loadRole = () => (dispatch) => {
+export const loadRoles = () => (dispatch) => {
   RoleApi.getAll()
     .then((roles) => {
-      dispatch(Actions.getAllDocuments(roles));
+      console.log(roles);
+      dispatch(Actions.getAllRoles(roles));
     })
     .catch((error) => {
       throw (error);

@@ -15,7 +15,7 @@ class ViewDocument extends Component {
 
   renderDocument(document) {
     console.log(document);
-          console.log(Modal)
+    console.log(Modal)
 
     return (
       <div>
@@ -24,19 +24,6 @@ class ViewDocument extends Component {
             <div className="card-content ">
               <span className="card-title">{document.title}</span>
               <p>{document.content}</p>
-            </div>
-            <div className="card-action">
-              <div className="row"> 
-                <div className="col s4 m4">
-                  <Link to={`/dashboard/documents/${document.id}`}> <i 
-                    className="material-icons prefix">remove_red_eye</i></Link>
-                </div>
-                  <div className="col s4 m4">
-                    <a href="#mode"> <i className="material-icons prefix">mode_edit</i></a>              </div>
-                <div className="col s4 m4">
-                  <a href="#"> <i className="material-icons prefix">delete</i></a>
-                </div>
-              </div>
             </div>
           </div>
         </div>

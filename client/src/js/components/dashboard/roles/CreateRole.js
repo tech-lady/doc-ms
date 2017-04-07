@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { bindActionCreators } from 'redux';
-import * as RoleAction from '../../../actions/Roles';
+import * as roleAction from '../../../actions/Roles';
 import { TextInput, TextArea } from '../../common/forms';
 import { connect } from 'react-redux';
 
@@ -47,14 +47,6 @@ class CreateRole extends React.Component {
                     onChange={this.onChange} /> 
                 </div>
                 <div className="row">
-                  <TextArea 
-                    id="content" 
-                    value={this.state.content}
-                    className="validate" 
-                    name="content"
-                    onChange={this.onChange}/>
-                </div>
-                <div className="row">
                   <div className="col m12 l12 s12 ">
                     <button className="btn btn-large waves-effect waves-light"> Save </button>
                   </div>
@@ -74,11 +66,11 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state.roles);
-  return {
-    data: 'hello'
-  }
-}
+// const mapStateToProps = (state) => {
+//   console.log(state.roles);
+//   return {
+//     data: 'hello'
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateRole);
+export default connect(null, mapDispatchToProps)(CreateRole);

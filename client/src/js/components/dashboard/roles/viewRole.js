@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { getUser } from '../../../actions/Roles';
+import { getRole } from '../../../actions/Roles';
 import { bindActionCreators } from 'redux'
 
 class ViewRole extends Component {
@@ -11,7 +11,6 @@ class ViewRole extends Component {
 
   renderRole() {
     let { role } = this.props;
-    user = user[0].data
     return (
       <div className="col s12 m12" key={role.id}>
         <div className="card darken-1">
@@ -25,7 +24,7 @@ class ViewRole extends Component {
                   className="material-icons prefix">remove_red_eye</i></Link>
               </div>
                 <div className="col s4 m4">
-                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a>              </div>
+                  <a href="#modal1"> <i className="material-icons prefix">mode_edit</i></a> </div>
               <div className="col s4 m4">
                 <a href="#"> <i className="material-icons prefix">delete</i></a>
               </div>
@@ -47,14 +46,13 @@ class ViewRole extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state, 'this is state');
   return {
     role: state.roles
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps)
+  console.log(ownProps);
   return {
     getRole: bindActionCreators(getRole, dispatch)
   }

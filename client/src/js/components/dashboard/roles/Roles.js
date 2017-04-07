@@ -7,7 +7,7 @@ import Role from './Role';
 import RoleApi from '../../../utils/RolesApi';
 import { loadRoles } from '../../../actions/Roles';
 import CreateRole from './CreateRole';
-
+import { Modal, Button, Row, Col, Icon } from 'react-materialize';
 
 class Roles extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class Roles extends React.Component {
       roles: [],
     }
     this.renderRole = this.renderRole.bind(this);
-    this.onClick = this.onClick.bind(this);
+    // this.onClick = this.onClick.bind(this);
   }
   
 
@@ -25,12 +25,12 @@ class Roles extends React.Component {
   //   console.log(this.state);
   // }
 
-    onClick(e) {
-      this.setState({ showCreate: true });
-    }
+  //   onClick(e) {
+  //     this.setState({ showCreate: true });
+  //   }
 
     componentDidMount() {
-      this.props.loadRoles()
+      this.props.loadRoles();
       console.log(this.state);
     }
 
@@ -40,15 +40,14 @@ class Roles extends React.Component {
 
   render() {
    return (
-
     <div>
-
- <a className="modal-trigger btn-floating btn-large waves-effect waves-light" href="#modal1"><i className="material-icons">add</i></a>
-  <div id="modal1" className="modal modal-fixed-footer">
-    <div class="modal-content">
-    <CreateRole />
-    </div>
-  </div>
+     <Modal
+        header='Modal Header'
+        trigger={
+        <a className="btn-floating btn-large waves-effect waves-light"><i className="material-icons">add</i></a>
+      }>
+      <CreateRole />
+      </Modal>
       <div>
         <Search />
          <div className="roles">
@@ -57,17 +56,14 @@ class Roles extends React.Component {
             </div>
           </div>
       </div>
-      </div>
+    </div>
     );
   }
 }
 
-Roles.contextTypes = {
-  router: React.PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state, ownProps) => {
-  const roles = state.roles.rows || [];
+  console.log(state);
+  const roles = state.roles || [];
   return {
     roles
   }
@@ -80,3 +76,5 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Roles);
+
+// export default Roles;

@@ -5,7 +5,6 @@ export default (state = [], action) => {
     case types.GET_ALL_ROLES:
       return action.roles;
     case types.GET_ROLES:
-      console.log(action.role);
       return [action.role];
     default:
       return state;
