@@ -128,8 +128,9 @@ describe('Users', () => {
   describe('Search User', () => {
     it('should get an existing user', (done) => {
       request.get('/api/search/users/?q=ti')
-        .set({ 'x-access-token': regularToken })
+        .set({ 'x-access-token': adminToken })
         .end((err, res) => {
+          console.log(res.body);
           res.body.should.have.lengthOf(2);
           res.status.should.be.equal(200);
           done();
@@ -160,6 +161,13 @@ describe('Users', () => {
         .end((err, res) => {
           res.status.should.be.equal(200);
           res.body.message.should.equal(`User with id ${defaultUser[0].id} deleted`);
+          done();
+        });
+    });
+    it('should disallow a regular user from deleting an existing user', (done) => {
+      request.delete(`/api/users/${defaultUser[0].id}`)
+        .end((err, res) => {
+          res.status.should.be.equal(401);
           done();
         });
     });
