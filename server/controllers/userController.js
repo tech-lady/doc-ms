@@ -164,7 +164,7 @@ export const updateUser = (req, res) => {
   db.User.findById(req.params.id)
   .then((user) => {
     if (!user) {
-      return res.status(401).json({
+      return res.status(404).json({
         message: `User with id ${req.params.id} not found!`
       });
     }

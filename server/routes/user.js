@@ -20,7 +20,7 @@ router.route('/search/users')
 router.route('/users/:id')
   .get(verifyToken, userCtrl.getUser)
   .put(verifyToken, userCtrl.updateUser)
-  .delete(verifyToken, userCtrl.deleteUser);
+  .delete(verifyToken, verifyAdmin, userCtrl.deleteUser);
 
 export default router;
 
