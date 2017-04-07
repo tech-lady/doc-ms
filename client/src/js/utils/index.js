@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getToken } from './helpers';
 
-const api = (AUTH_TOKEN = '') => {
+const api = (AUTH_TOKEN = '', BASE_URL) => {
   const instance = axios.create({
-    baseURL: process.env.BASE_URL || 'http://localhost:3001/api',
+    baseURL: BASE_URL || 'http://document-api.herokuapp.com/api',
   });
 
   // Adds interceptors to every request
