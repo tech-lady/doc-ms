@@ -14,6 +14,9 @@ router.route('/documents/private')
 router.route('/documents/public')
 .get(verifyToken, docCtrl.getPublicDocument);
 
+router.route('/users/:id/documents')
+.get(verifyToken, docCtrl.getUsersDocument);
+
 router.route('/search/documents')
 .get(verifyToken, docCtrl.searchDocument);
 
@@ -27,5 +30,6 @@ router.route('/documents/:id')
   .get(verifyToken, docCtrl.getDocument)
   .put(verifyToken, docCtrl.editDocument)
   .delete(verifyToken, docCtrl.deleteDocument);
+
 
 module.exports = router;

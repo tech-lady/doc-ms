@@ -2,13 +2,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { userDetail, roleDetail, documentDetail } from '../testFile';
-import app from '../../../server';
 import db from '../../models';
 
 const expect = chai.expect;
 const should = chai.should();
-chai.use(chaiHttp);
-//const request = supertest(app);
+
 
 
 process.env.NODE_ENV = 'test';
@@ -16,13 +14,10 @@ process.env.NODE_ENV = 'test';
 const User = db.User;
 const Document = db.Document;
 const Role = db.Role;
-// const adminUser = userDetail[1];
-// const regUser = userDetail[2];
 const publicDocument = documentDetail[3];
 
 describe('Document Model', () => {
   let docData;
-  let userData;
 
   before((done) => {
     Role.bulkCreate(roleDetail)
@@ -40,7 +35,6 @@ describe('Document Model', () => {
     it('should create new document', (done) => {
       Document.create(publicDocument)
         .then((newDocument) => {
-          console.log(newDocument);
           docData = newDocument;
           docData.should.have.property('ownerRoleId');
           done();
@@ -49,7 +43,6 @@ describe('Document Model', () => {
 
     it('created new document should exist', () => {
       docData.should.have.property('access');
-      //docData.should.be.an('object');
       docData.should.have.property('title');
       docData.should.have.property('content');
     });

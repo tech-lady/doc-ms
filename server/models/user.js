@@ -88,8 +88,9 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       toPublicJson() {
-        const user = delete this.dataValues.password;
-        return this.dataValues.password
+        delete this.dataValues.password;
+        delete this.dataValues.roleId;
+        return this.dataValues;
       }
     },
     hooks: {

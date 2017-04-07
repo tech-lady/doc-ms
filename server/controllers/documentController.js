@@ -1,7 +1,8 @@
 import db from '../models';
+import getUserDocumentQuery from '../helpers/query';
+import page from '../helpers/page';
 
 export const createDocument = (req, res) => {
-  console.log('hhhhhhhhhh heheheh', req.body);
   const newDoc = {
     title: req.body.title,
     content: req.body.content,
@@ -17,7 +18,7 @@ export const createDocument = (req, res) => {
 .then((docExist) => {
   if (docExist) {
     return res.status(409)
-    .json({ message: `title: ${newDoc.title} already exist`})
+    .json({ message: `title: ${newDoc.title} already exist` });
   }
 });
   db.Document.create(newDoc)
@@ -42,24 +43,42 @@ export const getDocument = (req, res) => {
       .json({ message: 'An error occured', error }));
 };
 
-export const getUserDocument = (req, res) => {
-  db.Document.findAll({
-    where: {
-      ownerId: req.params.id,
-      $or: [
-        { access: 'public' },
-        { ownerid: req.decoded.userId }
-      ]
-    }
+export const countUsersDoc = (req) => {
+  let rawQuery =
+      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})`;
+
+  if (req.query.q) {
+    rawQuery =
+      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE (("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
+  }
+  return db.sequelize.query(rawQuery, {
+    type: db.sequelize.QueryTypes.SELECT
+  });
+};
+
+
+export const getUsersDocument = (req, res) => {
+  db.sequelize.query(getUserDocumentQuery(req), {
+    type: db.sequelize.QueryTypes.SELECT
   })
-    .then((document) => {
-      if (!document) {
-        return res.status(404)
-          .json({ message: 'No match found for query' });
-      }
-      return res.status(200).json(document);
-    })
-    .catch(err => res.status(400).json(err));
+      .then((docs) => {
+        if (!docs) {
+          return res.status(404)
+            .send({ message: 'No document found' });
+        }
+        const query = page.pagination(req);
+        countUsersDoc(req)
+          .then((count) => {
+            const meta = {};
+            meta.totalCount = count[0].count;
+            meta.pageSize = query.limit;
+            meta.pageCount = Math.floor(meta.totalCount / query.limit) + 1;
+            meta.currentPage = Math.floor(query.offset / query.limit) + 1;
+            res.status(200).send({ paginationMeta: meta, docs });
+          });
+      }).catch((err) => {
+        res.status(400).send(err.message);
+      });
 };
 
 export const getPublicDocument = (req, res) => {
@@ -78,34 +97,6 @@ export const getPublicDocument = (req, res) => {
   .catch(err => res.status(400).json(err));
 };
 
-export const countUsersDoc = (req, res) => {
-  const page = helper.pagination(req);
-  let rawQuery =
-      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})`;
-
-  if (req.query.q) {
-    rawQuery =
-      `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE (("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
-  }
-  db.sequelize.query(rawQuery, {
-    type: db.sequelize.QueryTypes.SELECT
-  })
-    .then((count) => {
-      if (!count) {
-        return res.status(404)
-          .json({ message: 'No document found' });
-      }
-      const meta = {};
-      meta.totalCount = count[0].count;
-      meta.pageSize = page.limit;
-      meta.pageCount = Math.floor(meta.totalCount / page.limit) + 1;
-      meta.currentPage = Math.floor(page.offset / page.limit) + 1;
-      res.status(200).send({ paginationMeta: meta });
-    })
-    .catch(err => res.status(400).json(err));
-};
-
-
 
 export const getDocuments = (req, res) => {
   db.Document.findAndCount({
@@ -122,7 +113,6 @@ export const getDocuments = (req, res) => {
 };
 
 export const searchDocument = (req, res) => {
-  console.log(':::::::::hello');
   db.Document.findAll({
     where: {
       access: 'public',

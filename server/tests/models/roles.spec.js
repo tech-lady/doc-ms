@@ -1,15 +1,11 @@
 /* eslint no-unused-expressions: "off"*/
 import chai from 'chai';
-import chaiHttp from 'chai-http';
 import { roleDetail } from '../testFile';
-import app from '../../../server';
 import db from '../../models';
 
 const expect = chai.expect;
 const should = chai.should();
-chai.use(chaiHttp);
-// const request = supertest(app);
-const request = chai.request(app);
+
 
 process.env.NODE_ENV = 'test';
 

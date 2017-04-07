@@ -12,15 +12,15 @@ router.route('/users/logout')
 
 router.route('/users')
   .post(userCtrl.createUser)
-  .get(verifyToken, userCtrl.getUsers);
+  .get(verifyToken, verifyAdmin, userCtrl.findAllUsers);
 
 router.route('/search/users')
-.get(verifyToken, userCtrl.searchUser);
+.get(verifyToken, verifyAdmin, userCtrl.searchUser);
 
 router.route('/users/:id')
   .get(verifyToken, userCtrl.getUser)
   .put(verifyToken, userCtrl.updateUser)
-  .delete(verifyToken, verifyAdmin, userCtrl.deleteUser);
+  .delete(verifyToken, userCtrl.deleteUser);
 
 export default router;
 
