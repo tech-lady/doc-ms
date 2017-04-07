@@ -1,17 +1,14 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { userDetail, roleDetail, defaultUser } from '../testFile';
-import app from '../../../server';
+import app from '../../../testserver';
 import db from '../../models';
 
 
 const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
-// const request = supertest(app);
 const request = chai.request(app);
-
-// console.log(request);
 
 describe('Users', () => {
   let regularToken;
@@ -23,7 +20,7 @@ describe('Users', () => {
         .then(() => {
           db.User.create(defaultUser[1])
             .then(() => {
-              request.post('/users/login')
+              request.post('/api/users/login')
                 .send(defaultUser[1])
                 .end((err, res) => {
                   adminToken = res.body.token;
@@ -37,7 +34,7 @@ describe('Users', () => {
 
   describe('Create Users', () => {
     it('should create a new user', (done) => {
-      request.post('/users')
+      request.post('/api/users')
         .send(defaultUser[0])
         .end((err, res) => {
           regularToken = res.body.token;
@@ -53,7 +50,7 @@ describe('Users', () => {
         username: '',
         password: 12344567
       };
-      request.post('/users')
+      request.post('/api/users')
       .send(invalid)
       .end((err, res) => {
         res.status.should.be.equal(400);
@@ -64,7 +61,7 @@ describe('Users', () => {
 
   describe('Get User', () => {
     it('should get an existing user', (done) => {
-      request.get(`/users/${userDetail[2].id}`)
+      request.get(`/api/users/${userDetail[2].id}`)
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
           res.status.should.be.equal(200);
@@ -75,7 +72,7 @@ describe('Users', () => {
 
   describe('Get Multiple Users', () => {
     it('should get all existing users', (done) => {
-      request.get('/users')
+      request.get('/api/users')
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
           res.status.should.be.equal(200);
@@ -86,7 +83,7 @@ describe('Users', () => {
 
   describe('Create Admin', () => {
     it('should not allow admin account creation on signup', (done) => {
-      request.post('/users')
+      request.post('/api/users')
       .send(userDetail[0])
       .end((err, res) => {
         res.status.should.be.equal(403);
@@ -98,7 +95,7 @@ describe('Users', () => {
 
   describe('User Login', () => {
     it('should login an already registered user', (done) => {
-      request.post('/users/login')
+      request.post('/api/users/login')
         .send(defaultUser[0])
         .end((err, res) => {
           res.status.should.be.equal(200);
@@ -107,7 +104,7 @@ describe('Users', () => {
         });
     });
     it('should ensure that all credentials are entered on signin', (done) => {
-      request.post('/users/login')
+      request.post('/api/users/login')
         .send({ email: 'helo01', password: '12' })
         .end((err, res) => {
           res.status.should.be.equal(400);
@@ -119,7 +116,7 @@ describe('Users', () => {
 
   describe('User Logout', () => {
     it('should logout a logged in user', (done) => {
-      request.post('/users/logout')
+      request.post('/api/users/logout')
         .send(userDetail[2])
         .end((err, res) => {
           res.status.should.be.equal(200);
@@ -130,7 +127,7 @@ describe('Users', () => {
 
   describe('Search User', () => {
     it('should get an existing user', (done) => {
-      request.get('/search/users/?q=ti')
+      request.get('/api/search/users/?q=ti')
         .set({ 'x-access-token': regularToken })
         .end((err, res) => {
           res.body.should.have.lengthOf(2);
@@ -142,7 +139,7 @@ describe('Users', () => {
 
   describe('Update User', () => {
     it('should update an existing user\'s credential', (done) => {
-      request.put(`/users/${defaultUser[0].id}`)
+      request.put(`/api/users/${defaultUser[0].id}`)
       .send({
         firstname: 'ade',
         lastname: 'jare'
@@ -158,7 +155,7 @@ describe('Users', () => {
 
   describe('Delete User', () => {
     it('should allow an admin delete an existing user', (done) => {
-      request.delete(`/users/${defaultUser[0].id}`)
+      request.delete(`/api/users/${defaultUser[0].id}`)
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           res.status.should.be.equal(200);

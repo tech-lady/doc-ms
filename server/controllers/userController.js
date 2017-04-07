@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import db from '../models';
+import page from '../helpers/page';
 import { userProfile, checkRoleId, isSuperAdmin } from '../helpers/helpers';
 
 dotenv.config({ silence: true });
@@ -55,7 +56,7 @@ export const createUser = (req, res) => {
         roleId: user.roleId
       }, secret, { expiresIn: '1 day' });
 
-      res.status(201).json({ user: user.toPublicJson(), token });
+      res.status(201).json({ token, payload: user.toPublicJson() });
     })
     .catch(error => res.status(400).json(error.errors));
 };
@@ -81,8 +82,7 @@ export const login = (req, res) => {
           secret, {
             expiresIn: '1 day'
           });
-
-      res.status(200).json({ user: user.toPublicJson(), token });
+      res.status(200).json({ token, payload: user.toPublicJson() });
     })
     .catch(error => res.status(500).json(error));
 };
@@ -111,11 +111,11 @@ export const getUsers = (req, res) => {
 
 
 export const findAllUsers = (req, res) => {
-  const page = helper.pagination(req);
-  const limit = page.limit;
-  const offset = page.offset;
-  const order = page.order;
-  db.User.findAndCountAll({ limit, offset, order })
+  const query = page.pagination(req);
+  const limit = query.limit;
+  const offset = query.offset;
+  const order = query.order;
+  db.User.findAndCountAll(query)
       .then((users) => {
         if (!users) {
           return res.status(404)
@@ -123,7 +123,7 @@ export const findAllUsers = (req, res) => {
         }
         const meta = {};
         meta.totalCount = users.count;
-        meta.pageSize = limit;
+        meta.pageSize = users.rows.length;
         meta.pageCount = Math.floor(meta.totalCount / limit) + 1;
         meta.currentPage = Math.floor(offset / limit) + 1;
         res.status(200).send({ paginationMeta: meta, result: users.rows });

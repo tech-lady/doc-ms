@@ -1,14 +1,17 @@
 import express from 'express';
 import logger from 'morgan';
-import sequelize from 'sequelize';
 import bodyParser from 'body-parser';
+import path from 'path';
+import webpack from 'webpack';
+
 import routes from './server/routes';
 import models from './server/models';
-import http from 'http';
+import webpackConfig from './webpack.config';
 
 
-// Set up the express app
+const compiler = webpack(webpackConfig);
 const app = express();
+
 
 // Log requests to the console.
 app.use(logger('dev'));
@@ -21,26 +24,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // require('./server/routes/index')(app);
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 
-app.use('/', routes.roleRouter);
-app.use('/', routes.docRouter);
-app.use('/', routes.userRouter);
+app.use('/api', routes.roleRouter);
+app.use('/api', routes.docRouter);
+app.use('/api', routes.userRouter);
 
-app.get('/', (req, res) => res.status(200).send({
-  message: 'Welcome to the beginning of greatness.',
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: webpackConfig.output.publicPath
 }));
+app.use(require('webpack-hot-middleware')(compiler));
+app.use(express.static(path.join(__dirname, './client')));
 
 
-// models.sequelize.sync().then(() => {
-      //   console.log('database migrated');
-      // });
-
-
-
-const port = parseInt(process.env.PORT, 10) || 8000;
-const server = http.createServer(app);
-server
-.listen(port, () => {
-  console.log(`app started on port: ${port}`);
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('./client/src/index.html'));
 });
 
-export default server;
+
+models.sequelize.sync().then(() => {
+  const port = process.env.PORT || 3001;
+  app.listen(port, () => {
+    console.log(`server started in port ${port}`);
+  });
+});
+
+export default app;
