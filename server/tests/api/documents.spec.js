@@ -117,6 +117,7 @@ describe('Document Api', function () {
     it('should get existing documents', (done) => {
       request.get('/api/documents')
         .set({ 'x-access-token': regularToken })
+        .send({ access: 'public' })
         .end((err, res) => {
           res.status.should.be.equal(200);
           done();

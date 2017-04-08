@@ -68,7 +68,7 @@ export const userDetail = [{
   email: 'one@one.com',
   password: '12345678',
   roleId: 3
-},  {
+}, {
   id: 6,
   username: 'titi',
   firstname: 'bola',

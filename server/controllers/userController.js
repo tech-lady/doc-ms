@@ -9,39 +9,6 @@ dotenv.config({ silence: true });
 
 const secret = process.env.SECRET;
 
-export const createAdmin = (req, res) => {
-  if (checkRoleId(req)) {
-    return res.status(403)
-      .json({ message: 'You are not permitted to signup as an admin' });
-  }
-
-  db.User.findOne({
-    where: { email: req.body.email }
-  })
-  .then((oldUser) => {
-      /**
-       * if user already exists in the database
-       * return http status code 409
-       */
-    if (oldUser) {
-      return res.status(409)
-          .send({ message: `${req.body.email} already exists` });
-    }
-      // create admin
-    db.User.create(req.body)
-        .then((newAdmin) => {
-          const token = jwt.sign({
-            userId: newAdmin.id,
-            roleId: newAdmin.roleId
-          }, secret, { expiresIn: '5 days' });
-          return res.status(201)
-            .json({ message: 'New Admin created', newAdmin, token, expiresIn: '5 days' });
-        })
-        .catch(error => res.status(400)
-          .json({ errorMessage: error, message: 'An error occurred while creating an Admin' }));
-  });
-};
-
 export const createUser = (req, res) => {
   if (req.body.roleId === 1 || req.body.roleId === 2) {
     return res.status(403)
