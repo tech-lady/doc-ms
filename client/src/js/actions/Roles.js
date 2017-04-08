@@ -20,7 +20,7 @@ class Actions {
   }
 
   static updateRole(id) {
-    return { type: 'DELETE_ROLE', id };
+    return { type: 'UPDATE_ROLE', id };
   }
 
   static deleteRole(id) {
@@ -40,7 +40,6 @@ class Actions {
 export const loadRoles = () => (dispatch) => {
   RoleApi.getAll()
     .then((roles) => {
-      console.log(roles);
       dispatch(Actions.getAllRoles(roles));
     })
     .catch((error) => {
@@ -63,7 +62,7 @@ export const getRole = id => (dispatch) => {
 export const createRole = data => (dispatch) => {
   RoleApi.create(data)
     .then((res) => {
-      dispatch(Actions.roleSuccess(res));
+      dispatch(Actions.createRole(res.newRole));
     })
     .catch(error => dispatch(error));
 };
@@ -72,7 +71,7 @@ export const createRole = data => (dispatch) => {
 export const deleteRole = id => (dispatch) => {
   RoleApi.delete(id)
      .then((res) => {
-       dispatch(Actions.roleSuccess(res));
+       dispatch(Actions.deleteRole(res));
      })
     .catch(error => dispatch(error));
 };
@@ -80,7 +79,7 @@ export const deleteRole = id => (dispatch) => {
 export const updateRole = id => (dispatch) => {
   RoleApi.update(id)
      .then((res) => {
-       dispatch(Actions.roleSuccess(res));
+       dispatch(Actions.updateRole(res));
      })
     .catch(error => dispatch(error));
 };

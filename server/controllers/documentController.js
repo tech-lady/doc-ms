@@ -188,8 +188,8 @@ export const editDocument = (req, res) => {
           .json({ message: `documentid: ${req.body.id} does not exist` });
       }
       document.update(req.body)
-        .then(() => {
-          res.status(200).json({ message: 'Update successful' });
+        .then((updatedDocument) => {
+          res.status(200).json({ message: 'Update successful', updatedDocument });
         })
 .catch(err => res.status(400).json(err));
     });

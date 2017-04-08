@@ -45,7 +45,7 @@ class EditDocument extends React.Component {
           </div>
           <div className="row">
             <div className="input-field col s12">
-              <textarea id="textarea1" className="materialize-textarea" placeholder="Type Your documnent"></textarea>
+              <textarea id="textarea1" className="materialize-textarea" placeholder="Type Your document"></textarea>
             </div>
           </div>
         </form>
