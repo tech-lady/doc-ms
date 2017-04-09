@@ -85,7 +85,7 @@ export const updateDocument = updateData => (dispatch) => {
 export const searchDocument = (id, query) => (dispatch) => {
   DocumentApi.search(id, query)
   .then((res) => {
-    dispatch(Actions.getAllDocuments(res.docs));
+    dispatch(Actions.getAllDocuments(res.rows));
   })
   .catch(error => dispatch(error));
 };
