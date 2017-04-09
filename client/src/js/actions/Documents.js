@@ -19,8 +19,8 @@ class Actions {
     return { type: types.SHOW_DOCUMENT, doc };
   }
 
-  static updateDocument(id) {
-    return { type: types.UPDATE_DOCUMENT, id };
+  static updateDocument(updatedDocument) {
+    return { type: types.UPDATE_DOCUMENT, updatedDocument };
   }
 
   static deleteDocument(id) {
@@ -62,7 +62,6 @@ export const getDocument = id => (dispatch) => {
 export const createDocument = data => (dispatch) => {
   DocumentApi.create(data)
     .then((res) => {
-      console.log(res);
       dispatch(Actions.documentSuccess(res));
     })
     .catch(error => dispatch(error));
@@ -78,10 +77,9 @@ export const deleteDocument = id => (dispatch) => {
 };
 
 export const updateDocument = updateData => (dispatch) => {
-  console.log('update document action', updateData);
   DocumentApi.update(updateData)
      .then((res) => {
-       dispatch(Actions.documentSuccess(res));
+       dispatch(Actions.updateDocument(res.updatedDocument));
      })
     .catch(error => dispatch(error));
 };
@@ -90,8 +88,7 @@ export const updateDocument = updateData => (dispatch) => {
 export const searchDocument = (id, query) => (dispatch) => {
   DocumentApi.search(id, query)
   .then((res) => {
-    console.log(res);
-    dispatch(Actions.getAllDocuments(res));
+    dispatch(Actions.getAllDocuments(res.docs));
   })
   .catch(error => dispatch(error));
 };

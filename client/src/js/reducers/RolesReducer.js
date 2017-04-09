@@ -6,6 +6,8 @@ export default (state = [], action) => {
       return action.roles;
     case types.GET_ROLES:
       return [action.role];
+    case types.CREATE_ROLE:
+      return [...state, action.role];
     default:
       return state;
   }

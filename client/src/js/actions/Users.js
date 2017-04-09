@@ -41,7 +41,7 @@ export const loadUsers = () => (dispatch) => {
   UserApi.getAll()
     .then((users) => {
       console.log(users);
-      dispatch(Actions.getAllUsers(users.data));
+      dispatch(Actions.getAllUsers(users.data.result));
     })
     .catch((error) => {
       throw (error);
