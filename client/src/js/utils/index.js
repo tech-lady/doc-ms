@@ -3,7 +3,7 @@ import { getToken } from './helpers';
 
 const api = (AUTH_TOKEN = '', BASE_URL) => {
   const instance = axios.create({
-    baseURL: BASE_URL || 'http://localhost:3001/api',
+    baseURL: BASE_URL || 'http://document-api.herokuapp.com/api',
   });
 
   // Adds interceptors to every request
@@ -17,7 +17,7 @@ const api = (AUTH_TOKEN = '', BASE_URL) => {
   axios.interceptors.response.use((response) => {
     console.log(response);
     return response;
-  });
+  }, (error) => { console.log(error)});
 
   return instance;
 };

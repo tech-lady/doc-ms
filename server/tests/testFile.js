@@ -1,6 +1,6 @@
 export const documentDetail = [{
   id: 1,
-  ownerId: 1,
+  ownerId: 5,
   title: 'Hello World',
   content: 'Welcome to this world',
   access: 'private',

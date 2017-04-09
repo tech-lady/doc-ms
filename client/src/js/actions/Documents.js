@@ -1,6 +1,7 @@
 import DocumentApi from '../utils/DocumentsApi';
 import * as types from './Types';
 
+import { getPayload } from '../utils/helpers';
 
 class Actions {
   static getAllDocuments(documents) {
@@ -37,15 +38,14 @@ class Actions {
 }
 
 
+
 export const loadDocuments = () => (dispatch) => {
-  DocumentApi.getAll()
+  const { id } = getPayload();
+  DocumentApi.getAll(id)
     .then((documents) => {
-      console.log(documents);
       dispatch(Actions.getAllDocuments(documents.rows));
     })
-    .catch((error) => {
-      throw (error);
-    });
+    .catch((error) => { throw (error); });
 };
 
 export const getDocument = id => (dispatch) => {
@@ -58,7 +58,6 @@ export const getDocument = id => (dispatch) => {
   });
 };
 
-
 export const createDocument = data => (dispatch) => {
   DocumentApi.create(data)
     .then((res) => {
@@ -67,23 +66,21 @@ export const createDocument = data => (dispatch) => {
     .catch(error => dispatch(error));
 };
 
-
 export const deleteDocument = id => (dispatch) => {
   DocumentApi.delete(id)
-     .then((res) => {
-       dispatch(Actions.deleteDocument(id));
-     })
-    .catch(error => dispatch(error));
+    .then(() => {
+      dispatch(Actions.deleteDocument(id));
+    })
+  .catch(error => dispatch(error));
 };
 
 export const updateDocument = updateData => (dispatch) => {
   DocumentApi.update(updateData)
-     .then((res) => {
-       dispatch(Actions.updateDocument(res.updatedDocument));
-     })
-    .catch(error => dispatch(error));
+    .then((res) => {
+      dispatch(Actions.updateDocument(res.updatedDocument));
+    })
+  .catch(error => dispatch(error));
 };
-
 
 export const searchDocument = (id, query) => (dispatch) => {
   DocumentApi.search(id, query)

@@ -9,6 +9,41 @@ dotenv.config({ silence: true });
 
 const secret = process.env.SECRET;
 
+export const createAdmin = (req, res) => {
+  if (checkRoleId(req)) {
+    return res.status(403)
+      .json({ message: 'You are not permitted to signup as an admin' });
+  }
+
+  db.User.findOne({
+    where: { email: req.body.email }
+  })
+  .then((oldUser) => {
+      /**
+       * if user already exists in the database
+       * return http status code 409
+       */
+    if (oldUser) {
+      return res.status(409)
+          .json({ message: `${req.body.email} already exists` });
+    }
+      // create admin
+    db.User.findOne({ where: req.body })
+        .then((newAdmin) => {
+          newAdmin.update({ roleId: 2 }).then((adminUser) => {
+            const token = jwt.sign({
+              user: adminUser.id,
+              roleId: adminUser.roleId
+            }, secret, { expiresIn: '5 days' });
+            return res.status(201)
+            .json({ message: 'New Admin created', adminUser, token, expiresIn: '5 days' });
+          });
+        })
+        .catch(error => res.status(400)
+          .json({ errorMessage: error, message: 'An error occurred while creating an Admin' }));
+  });
+};
+
 export const createUser = (req, res) => {
   if (req.body.roleId === 1 || req.body.roleId === 2) {
     return res.status(403)
@@ -21,14 +56,18 @@ export const createUser = (req, res) => {
         userId: user.id,
         userName: user.username,
         roleId: user.roleId
-      }, secret, { expiresIn: '1 day' });
-
-      res.status(201).json({ token, payload: user.toPublicJson() });
+      },
+        secret, {
+          expiresIn: '1 day'
+        });
+        // console.log(user.toPublicJson());
+      res.status(200).json({ token, payload: user.toPublicJson() });
     })
     .catch(error => res.status(400).json(error.errors));
 };
 
 export const login = (req, res) => {
+  console.log(req.body);
   db.User.find({
     where: {
       email: req.body.email
@@ -193,6 +232,4 @@ export const deleteUser = (req, res) => {
     .then(res.status(200).json({ message: `User with id ${req.params.id} deleted` }))
     .catch(error => res.status(400).json(error));
 };
-
-
 

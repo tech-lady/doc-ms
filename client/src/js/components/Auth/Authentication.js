@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { isAuthenticated, getPayload } from '../../utils/helpers';
+import { isAuthenticated, getPayload, getToken } from '../../utils/helpers';
 import * as authActions from '../../actions/Authentication'
 
 export default (ComposedComponent)  => {
   class Authentication extends React.Component {
   
     componentWillMount() {
+      console.log(getPayload(), getToken())
       if(isAuthenticated()) {
         this.props.actions.authenticate()
       } else {
@@ -21,7 +22,6 @@ export default (ComposedComponent)  => {
       }
     }
     render() {
-      console.log(getPayload());
       return (
         <ComposedComponent {...this.props} />
       )

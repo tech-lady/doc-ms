@@ -2,9 +2,9 @@ import axios from './index';
 
 export default class Document {
 
-  static getAll() {
+  static getAll(id) {
     return new Promise((resolve, reject) => {
-      axios.get('/documents')
+      axios.get(`/users/${id}/documents`)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
     });
@@ -27,7 +27,6 @@ export default class Document {
       .catch(error => reject(error));
     });
   }
-
 
   static delete(id) {
     return new Promise((resolve, reject) => {
@@ -52,4 +51,4 @@ export default class Document {
       .catch(error => reject(error));
     });
   }
-};
+}
