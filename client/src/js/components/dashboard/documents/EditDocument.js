@@ -61,7 +61,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps)
   return {
     getDoc: bindActionCreators(getDocument, dispatch)
   }

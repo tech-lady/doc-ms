@@ -60,14 +60,12 @@ export const createUser = (req, res) => {
         secret, {
           expiresIn: '1 day'
         });
-        // console.log(user.toPublicJson());
-      res.status(200).json({ token, payload: user.toPublicJson() });
+      res.status(201).json({ token, payload: user.toPublicJson() });
     })
     .catch(error => res.status(400).json(error.errors));
 };
 
 export const login = (req, res) => {
-  console.log(req.body);
   db.User.find({
     where: {
       email: req.body.email

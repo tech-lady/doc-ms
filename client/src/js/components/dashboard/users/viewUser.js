@@ -10,10 +10,6 @@ class ViewUser extends Component {
   }
 
   renderUser(user) {
-    // let { user } = this.props;
-    // user = user[0].data
-
-    console.log(user);
     return (
       <div className="col s12 m12" key={user.id}>
         <div className="card darken-1">
@@ -58,7 +54,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps)
   return {
     getUser: bindActionCreators(getUser, dispatch)
   }

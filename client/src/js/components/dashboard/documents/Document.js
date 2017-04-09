@@ -52,13 +52,6 @@ class Document extends React.Component {
     );
   }
 }
-
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     documents: state.documents
-//   }
-// }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(documentAction, dispatch)

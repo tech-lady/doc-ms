@@ -28,7 +28,6 @@ class Login extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.actions.signInUser(this.state);
-    console.log(this.state)
   }
   render() {
     const error = () => {

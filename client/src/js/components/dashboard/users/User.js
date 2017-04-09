@@ -11,7 +11,6 @@ constructor(props) {
     super(props);
   }
   render() {
-    console.log(this.props);
     return (
           <tr>
             <td>{this.props.user.username}</td>

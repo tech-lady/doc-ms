@@ -14,7 +14,6 @@ export default class RolesApi {
     return new Promise((resolve, reject) => {
       axios.get(`/roles/${id}`)
       .then((roles) => {
-        console.log( roles);
         return resolve(roles);
       })
       .catch(error => reject(error));

@@ -96,7 +96,6 @@ describe('Users', () => {
       request.post('/api/users')
       .send(userDetail[2])
       .end((err, res) => {
-        console.log(res.body, '::::::::::creations');
         res.status.should.be.equal(200);
         done();
       });
@@ -140,7 +139,6 @@ describe('Users', () => {
       request.get('/api/search/users/?q=ti')
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
-          console.log(res.body);
           res.body.should.have.lengthOf(2);
           res.status.should.be.equal(200);
           done();

@@ -8,7 +8,6 @@ export default (ComposedComponent)  => {
   class Authentication extends React.Component {
   
     componentWillMount() {
-      console.log(getPayload(), getToken())
       if(isAuthenticated()) {
         this.props.actions.authenticate()
       } else {

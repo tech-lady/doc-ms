@@ -3,7 +3,6 @@ import getUserDocumentQuery from '../helpers/query';
 import page from '../helpers/page';
 
 export const createDocument = (req, res) => {
-  console.log(req.body);
   const newDoc = {
     title: req.body.title,
     content: req.body.content,
@@ -45,7 +44,6 @@ export const getDocument = (req, res) => {
 export const countUsersDoc = (req) => {
   let rawQuery =
       `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE ("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})`;
-console.log(req.query, 'issa controller!');
   if (req.query.q) {
     rawQuery =
       `SELECT COUNT (*) FROM "Documents" INNER JOIN "Users" ON "Documents"."ownerId" = "Users"."id" WHERE (("Users"."roleId" = ${req.decoded.roleId} AND "Documents"."access" = 'role') OR ("Documents"."ownerId" = ${req.params.id})) AND (( "Documents"."title" ILIKE '%${req.query.q}%' ) OR ( "Documents"."content" ILIKE '%${req.query.q}%'))`;
