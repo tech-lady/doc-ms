@@ -20,10 +20,10 @@ export const createDocument = (req, res) => {
     return res.status(409)
     .json({ message: `title: ${newDoc.title} already exist` });
   }
-});
   db.Document.create(newDoc)
     .then(document => res.status(201).json(document))
     .catch(error => res.status(400).json(error));
+});
 };
 
 export const getDocument = (req, res) => {

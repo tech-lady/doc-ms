@@ -91,15 +91,6 @@ describe('Users', () => {
         done();
       });
     });
-
-    it('should not allow admin account creation on signup', (done) => {
-      request.post('/api/users')
-      .send(userDetail[2])
-      .end((err, res) => {
-        res.status.should.be.equal(200);
-        done();
-      });
-    });
   });
 
   describe('User Login', () => {
