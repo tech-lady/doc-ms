@@ -57,6 +57,24 @@ describe('Users', () => {
         done();
       });
     });
+    it('should not allow creation of admin user', (done) => {
+      request.post('/api/users')
+        .send(userDetail[0])
+        .end((err, res) => {
+          console.log(res.body);
+          res.status.should.be.equal(403);
+          done();
+        });
+    });
+    // it('should allow super admin upgrade user to admin', (done) => {
+    //   request.post('/api/users')
+    //     .send(defaultUser[0])
+    //     .set({ 'x-access-token': adminToken })
+    //     .end((err, res) => {
+    //       res.status.should.be.equal(201);
+    //       done();
+    //     });
+    // });
   });
 
   describe('Get User', () => {

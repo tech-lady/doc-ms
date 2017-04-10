@@ -260,6 +260,30 @@ Endpoint for Users API.
   ]
 }]
 ```
+###Search for a User
+### Users
+
+#### Request
+- Endpoint: GET: `/search/users/?term=searchterm`
+- Requires: Authentication, Admin Role
+
+### Response
+- Status: '200: OK'
+-Body '(application/json)'
+```json
+[
+  {
+    "id": 3,
+    "username": "regular",
+    "firstname": "person",
+    "lastname": "gender",
+    "email": "sola@sola.com",
+    "password": "$2a$10$u3ZKAP9Nh0NLDv3GX8oCR.IVmsWqNduMYGWCkuyeauRsyp4U3IMEW",
+    "roleId": 3,
+    "createdAt": "2017-04-08T19:43:29.702Z",
+    "updatedAt": "2017-04-08T19:43:29.702Z"
+  }]
+```
 ## Documents
 Endpoint for document API.
 
@@ -447,6 +471,79 @@ Endpoint for document API.
   "updatedAt": "2017-04-08T19:43:29.717Z"  
 }]
 ```
+
+### Search
+#### Documents
+
+#### Request
+- Endpoint: GET: `/api/users/4/documents`
+- Requires: Authentication
+
+#### Response
+- Status: `200: OK`
+- Body `(application/json)`
+```json
+[{
+  "paginationMeta": {
+    "totalCount": "7",
+    "pageSize": 8,
+    "pageCount": 1,
+    "currentPage": 1
+  },
+  "rows": [
+    {
+      "id": 7,
+      "title": "ducimus quia voluptatum",
+      "content": "et nesciunt laboriosam\nexercitationem earum alias\naccusantium eligendi consequuntur libero adipisci\nvel ipsam aut blanditiis et\n \r\tvoluptatem quia doloribus ex\net deleniti voluptas pariatur in laudantium voluptatem\naut a vel\n \r\taperiam et a sit\nut cumque perferendis neque\nfugiat qui et dolorem\nomnis et non consectetur dolores consequatur\nquidem libero culpa molestiae quo",
+      "ownerId": 1,
+      "access": "role"
+    },
+    {
+      "id": 15,
+      "title": "iure voluptatum consequatur",
+      "content": "non modi voluptatem sed dicta eos ut\nsed sunt quaerat dignissimos neque\nut modi eius aut sit vel distinctio\n \r\tculpa et sunt dignissimos ab sapiente repellendus velit\nmolestiae reprehenderit et excepturi sequi qui qui earum incidunt\nquia et asperiores quibusdam aperiam\nut officiis sint porro tenetur similique unde\nvoluptatum maxime consequatur sit aut et adipisci\n \r\tvel blanditiis illum hic\nveniam et ducimus repellendus commodi\nsunt quis vitae omnis aut voluptatibus illum",
+      "ownerId": 1,
+      "access": "role"
+    },
+    {
+      "id": 17,
+      "title": "eum facere rerum aperiam non a quisquam corrupti",
+      "content": "ipsam vero omnis\naut et vel deserunt quos\nmolestias reiciendis voluptatem repellat omnis quia iure quod doloribus\n \r\teveniet consequatur voluptatem hic delectus magnam rem ut quia\nsoluta ea consequatur molestiae\nfugit numquam neque ut illo ea unde aut\nrepellat molestiae voluptatem et recusandae ducimus autem\n \r\teligendi reprehenderit eum quam ipsum\nminus ea et rerum velit\nquis assumenda fugit sed\nrepudiandae dolorem molestias dolor magni blanditiis",
+      "ownerId": 1,
+      "access": "role"
+    },
+    {
+      "id": 20,
+      "title": "eum eos ut fuga et aut reiciendis",
+      "content": "vel officiis et eveniet sunt accusamus dolore\ncorporis facere alias tempore expedita omnis blanditiis ut\nmagni reiciendis eum facilis in quasi ipsam\nitaque explicabo beatae\n \r\tcupiditate velit ut dignissimos ut quae distinctio\niusto quis velit dolores ullam\nnostrum laudantium cumque nam repellat sequi\naut sit accusamus voluptatem porro\n \r\tofficia ut suscipit aut beatae\nrem qui cumque ipsum at\nquae et sequi provident\nmolestiae quia atque possimus",
+      "ownerId": 1,
+      "access": "role"
+    },
+    {
+      "id": 34,
+      "title": "accusamus quibusdam ut nostrum iste rem sunt reprehenderit",
+      "content": "aliquid dicta incidunt et\nasperiores sit totam aliquam ut molestiae soluta saepe\nid eius et ut accusamus veniam et vitae\nut qui sit\n \r\tnon corporis vel molestiae maiores explicabo quae odit\nillo sed doloremque\nsequi eos enim\nsed ea molestiae iure eum explicabo temporibus eligendi\nvoluptates magnam ducimus corrupti officiis et quas voluptas\n \r\tcumque consequatur officia\nnihil quas praesentium maxime cupiditate commodi cum soluta\nvoluptatem id voluptas\nquia ut id doloribus aliquam cupiditate magnam\neum quaerat molestias aut non culpa accusamus provident magni",
+      "ownerId": 1,
+      "access": "role"
+    },
+    {
+      "id": 42,
+      "title": "et deleniti consequuntur iure nesciunt non in voluptatem",
+      "content": "rerum a veniam ex et ab\nea eos ut\ninventore nisi vel nesciunt quis aut\nid doloribus iusto atque optio saepe libero\n \r\taccusamus voluptatibus ratione labore aut non aspernatur\nerror veritatis sunt necessitatibus dolorem quibusdam soluta\nconsequatur aspernatur maxime debitis\na ut ab qui cupiditate exercitationem sunt\n \r\teligendi tempore aliquam illo hic excepturi nobis\nest repellendus ab expedita voluptatem debitis consequuntur qui\nmolestiae culpa officia placeat cupiditate adipisci expedita quis",
+      "ownerId": 1,
+      "access": "role"
+    },
+    {
+      "id": 48,
+      "title": "amet quis sit modi",
+      "content": "quae numquam tenetur et quia ipsam quia sunt ut\ncorrupti eum nam et quas\nea minima nulla consequatur voluptatem perspiciatis ratione beatae\nqui quam non ut amet nesciunt\ndoloremque minima quas impedit et iste ut\n \r\tsed libero enim dolor officiis quisquam et nihil possimus\naut quod hic ullam quis magnam consequuntur\nvoluptatem et mollitia sapiente\nrepellendus velit corrupti alias\nnon nisi aperiam quia iusto unde\n \r\tpraesentium et omnis facilis odio\nfugiat et sapiente voluptas\nest consequatur veritatis",
+      "ownerId": 1,
+      "access": "role"
+    }
+  ]
+}]
+```
+
 ### Edit Document
 
 #### Request

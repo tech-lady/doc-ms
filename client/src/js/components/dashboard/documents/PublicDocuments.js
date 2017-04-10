@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Button, Row, Col, Icon, Pagination } from 'react-materialize';
+import { Modal, Button, Row, Col, Icon } from 'react-materialize';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Search from '../Search';
@@ -12,7 +12,7 @@ import modal from '../../common/modal';
 import { getPayload } from '../../../utils/helpers';
 
 
-class Documents extends React.Component {
+class PublicDocuments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,7 +59,8 @@ class Documents extends React.Component {
             </div>
           </div>
       </div>
-<Pagination items={10} activePage={2} maxButtons={8}/> </div>
+
+      </div>
     );
   }
 }
@@ -81,4 +82,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Documents);
+export default connect(mapStateToProps, mapDispatchToProps)(PublicDocuments);
