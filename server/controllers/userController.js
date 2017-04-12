@@ -6,20 +6,6 @@ import { userProfile, checkRoleId, isSuperAdmin } from '../helpers/helpers';
 
 dotenv.config({ silence: true });
 
-// export const createUser = (req, res) => {
-//   if (req.body.roleId === 1 || req.body.roleId === 2) {
-//     return res.status(403)
-//       .json({ message: 'You are not permitted to signup as an admin' });
-//   }
-//   db.User.findOne({ where: { email: req.body.email } })
-//     .then((emailExist) => {
-//       if (emailExist) {
-//         return res.status(409)
-//           .json({ message: 'Email already exists' });
-//       }
-
-
-
 const secret = process.env.SECRET;
 
 export const createUser = (req, res) => {
