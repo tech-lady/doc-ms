@@ -79,13 +79,6 @@ export const getUser = (req, res) => {
     .catch(error => res.status(400).json(error));
 };
 
-export const getUsers = (req, res) => {
-  db.User.findAll({ attributes: ['id', 'username', 'email', 'firstname', 'lastname', 'createdAt', 'updatedAt'] })
-    .then(user => res.status(200).json(user))
-    .catch(err => res.status(400).json(err));
-};
-
-
 export const findAllUsers = (req, res) => {
   const query = page.pagination(req);
   const limit = query.limit;
