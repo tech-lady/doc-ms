@@ -68,6 +68,13 @@ Documents.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
+/**
+ *
+ *
+ * @param {any} state
+ * @returns {boolean}
+ */
+
 const mapStateToProps = (state, ownProps) => {
   return {
     documents : state.documents

@@ -49,6 +49,13 @@ render() {
   }
 }
 
+/**
+ *
+ *
+ * @param {any} state
+ * @returns {boolean}
+ */
+
 const mapStateToProps = (state) =>  {
   return {
     users:  state.users

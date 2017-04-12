@@ -8,6 +8,15 @@ import {
 import axios from '../utils/index';
 import { setToken, removeToken } from '../utils/helpers';
 
+/**
+ *  login users action dispatch on success authentication
+ *
+ * @export
+ * @param {any} token
+ * @returns {Object} json object
+ */
+
+
 export const signInUser = ({ LoginEmail, LoginPassword }) => (dispatch) => {
   axios.post('/users/login', { email: LoginEmail, password: LoginPassword })
     .then((res) => {
@@ -22,6 +31,13 @@ export const signInUser = ({ LoginEmail, LoginPassword }) => (dispatch) => {
     });
 };
 
+/**
+ *
+ * logout user and clear token from localStorage
+ * @export
+ * @returns {any} data
+ */
+
 export const logoutUser = () => (dispatch) => {
   axios.post('/users/logout')
     .then(() => {
@@ -31,6 +47,13 @@ export const logoutUser = () => (dispatch) => {
     });
 };
 
+/**
+ * action dispatched on register new user success
+ *
+ * @export
+ * @param {any} user
+ * @returns {Object} json object
+ */
 
 export const registerUser =
   ({ firstname, lastname, username, email, password }) => (dispatch) => {

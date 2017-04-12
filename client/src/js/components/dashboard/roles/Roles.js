@@ -49,6 +49,13 @@ class Roles extends React.Component {
   }
 }
 
+/**
+ *
+ *
+ * @param {any} state
+ * @returns {boolean}
+ */
+
 const mapStateToProps = (state, ownProps) => {
   const roles = state.roles || [];
   return {

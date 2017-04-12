@@ -44,6 +44,12 @@ class ViewRole extends Component {
   }
 }
 
+/**
+ *
+ *
+ * @param {any} state
+ * @returns {boolean}
+ */
 
 const mapStateToProps = (state, ownProps) => {
   return {

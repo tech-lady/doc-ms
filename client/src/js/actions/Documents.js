@@ -1,3 +1,8 @@
+/**
+ * Documents action, disptach action and
+ * action types of each action to the reducer
+ */
+
 import DocumentApi from '../utils/DocumentsApi';
 import * as types from './Types';
 
@@ -37,7 +42,13 @@ class Actions {
   }
 }
 
-
+/**
+ *
+ * loaddocumentsuccess
+ * @export
+ * @param {any} documents  returned documents from api call
+ * @returns {any} action and action types
+ */
 
 export const loadDocuments = () => (dispatch) => {
   const { id } = getPayload();
@@ -47,6 +58,15 @@ export const loadDocuments = () => (dispatch) => {
     })
     .catch((error) => { throw (error); });
 };
+
+
+/**
+ * get documentsfrom database
+ * by calling api route /documents/:id
+ *
+ * @export
+ * @returns {object} documents
+ */
 
 export const getDocument = id => (dispatch) => {
   DocumentApi.get(id)
@@ -58,6 +78,14 @@ export const getDocument = id => (dispatch) => {
   });
 };
 
+/**
+ * create new document success action
+ *
+ * @export
+ * @param {any} document newly create document reponse from api post
+ * @returns {any} action and action types
+ */
+
 export const createDocument = data => (dispatch) => {
   DocumentApi.create(data)
     .then((res) => {
@@ -65,6 +93,11 @@ export const createDocument = data => (dispatch) => {
     })
     .catch(error => dispatch(error));
 };
+
+/**
+ * delete from state the currently selected document
+ * @return {[type]} [description]
+ */
 
 export const deleteDocument = id => (dispatch) => {
   DocumentApi.delete(id)
@@ -74,6 +107,14 @@ export const deleteDocument = id => (dispatch) => {
   .catch(error => dispatch(error));
 };
 
+/**
+ * update documents to database using PUT api route /documents/:id
+ *
+ * @export
+ * @param {any} document
+ * @returns {object} documents
+ */
+
 export const updateDocument = updateData => (dispatch) => {
   DocumentApi.update(updateData)
     .then((res) => {
@@ -81,6 +122,14 @@ export const updateDocument = updateData => (dispatch) => {
     })
   .catch(error => dispatch(error));
 };
+
+/**
+ * search documents from database using GET api route /documents/:id
+ *
+ * @export
+ * @param {any} document
+ * @returns {object} documents
+ */
 
 export const searchDocument = (id, query) => (dispatch) => {
   DocumentApi.search(id, query)
