@@ -61,14 +61,14 @@ export default class Document {
   }
   static getPrivate(id){
     return new Promise((resolve, reject) => {
-      axios.get(`/documents/private/`)
+      axios.get('/documents/private/')
       .then(res => resolve(res.data))
       .catch(error => reject(error));
     });
   }
   static getPublic(id){
     return new Promise((resolve, reject) => {
-      axios.get(`/documents/public`)
+      axios.get('/documents/public')
       .then(res => resolve(res.data))
       .catch(error => reject(error));
     });
