@@ -151,7 +151,6 @@ export const getPrivateDocuments = id => (dispatch) => {
 export const getPublicDocuments = id => (dispatch) =>{
   DocumentApi.getPublic(id)
   .then((res) => {
-    console.log(res);
     dispatch(Actions.getAllDocuments(res));
   })
   .catch(error => dispatch(error));
