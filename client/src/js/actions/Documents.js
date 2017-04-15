@@ -138,3 +138,21 @@ export const searchDocument = (id, query) => (dispatch) => {
   })
   .catch(error => dispatch(error));
 };
+
+
+export const getPrivateDocuments = id => (dispatch) => {
+  DocumentApi.getPrivate(id)
+  .then((res) => {
+    dispatch(Actions.getAllDocuments(res.rows));
+  })
+  .catch(error => dispatch(error));
+};
+
+export const getPublicDocuments = id => (dispatch) =>{
+  DocumentApi.getPublic(id)
+  .then((res) => {
+    console.log(res);
+    dispatch(Actions.getAllDocuments(res));
+  })
+  .catch(error => dispatch(error));
+};

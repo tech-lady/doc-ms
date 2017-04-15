@@ -40,7 +40,7 @@ export default class Document {
     return new Promise((resolve, reject) => {
       axios.delete(`/documents/${id}`)
       .then(res => resolve(res.data))
-      .catch((error) => reject(error));
+      .catch(error => reject(error));
     });
   }
 
@@ -55,6 +55,20 @@ export default class Document {
   static search(id, query) {
     return new Promise((resolve, reject) => {
       axios.get(`/users/${id}/documents?q=${query}`)
+      .then(res => resolve(res.data))
+      .catch(error => reject(error));
+    });
+  }
+  static getPrivate(id){
+    return new Promise((resolve, reject) => {
+      axios.get(`/documents/private/`)
+      .then(res => resolve(res.data))
+      .catch(error => reject(error));
+    });
+  }
+  static getPublic(id){
+    return new Promise((resolve, reject) => {
+      axios.get(`/documents/public`)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
     });
