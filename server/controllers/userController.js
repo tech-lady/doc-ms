@@ -75,8 +75,7 @@ export const getUser = (req, res) => {
     }
     user = userProfile(user);
     return res.status(200).json(user);
-  })
-    .catch(error => res.status(400).json(error));
+  });
 };
 
 export const findAllUsers = (req, res) => {
@@ -147,8 +146,7 @@ export const updateUser = (req, res) => {
     })
     .then(() => res.status(200).json({ message: `User with id ${req.params.id} updated!` }))
     .catch(err => res.status(400).json(err.errors));
-  })
-  .catch(error => res.status(500).json(error.message));
+  });
 };
 
 
@@ -179,9 +177,7 @@ export const updateUserRole = (req, res) => {
             .update({
               roleId: req.body.roleId
             }).then(res.status(201)
-              .json({ message: 'User role successfully updated' }))
-            .catch(error => res.status(400)
-              .json(error));
+              .json({ message: 'User role successfully updated' }));
         });
     });
 };

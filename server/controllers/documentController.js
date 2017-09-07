@@ -88,8 +88,7 @@ export const getPublicDocument = (req, res) => {
             .json({ message: 'No document found' });
         }
         res.status(200).json(document);
-      })
-  .catch(err => res.status(400).json(err));
+      });
 };
 
 
